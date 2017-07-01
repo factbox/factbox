@@ -1,0 +1,2 @@
+class Metodology < ApplicationRecord
+end
