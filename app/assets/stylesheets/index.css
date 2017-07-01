@@ -1,0 +1,71 @@
+@import url(https://fonts.googleapis.com/css?family=Yanone+Kaffeesatz);
+
+section {
+	padding: 50px 0px 50px 0px;
+	font-family: 'Yanone Kaffeesatz', sans-serif;
+}
+
+.form-control {
+	font-size: 20px;
+}
+
+.thumbnail {
+	border: 0px;
+}
+
+.initial {
+	color: #FFF;
+	font-size: 25px;
+	background-attachment: scroll;
+	background-image: url('stardust.png');
+	border-bottom: solid 1px #000;
+}
+
+.initial h1 {
+	margin-bottom: 25px;
+	font-size: 50px;
+}
+
+.initial p {
+	color: #000;
+}
+
+.btn-signup {
+	font-size: 20px;
+	padding: 10px 20px 10px 20px;
+}
+
+.register h2 {
+	color: #2A00FF;
+	text-align: center;
+}
+
+.register p {
+	text-align: center;
+}
+
+.caption {
+	font-size: 20px;
+}
+
+.motive {
+	font-size: 25px;
+	color: #0DB209;
+	list-style: none;
+}
+
+.form-signin input {
+	height: 50px;
+	text-align: center;
+	margin: 2px;
+}
+
+.form-input-user {
+	font-size: 20px;
+}
+
+.form-input-user input {
+	height: 50px;
+	width: 100%;
+	margin-bottom: 2px;
+}
