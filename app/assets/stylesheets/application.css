@@ -13,3 +13,22 @@
  *= require_tree .
  *= require_self
  */
+
+.wrap {
+  min-height: 80%;
+  height: 100%;
+}
+
+footer {
+  background-color: #F2F2F2;
+	padding: 20px;
+}
+
+footer .copyright {
+	color: #000;
+	font-size: 20px;
+}
+
+.error-element {
+  font-size: 16px;
+}

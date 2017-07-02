@@ -1,0 +1,13 @@
+h2 {
+  font-size: 36px;
+}
+
+#centered-box {
+  margin-top: 15%;
+  text-align: center;
+  margin-bottom: 20%;
+}
+
+#centered-box i {
+  font-size: 64px;
+}

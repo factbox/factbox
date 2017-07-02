@@ -1,23 +1,24 @@
 class UsersController < ApplicationController
   def index
+    @user = UrutaUser.new
+    render layout: "unstyled"
   end
 
   def create
     @user = UrutaUser.new(user_params)
     if @user.save
-      redirect_to root_url
+      session[:user_id] = @user.id
+      render 'sucessful_register'
     else
-      render :new
+      render :index, layout: "unstyled"
     end
-  end
-
-  def authenticate
   end
 
   private
 
   def user_params
-    params.require(:user).permit(:email, :name, :lastName, :login, :password_digest)
+    params.require(:uruta_user)
+      .permit(:email, :name, :lastName, :login, :password, :password_confirmation)
   end
 
 end
