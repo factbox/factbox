@@ -1,0 +1,47 @@
+<header>
+  <nav class="navbar navbar-default navbar-fixed-top" role="navigation">
+    <div class="container">
+      <div class="navbar-header">
+        <a class="navbar-brand" href="/">Urutau</a>
+      </div>
+      <ul class="nav navbar-right top-nav">
+        <li class="dropdown">
+          <% if logged_in? %>
+            <a href="#" id="top-menu-btn" class="dropdown-toggle" data-toggle="dropdown">
+              <%= current_user.login %>
+						</a>
+            <ul class="dropdown-menu" id="top-menu-dropdown">
+              <li><a href="#">see_profile</a></li>
+              <li><a href='/user/settings'>settings</a></li>
+              <li class="divider"></li>
+              <li><a href="/logout"> logout</a></li>
+            </ul>
+          <% else %>
+            <ul class="nav pull-right" id="top-menu-dropdown">
+              <li class="dropdown" id="menuLogin">
+                <a  href="#" id="top-menu-btn" class="dropdown-toggle"data-toggle="dropdown">
+                  Sign up
+                </a>
+                <ul class="dropdown-menu" id="login-box">
+                  <li>
+                    <form action="/user/authenticate" class="form-group login-form" method="POST">
+                      <input name="login" type="text" class="form-control" placeholder="Login or email"/>
+                      <input name="password" type="password" class="form-control" placeholder="Password">
+                      <button type="submit" class="btn btn-primary btn-group-justified">
+                        Sign Up
+                      </button>
+                    </form>
+                  </li>
+                  <li class="divider"></li>
+                  <li>
+                    <a href="whataver?"></a>
+							    </li>
+                </ul>
+              </li>
+            </ul>
+          <% end %>
+        </li>
+      </ul>
+    </div>
+  </nav>
+</header>

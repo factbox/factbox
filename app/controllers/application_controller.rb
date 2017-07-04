@@ -3,9 +3,13 @@ class ApplicationController < ActionController::Base
 
   private
 
-  def logged_in?
+  def current_user
     @current_user ||= UrutaUser.find(session[:user_id]) if session[:user_id]
   end
 
-  helper_method :logged_in?
+  def logged_in?
+    session[:user_id]
+  end
+
+  helper_method :current_user, :logged_in?
 end
