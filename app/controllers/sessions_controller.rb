@@ -1,17 +1,11 @@
 class SessionsController < ApplicationController
-  def new
-  end
 
   def create
-    # Email is a unique field
-    user = UrutaUser.find_by(email: params[:email])
-    if user && user.authenticate(params[:password])
-      session[:user_id] = user.id
-      redirect_to root_url, notice: 'Logged in!'
-    else
-      flash.now.alert = 'Email or password is invalid'
-      render :index
-    end
+    user = UrutaUser.find_by(login: params[:login])
+
+    session[:user_id] = user.id if user && user.authenticate(params[:password])
+
+    redirect_to root_url
   end
 
   def destroy

@@ -1,7 +1,11 @@
 class UsersController < ApplicationController
   def index
-    @user = UrutaUser.new
-    render layout: "unstyled"
+    if logged_in?
+        redirect_to '/projects'
+    else
+      @user = UrutaUser.new
+      render layout: "unstyled"
+    end
   end
 
   def create
