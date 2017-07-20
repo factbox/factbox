@@ -1,8 +1,8 @@
 Rails.application.routes.draw do
 
   resources :sessions
-  # we use user model like uruta_user
-  resources :uruta_users, controller: 'users'
+
+  resources :users
   resources :projects
 
   root 'users#index'

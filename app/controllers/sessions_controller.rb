@@ -1,7 +1,7 @@
 class SessionsController < ApplicationController
 
   def create
-    user = UrutaUser.find_by(login: params[:login])
+    user = User.find_by(login: params[:login])
 
     session[:user_id] = user.id if user && user.authenticate(params[:password])
 
