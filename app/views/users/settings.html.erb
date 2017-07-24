@@ -1,10 +1,17 @@
-<%= simple_form_for(current_user) do |f| %>
-  <div class="col-md-4 col-md-offset-4">
+<div class="col-md-4 col-md-offset-4">
+  <div class="page-head">
+    <h1>Edit profile</h1>
+    <small>Set your preferences and profile informations</small>
+  </div>
+
+  <div class="page-content">
+    <%= simple_form_for(current_user) do |f| %>
       <%= f.input :email %>
       <%= f.input :name %>
       <%= f.input :login %>
       <%= f.input :lastName %>
 
       <%= f.button :submit, 'Update', class: 'btn btn-success pull-right' %>
+    <% end %>
   </div>
-<% end %>
+</div>
