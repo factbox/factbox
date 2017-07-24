@@ -7,6 +7,10 @@ class ProjectsController < ApplicationController
     @user_projects = current_user.projects
   end
 
+  def show
+    @project = Project.find(params[:id])
+  end
+
   # Form page to new projects
   # GET /projects/new
   def new

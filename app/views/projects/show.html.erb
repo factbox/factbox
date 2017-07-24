@@ -1,0 +1,58 @@
+<div class="col-md-3">
+  <h1><%= @project.name %></h1>
+  <div class="description info">
+    <%= @project.description %>
+  </div>
+  <div class="date info">
+    <small>Criado em <%= @project.created_at.strftime("%B %d, %Y") %></small>
+  </div>
+</div>
+<div class="col-md-9">
+  <div class="row">
+    <ul class="nav nav-tabs">
+      <li role="presentation" class="active">
+        <a href="#">Projeto <i class="glyphicon glyphicon-home"></i></a>
+      </li>
+      <li role="presentation">
+        <a href="#">Criar Artefato <i class="glyphicon glyphicon-plus"></i></a>
+      </li>
+      <li role="presentation">
+        <a href="#">Configurações <i class="glyphicon glyphicon-cog"></i></a>
+      </li>
+    </ul>
+  </div>
+  <div class="panel-target widgets row">
+		<div class="panel panel-default">
+      <div class="panel-heading">
+        Atividades
+      </div>
+			<div class="panel-body">
+        <% if nil %>
+          <div class="panel-body requirements"></div>
+        <% else %>
+          <h4 class="text-center info">
+            <span class="glyphicon glyphicon-info-sign"></span>
+            Não existem requisitos nesse projeto ainda...
+          </h4>
+        <% end %>
+      </div>
+		</div>
+	</div>
+  <div class="panel-target widgets row">
+		<div class="panel panel-default">
+      <div class="panel-heading">
+        Artefatos
+      </div>
+			<div class="panel-body">
+        <% if nil %>
+          <div class="panel-body requirements"></div>
+        <% else %>
+          <h4 class="text-center info">
+            <span class="glyphicon glyphicon-info-sign"></span>
+            Não existem requisitos nesse projeto ainda...
+          </h4>
+        <% end %>
+      </div>
+		</div>
+	</div>
+</div>
