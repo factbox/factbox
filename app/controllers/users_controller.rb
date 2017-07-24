@@ -36,7 +36,8 @@ class UsersController < ApplicationController
     if result.length == 1
       @user = result.first
     else
-      # Throws exception
+      # Throws invalid duplication error
+      raise NotImplementedError('System keep 2 user with same login!')
     end
   end
 
