@@ -1,4 +1,33 @@
-<div>
-  <h1>Projects#index</h1>
-  <p>Find me in app/views/projects/index.html.erb</p>
+<div class="row">
+  <div class="navbar-default sidebar" role="navigation">
+	  <div class="col-md-4">
+      <div class="sidebar-nav">
+        <ul class="nav">
+          <li id="projects">
+            <div class="panel panel-default">
+              <div class="panel-heading">
+                <h3>Projects</h3>
+              </div>
+              <ul class="list-group text-left">
+                <% @user_projects.each do |project| %>
+                  <li class="list-unstyled list-projects list-group-item">
+                    <a href="${project.id}-${project.title}">
+                      <i class="glyphicon glyphicon-book"></i> <%= project.name %>
+                    </a>
+                  </li>
+                <% end %>
+              </ul>
+            </div>
+          </li>
+          <li>
+            <h2>
+              <a href="#" class="btn btn-success btn-group-justified">
+                Criar projeto
+              </a>
+            </h2>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </div>
 </div>
