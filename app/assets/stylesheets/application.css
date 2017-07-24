@@ -46,3 +46,17 @@ footer .copyright {
 .error-element {
   font-size: 16px;
 }
+
+.page-head {
+  padding-bottom: 25px;
+  border-bottom: 1px #DCDCDC solid;
+}
+
+.page-head small {
+  font-size: 16px;
+  color: #808080;
+}
+
+.page-content {
+  padding-top: 25px;
+}

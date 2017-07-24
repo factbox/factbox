@@ -22,6 +22,8 @@ gem 'coffee-rails', '~> 4.2'
 gem "twitter-bootstrap-rails"
 # Authentication
 gem "bcrypt"
+# Facilitates forms
+gem 'simple_form'
 
 # Use jquery as the JavaScript library
 gem 'jquery-rails'

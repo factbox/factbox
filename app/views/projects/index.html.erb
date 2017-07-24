@@ -11,7 +11,7 @@
               <ul class="list-group text-left">
                 <% @user_projects.each do |project| %>
                   <li class="list-unstyled list-projects list-group-item">
-                    <a href="${project.id}-${project.title}">
+                    <a href="#" %>
                       <i class="glyphicon glyphicon-book"></i> <%= project.name %>
                     </a>
                   </li>
@@ -21,7 +21,7 @@
           </li>
           <li>
             <h2>
-              <a href="#" class="btn btn-success btn-group-justified">
+              <a href="/projects/new" class="btn btn-success btn-group-justified">
                 Criar projeto
               </a>
             </h2>
