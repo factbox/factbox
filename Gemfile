@@ -24,6 +24,8 @@ gem "twitter-bootstrap-rails"
 gem "bcrypt"
 # Facilitates forms
 gem 'simple_form'
+# To use artifacts with multitable strategy
+gem 'active_record-acts_as'
 
 # Use jquery as the JavaScript library
 gem 'jquery-rails'
