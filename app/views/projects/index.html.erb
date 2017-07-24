@@ -6,21 +6,28 @@
           <li id="projects">
             <div class="panel panel-default">
               <div class="panel-heading">
-                <h3>Projects</h3>
+                <h3>Your projects</h3>
               </div>
+              <% unless @user_projects.empty? %>
               <ul class="list-group text-left">
-                <% if @user_projects %>
-                  <% @user_projects.each do |project| %>
-                    <li class="list-unstyled list-projects list-group-item">
-                      <a href="#" %>
-                        <i class="glyphicon glyphicon-book"></i> <%= project.name %>
-                      </a>
-                    </li>
-                  <% end %>
-                  <% else %>
-                    <h3>Você não tem nenhum projeto ainda</h3>
+                <% @user_projects.each do |project| %>
+                  <li class="list-unstyled list-projects list-group-item">
+                    <a href="#" %>
+                      <i class="glyphicon glyphicon-book"></i> <%= project.name %>
+                    </a>
+                  </li>
                 <% end %>
               </ul>
+              <% else %>
+                <div class="panel-body text-center">
+                  <h4 class="info">
+                    Nenhum projeto ainda...
+                  </h4>
+                  <h4 class="info">
+                    Crie um aqui <i class="glyphicon glyphicon-arrow-down"></i>
+                  </h4>
+                </div>
+              <% end %>
             </div>
           </li>
           <li>
