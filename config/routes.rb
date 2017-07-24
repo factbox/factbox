@@ -9,5 +9,7 @@ Rails.application.routes.draw do
 
   post '/authenticate' => 'sessions#create'
   get '/logout' => 'sessions#destroy'
+
   post 'authenticate', to: 'users#authenticate'
+  get '/user/settings', to: 'users#settings'
 end

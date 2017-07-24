@@ -1,0 +1,10 @@
+<%= simple_form_for(current_user) do |f| %>
+  <div class="col-md-4 col-md-offset-4">
+      <%= f.input :email %>
+      <%= f.input :name %>
+      <%= f.input :login %>
+      <%= f.input :lastName %>
+
+      <%= f.button :submit, 'Update', class: 'btn btn-success pull-right' %>
+  </div>
+<% end %>
