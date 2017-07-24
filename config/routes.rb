@@ -12,4 +12,5 @@ Rails.application.routes.draw do
 
   post 'authenticate', to: 'users#authenticate'
   get '/user/settings', to: 'users#settings'
+  get '/user/:login', to: 'users#show'
 end

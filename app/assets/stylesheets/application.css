@@ -21,7 +21,7 @@ html {
 .wrap {
   height: 100%;
   min-height: 100%;
-  margin-bottom: 20px;
+  margin-bottom: 100px;
 }
 
 header {
@@ -59,4 +59,8 @@ footer .copyright {
 
 .page-content {
   padding-top: 25px;
+}
+
+.info {
+  color: #696969;
 }

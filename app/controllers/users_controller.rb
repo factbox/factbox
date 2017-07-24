@@ -28,6 +28,17 @@ class UsersController < ApplicationController
   def settings
   end
 
+  # GET  /users/:login
+  def show
+    # Result is a array, login should refers to unique user
+    result = User.where(login: params[:login])
+
+    if result.length == 1
+      @user = result.first
+    else
+      # Throws exception
+    end
+  end
 
   private
 
