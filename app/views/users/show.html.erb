@@ -1,12 +1,13 @@
 <div class="col-md-3">
   <a class="user-image" href="#">
-    <img class="img-rounded col-md-offset-2" src="https://avatars1.githubusercontent.com/u/3610670?v=4&s=460" alt="">
+    <img class="img-rounded col-md-offset-2" width="200px"
+      src="http://www.edite.eu/wp-content/plugins/all-in-one-seo-pack/images/default-user-image.png">
   </a>
 </div>
 <div class="page-head col-md-9">
   <h1>
     <%= @user.name + ' ' + @user.lastName %>
-    <small><%= @user.login %></small>
+    <small>@<%= @user.login %></small>
   </h1>
   <div class="row">
     <div class="email info col-md-3">
