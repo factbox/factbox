@@ -1,4 +1,4 @@
-class Artifact < ApplicationRecord
+class Artifact < ActiveRecord::Base
   belongs_to :project
 
   validates :title, presence: true, length:{in: 2..20}

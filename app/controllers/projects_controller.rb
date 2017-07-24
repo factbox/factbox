@@ -7,6 +7,9 @@ class ProjectsController < ApplicationController
     @user_projects = current_user.projects
   end
 
+  # TODO change :id to name with properly encoding
+  # Shows specific project
+  # GET /projects/:id
   def show
     @project = Project.find(params[:id])
   end
