@@ -9,12 +9,16 @@
                 <h3>Projects</h3>
               </div>
               <ul class="list-group text-left">
-                <% @user_projects.each do |project| %>
-                  <li class="list-unstyled list-projects list-group-item">
-                    <a href="#" %>
-                      <i class="glyphicon glyphicon-book"></i> <%= project.name %>
-                    </a>
-                  </li>
+                <% if @user_projects %>
+                  <% @user_projects.each do |project| %>
+                    <li class="list-unstyled list-projects list-group-item">
+                      <a href="#" %>
+                        <i class="glyphicon glyphicon-book"></i> <%= project.name %>
+                      </a>
+                    </li>
+                  <% end %>
+                  <% else %>
+                    <h3>Você não tem nenhum projeto ainda</h3>
                 <% end %>
               </ul>
             </div>
