@@ -10,14 +10,14 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170724173853) do
+ActiveRecord::Schema.define(version: 20170724193859) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
   create_table "artifacts", force: :cascade do |t|
-    t.integer  "author_id"
-    t.integer  "project_id"
+    t.integer  "author_id",   null: false
+    t.integer  "project_id",  null: false
     t.string   "title"
     t.string   "description"
     t.datetime "created_at",  null: false
