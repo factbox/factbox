@@ -26,7 +26,6 @@ class UsersController < ApplicationController
   # Page with user settings
   # GET /user/settings
   def settings
-    
   end
 
 
