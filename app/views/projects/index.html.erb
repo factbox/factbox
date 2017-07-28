@@ -12,7 +12,7 @@
               <ul class="list-group text-left">
                 <% @user_projects.each do |project| %>
                   <li class="list-unstyled list-projects list-group-item">
-                    <a href="#" %>
+                    <a href="projects/<%= project.id %>">
                       <i class="glyphicon glyphicon-book"></i> <%= project.name %>
                     </a>
                   </li>
