@@ -3,7 +3,7 @@
 # and updated_at.
 # To use it, you need use the gem active_record-acts_as, like does Note model.
 # See file app/models/note.rb
-class Artifact < ActiveRecord::Base
+class Artifact < ApplicationRecord
   actable
   belongs_to :project
 

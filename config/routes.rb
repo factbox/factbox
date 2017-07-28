@@ -1,5 +1,6 @@
 Rails.application.routes.draw do
 
+  resources :notes, controller: 'artifacts'
   resources :sessions
   resources :users
   resources :projects
@@ -12,5 +13,7 @@ Rails.application.routes.draw do
 
   get '/user/settings', to: 'users#settings'
   get '/user/:login', to: 'users#show'
+
+  get '/artifacts/new/:type', to: 'artifacts#new_type'
 
 end

@@ -1,23 +1,15 @@
 <div class="col-md-8 col-md-offset-2">
   <div class="page-head">
-    <h1> Crie um novo artefato </h1>
-    <small>Aqui é possível criar todos artefatos suportados</small>
+    <h1>Escolha o tipo de artefato</h1>
+    <small>Esses são os artefatos atualmente suportados</small>
   </div>
 
   <div class="page-content">
-    <%= simple_form_for(@artifact) do |f| %>
-      <%= f.error_notification %>
-
-      <div class="form-inputs">
-        <%= f.input :title %>
-        <%= f.input :description, as: :text %>
-      </div>
-
-      <div class="form-actions">
-        <%= f.button :submit, 'Criar Artefato', class: 'btn btn-success pull-right' %>
-      </div>
-    <% end %>
-
+    <ul>
+      <% @artifacts.each do |artifact| %>
+        <li><a href="/artifacts/new/<%= artifact.name %>"><%= artifact.name %></a></li>
+      <% end %>
+    </ul>
     <%= link_to 'Back', projects_path, class: 'btn btn-default pull-left'  %>
   </div>
 </div>
