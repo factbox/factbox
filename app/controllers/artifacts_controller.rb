@@ -1,6 +1,8 @@
 class ArtifactsController < ApplicationController
   include ArtifactsHelper
 
+  before_action :authorize, only: [:new, :new_type, :create]
+
   # Page with all artifacts type that could be created
   # GET /artifacts/new
   def new
@@ -42,6 +44,8 @@ class ArtifactsController < ApplicationController
     end
   end
 
+  # Shows artifact selected
+  # GET /artifacts/:id
   def show
     @artifact = Artifact.find(params[:id]).specific
 

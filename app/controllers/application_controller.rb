@@ -10,5 +10,9 @@ class ApplicationController < ActionController::Base
       session[:user_id]
     end
 
-    helper_method :current_user, :logged_in?
+    def authorize
+      redirect_to root_path unless logged_in?
+    end
+
+    helper_method :current_user, :logged_in?, :authorize
 end

@@ -1,5 +1,7 @@
 class SessionsController < ApplicationController
 
+  # POST /sessions
+  # Login - Creates user session
   def create
     user = User.find_by(login: params[:login])
 
@@ -8,6 +10,8 @@ class SessionsController < ApplicationController
     redirect_to root_url
   end
 
+  # DELETE /sessions/:id
+  # Logout - Destroy user session
   def destroy
     session[:user_id] = nil
     redirect_to root_url, notice: 'Logged out!'

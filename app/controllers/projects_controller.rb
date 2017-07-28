@@ -1,5 +1,7 @@
 class ProjectsController < ApplicationController
 
+  before_action :authorize, only: [:index, :new, :create]
+
   # Used like home page of logged users
   # GET /projects
   def index

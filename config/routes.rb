@@ -1,7 +1,7 @@
 Rails.application.routes.draw do
 
   resources :notes, controller: 'artifacts'
-  resources :sessions
+  resources :sessions, only: [:create, :destroy]
   resources :users
   resources :projects
   resources :artifacts
