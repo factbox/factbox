@@ -1,7 +1,9 @@
-<%= simple_form_for(@artifact) do |f| %>
+<%= simple_form_for(@artifact, as: 'artifact') do |f| %>
   <%= f.error_notification %>
 
   <div class="form-inputs">
+    <%= f.input :project_id, as: :hidden, input_html: { value: @artifact.project_id } %>
+    <%= f.input :type, as: :hidden, input_html: { value: 'Note' } %>
     <%= f.input :title %>
     <%= f.input :description, as: :text %>
     <%= f.input :content, as: :text %>

@@ -6,14 +6,18 @@ Rails.application.routes.draw do
   resources :projects
   resources :artifacts
 
-  root 'users#index'
+  root  'users#index'
 
-  post '/authenticate' => 'sessions#create'
-  get '/logout' => 'sessions#destroy'
+  post  '/authenticate' => 'sessions#create'
+  get   '/logout' => 'sessions#destroy'
 
-  get '/user/settings', to: 'users#settings'
-  get '/user/:login', to: 'users#show'
+  get   '/user/settings', to: 'users#settings'
+  get   '/user/:login', to: 'users#show'
 
-  get '/artifacts/new/:type', to: 'artifacts#new_type'
+  get   '/projects/:id', to: 'projects#show'
+
+  get   '/projects/:id/artifacts/new', to: 'artifacts#new'
+  get   '/projects/:id/artifacts/new/:type', to: 'artifacts#new_type'
+  post  '/artifacts/new', to: 'artifacts#create'
 
 end

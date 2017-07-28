@@ -1,4 +1,7 @@
 <p id="notice"><%= notice %></p>
 
-<%= link_to 'Edit', edit_note_path(@note) %> |
+<h1><%= @artifact.title %></h1>
+<p><%= @artifact.content %></p>
+
+<%= link_to 'Edit', edit_note_path(@artifact) %> |
 <%= link_to 'Back', notes_path %>
