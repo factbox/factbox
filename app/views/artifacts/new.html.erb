@@ -5,11 +5,11 @@
   </div>
 
   <div class="page-content">
-    <ul>
+    <ul class="artifact-types">
       <% @artifacts.each do |artifact| %>
         <li><a href="/artifacts/new/<%= artifact.name %>"><%= artifact.name %></a></li>
       <% end %>
     </ul>
-    <%= link_to 'Back', projects_path, class: 'btn btn-default pull-left'  %>
+    <%= link_to 'Voltar', projects_path, class: 'btn btn-default pull-left'  %>
   </div>
 </div>
