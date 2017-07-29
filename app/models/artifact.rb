@@ -6,6 +6,7 @@
 class Artifact < ApplicationRecord
   actable
   belongs_to :project
+  belongs_to :author, class_name: 'User', foreign_key: 'author_id'
 
   validates :title, presence: true, length:{in: 2..20}
   validates :description, presence: true, length:{in: 2..100}

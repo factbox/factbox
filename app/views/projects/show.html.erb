@@ -32,27 +32,11 @@
         <% else %>
           <h4 class="text-center info">
             <span class="glyphicon glyphicon-info-sign"></span>
-            Não existem requisitos nesse projeto ainda...
+            Nenhuma atividade...
           </h4>
         <% end %>
       </div>
 		</div>
 	</div>
-  <div class="panel-target widgets row">
-		<div class="panel panel-default">
-      <div class="panel-heading">
-        Artefatos
-      </div>
-			<div class="panel-body">
-        <% if nil %>
-          <div class="panel-body requirements"></div>
-        <% else %>
-          <h4 class="text-center info">
-            <span class="glyphicon glyphicon-info-sign"></span>
-            Não existem requisitos nesse projeto ainda...
-          </h4>
-        <% end %>
-      </div>
-		</div>
-	</div>
+  <%= render 'artifact-list' %>
 </div>

@@ -1,0 +1,41 @@
+<div class="panel-target widgets row">
+  <div class="panel panel-default">
+    <div class="panel-heading">
+      Artefatos mantidos no projeto
+    </div>
+    <div class="panel-body">
+      <% unless @project.artifacts.empty? %>
+        <div class="panel-body requirements">
+          <table class="table">
+            <thead>
+              <tr>
+                <th>Tipo</th>
+                <th>Título</th>
+                <th>Autor</th>
+                <th>Data de criação</th>
+                <th>Ultima modificação</th>
+              </tr>
+            </thead>
+            <tbody>
+              <% @project.artifacts.each do |artifact| %>
+                <tr>
+                  <td><%= artifact.actable_type %></td>
+                  <td><%= artifact.title %></td>
+                  <td><%= artifact.author.login %></td>
+                  <td><%= artifact.created_at.strftime("%B %d, %Y") %></td>
+                  <td><%= artifact.updated_at.strftime("%B %d %Y %H:%M") %></td>
+                  </td>
+                </tr>
+              <% end %>
+            </tbody>
+          </table>
+        </div>
+      <% else %>
+        <h4 class="text-center info">
+          <span class="glyphicon glyphicon-info-sign"></span>
+          Não existem requisitos nesse projeto ainda...
+        </h4>
+      <% end %>
+    </div>
+  </div>
+</div>

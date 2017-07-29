@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170724220549) do
+ActiveRecord::Schema.define(version: 20170729023152) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -24,6 +24,13 @@ ActiveRecord::Schema.define(version: 20170724220549) do
     t.datetime "updated_at",   null: false
     t.integer  "actable_id"
     t.string   "actable_type"
+  end
+
+  create_table "artifacts_users", id: false, force: :cascade do |t|
+    t.integer "user_id",     null: false
+    t.integer "artifact_id", null: false
+    t.index ["artifact_id", "user_id"], name: "index_artifacts_users_on_artifact_id_and_user_id", using: :btree
+    t.index ["user_id", "artifact_id"], name: "index_artifacts_users_on_user_id_and_artifact_id", using: :btree
   end
 
   create_table "metodologies", force: :cascade do |t|
