@@ -1,6 +1,7 @@
 class ProjectsController < ApplicationController
 
   before_action :authorize, only: [:index, :new, :create]
+  before_action :set_project, only: [:show, :edit, :update]
 
   # Used like home page of logged users
   # GET /projects
@@ -13,7 +14,6 @@ class ProjectsController < ApplicationController
   # Shows specific project
   # GET /projects/:id
   def show
-    @project = Project.find(params[:id])
   end
 
   # Form page to new projects
@@ -36,7 +36,26 @@ class ProjectsController < ApplicationController
     end
   end
 
+  # Page for edit projects
+  # GET /projects/:id/edit
+  def edit
+  end
+
+  # Action to update projects
+  # PUT /projects/:id
+  def update
+    if @project.update(project_params)
+      redirect_to @project, notice: 'Projeto atualizado com sucesso'
+    else
+      render :edit
+    end
+  end
+
   private
+
+  def set_project
+    @project = Project.find(params[:id])
+  end
 
   def project_params
     params.require(:project).permit(:name, :description)
