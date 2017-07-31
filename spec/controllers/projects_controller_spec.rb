@@ -2,9 +2,9 @@ require 'rails_helper'
 
 RSpec.describe ProjectsController, type: :controller do
 
-  describe "GET #index" do
-    let(:user) { FactoryGirl.build(:user) }
+  let(:user) { FactoryGirl.build(:user) }
 
+  describe "GET #index" do
     before(:each) do
       user.save!
       login(user)
@@ -23,7 +23,7 @@ RSpec.describe ProjectsController, type: :controller do
 
   describe "GET #new" do
     before(:each) do
-      login(FactoryGirl.build(:user))
+      login(user)
     end
 
     it "loads empty object into new page" do
@@ -33,6 +33,38 @@ RSpec.describe ProjectsController, type: :controller do
 
     it "renders the new template" do
       get :new
+      expect(response).to render_template("new")
+    end
+  end
+
+  describe "POST #create" do
+    before(:each) do
+      user.save!
+      login(user)
+    end
+
+    it "creates a valid project" do
+      expect {
+        post :create, params: {
+          project: {
+            name: "New project",
+            description: "Just a test"
+          }
+        }
+      }.to change(Project, :count).by(1)
+
+      expect(response).to redirect_to("/projects")
+    end
+
+    it "try creates an invalid project" do
+      expect {
+        post :create, params: {
+          project: {
+            description: "Just a test"
+          }
+        }
+      }.to change(Project, :count).by(0)
+
       expect(response).to render_template("new")
     end
   end
