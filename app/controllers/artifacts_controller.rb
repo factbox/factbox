@@ -54,14 +54,6 @@ class ArtifactsController < ApplicationController
 
   private
 
-  def get_request_instance(klass_type, parametters=nil)
-    if parametters
-      klass_type.classify.safe_constantize.new(parametters.except(:type))
-    else
-      klass_type.classify.safe_constantize.new
-    end
-  end
-
   def artifact_params
     params.require(:artifact).permit!
   end

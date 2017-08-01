@@ -69,4 +69,25 @@ RSpec.describe ProjectsController, type: :controller do
     end
   end
 
+  describe "PUT #update" do
+    it "do a valid update" do
+      project = FactoryGirl.build(:project)
+      project.save!
+
+      put :update, params: {id: project.id, project: { name: "A valid title" }}
+
+      project.reload
+      expect(project.name).to eq("A valid title")
+    end
+
+    it "do a invalid update" do
+      project = FactoryGirl.build(:project)
+      project.save!
+
+      put :update, params: {id: project.id, project: { name: "" }}
+
+      expect(response).to render_template("edit")
+    end
+  end
+
 end

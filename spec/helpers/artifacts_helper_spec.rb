@@ -1,15 +1,20 @@
 require 'rails_helper'
 
-# Specs in this file have access to a helper object that includes
-# the ArtifactsHelper. For example:
-#
-# describe ArtifactsHelper do
-#   describe "string concat" do
-#     it "concats two strings with spaces" do
-#       expect(helper.concat_strings("this","that")).to eq("this that")
-#     end
-#   end
-# end
 RSpec.describe ArtifactsHelper, type: :helper do
-  pending "add some examples to (or delete) #{__FILE__}"
+  describe "request instance of Note" do
+    it "when klass_name is valid and without params" do
+      expect(get_request_instance("Note")).to be_a_kind_of(Note)
+    end
+
+    it "when klass_name is valid with valid param" do
+      params = { content: "Hello World" }
+      expect(get_request_instance("Note", params)).to be_a_kind_of(Note)
+    end
+
+    it "when klass_name is invalid and without params" do
+      expect {
+        get_request_instance("Nevermind")
+      }.to raise_error(ArtifactsHelper::InvalidKlassNameError)
+    end
+  end
 end
