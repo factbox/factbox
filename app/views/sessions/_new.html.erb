@@ -1,5 +1,12 @@
 <div class="col-xs-6 col-md-3">
   <%= form_tag("/authenticate", method: "POST", class: "form-signin") do %>
+    <% if flash[:notice] %>
+      <div class="error_messages text-center">
+        <h4 class="alert alert-warning">
+          <%= flash[:notice] %>
+        </h4>
+      </div>
+    <% end %>
     <%= text_field_tag(:login, nil, class: "form-control", autofocus: true,
       required: true, placeholder: "User login") %>
     <%= password_field_tag(:password, nil, class: "form-control",
