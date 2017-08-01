@@ -38,14 +38,17 @@ class ArtifactsController < ApplicationController
   # Save a instance of specific artifact
   # POST /artifacts/new
   def create
-    @artifact = get_request_instance(artifact_params[:type], artifact_params)
+    begin
+      @artifact = get_request_instance(artifact_params[:type], artifact_params)
+      @artifact.author_id = current_user.id
 
-    @artifact.author_id = current_user.id
-
-    if @artifact.save
-      redirect_to @artifact.project
-    else
-      render get_view(@artifact.actable_type, 'new')
+      if @artifact.save
+        redirect_to @artifact.project
+      else
+        render get_view(@artifact.actable_type, 'new')
+      end
+    rescue ArtifactsHelper::InvalidKlassNameError => error
+      redirect_to_error_page error.message
     end
   end
 

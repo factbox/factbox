@@ -45,4 +45,29 @@ RSpec.describe ArtifactsController, type: :controller do
 
   end
 
+  describe "POST #create" do
+
+    let(:project) { FactoryGirl.build(:project) }
+
+    before(:each) do
+      user.save!
+      project.save!
+      login(user)
+    end
+
+    it "when params is valid" do
+      post :create, params: {
+        artifact: {
+          type: 'note',
+          project_id: project.id,
+          title: 'Simple note',
+          description: 'Simple note'
+        }
+      }
+
+      expect(response).to redirect_to("/projects/#{project.id}")
+    end
+
+  end
+
 end

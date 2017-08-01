@@ -1,9 +1,8 @@
 FactoryGirl.define do
   factory :note do
-    title "Example"
+    name "Example"
     description "Simple example"
-    # It's not possible create user, because user creates this project,
-    # so just quote him. See /spec/factories/user.rb
+    content "TODO"
     author_id 7
   end
 end
