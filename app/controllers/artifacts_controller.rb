@@ -24,10 +24,15 @@ class ArtifactsController < ApplicationController
     type = params[:type]
 
     # Creates artifact dynamically through artifact type
-    @artifact = get_request_instance type
-    @artifact.project_id = params[:id]
+    begin
+      @artifact = get_request_instance type
+      @artifact.project_id = params[:id]
 
-    render get_view(type, 'new'), object: @artifact
+      render get_view(type, 'new'), object: @artifact
+    rescue ArtifactsHelper::InvalidKlassNameError => error
+      redirect_to_error_page error.message
+    end
+
   end
 
   # Save a instance of specific artifact
@@ -55,6 +60,7 @@ class ArtifactsController < ApplicationController
   private
 
   def artifact_params
+    # permit all params
     params.require(:artifact).permit!
   end
 

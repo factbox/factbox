@@ -23,7 +23,7 @@ module ArtifactsHelper
         klass.new
       end
     rescue NoMethodError => e
-      raise InvalidKlassNameError.new("Please verify if exists artifact named #{klass_name}")
+      raise InvalidKlassNameError.new("Please verify if exists artifact named '#{klass_name}'")
     end
   end
 

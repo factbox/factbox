@@ -64,3 +64,13 @@ footer .copyright {
 .info {
   color: #696969;
 }
+
+#centered-box {
+  margin-top: 10%;
+  text-align: center;
+  margin-bottom: 10%;
+}
+
+#centered-box i {
+  font-size: 64px;
+}

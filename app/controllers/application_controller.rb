@@ -14,5 +14,10 @@ class ApplicationController < ActionController::Base
       redirect_to root_path unless logged_in?
     end
 
+    def redirect_to_error_page(msg)
+      @message = msg
+      render 'layouts/error'
+    end
+
     helper_method :current_user, :logged_in?, :authorize
 end
