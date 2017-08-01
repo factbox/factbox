@@ -70,6 +70,6 @@ class ArtifactsController < ApplicationController
   # TODO Throws error if page null
   def get_view(klass, page)
     # The default of the rails views folders is lowercase and plural
-    klass.downcase + 's/' + page
+    klass.downcase.pluralize + '/' + page
   end
 end
