@@ -1,5 +1,7 @@
 module ArtifactsHelper
 
+  # This error is throwed when the follow method can not instantiate a class
+  # because it dont exist or probably is in a bad format
   class InvalidKlassNameError < StandardError
     def initialize(msg)
       super(msg)
