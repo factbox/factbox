@@ -26,13 +26,6 @@ ActiveRecord::Schema.define(version: 20170801174532) do
     t.string   "actable_type", null: false
   end
 
-  create_table "artifacts_users", id: false, force: :cascade do |t|
-    t.integer "user_id",     null: false
-    t.integer "artifact_id", null: false
-    t.index ["artifact_id", "user_id"], name: "index_artifacts_users_on_artifact_id_and_user_id", using: :btree
-    t.index ["user_id", "artifact_id"], name: "index_artifacts_users_on_user_id_and_artifact_id", using: :btree
-  end
-
   create_table "metodologies", force: :cascade do |t|
     t.string   "name"
     t.string   "description"
