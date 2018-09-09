@@ -16,7 +16,7 @@ module ArtifactsHelper
     klass = nil
 
     begin
-      klass = klass_name.classify.safe_constantize
+      klass = get_klass klass_name
       if params
         klass.new(params.except(:type))
       else
@@ -25,6 +25,10 @@ module ArtifactsHelper
     rescue NoMethodError => e
       raise InvalidKlassNameError.new("Please verify if exists artifact named '#{klass_name}'")
     end
+  end
+
+  def get_klass(klass_name)
+    klass_name.classify.safe_constantize
   end
 
 end
