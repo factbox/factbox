@@ -2,7 +2,7 @@ require 'rails_helper'
 
 RSpec.describe SessionsController, type: :controller do
 
-  let(:user) { FactoryGirl.build(:user) }
+  let(:user) { FactoryBot.build(:user) }
 
   describe "POST #create" do
     before(:each) do

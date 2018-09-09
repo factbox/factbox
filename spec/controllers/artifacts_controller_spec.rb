@@ -2,7 +2,7 @@ require 'rails_helper'
 
 RSpec.describe ArtifactsController, type: :controller do
 
-  let(:user) { FactoryGirl.build(:user) }
+  let(:user) { FactoryBot.build(:user) }
 
   describe "GET #new" do
     before(:each) do
@@ -28,7 +28,7 @@ RSpec.describe ArtifactsController, type: :controller do
     end
 
     it "when render right page" do
-      project = FactoryGirl.build(:project)
+      project = FactoryBot.build(:project)
       project.save!
 
       get :new_type, params: { id: project.id, type: 'note' }
@@ -36,7 +36,7 @@ RSpec.describe ArtifactsController, type: :controller do
     end
 
     it "when call inexistent artifact" do
-      project = FactoryGirl.build(:project)
+      project = FactoryBot.build(:project)
       project.save!
 
       get :new_type, params: { id: project.id, type: 'XGH' }
@@ -47,7 +47,7 @@ RSpec.describe ArtifactsController, type: :controller do
 
   describe "POST #create" do
 
-    let(:project) { FactoryGirl.build(:project) }
+    let(:project) { FactoryBot.build(:project) }
 
     before(:each) do
       user.save!
@@ -96,7 +96,7 @@ RSpec.describe ArtifactsController, type: :controller do
 
   describe "GET #show" do
     it "render page" do
-      note = FactoryGirl.build(:note)
+      note = FactoryBot.build(:note)
       note.save!
 
       get :show, params: { id: note.id }

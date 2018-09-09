@@ -2,7 +2,7 @@ require 'rails_helper'
 
 RSpec.describe ProjectsController, type: :controller do
 
-  let(:user) { FactoryGirl.build(:user) }
+  let(:user) { FactoryBot.build(:user) }
 
   describe "GET #index" do
     before(:each) do
@@ -71,7 +71,7 @@ RSpec.describe ProjectsController, type: :controller do
 
   describe "PUT #update" do
     it "do a valid update" do
-      project = FactoryGirl.build(:project)
+      project = FactoryBot.build(:project)
       project.save!
 
       put :update, params: {id: project.id, project: { name: "A valid title" }}
@@ -81,7 +81,7 @@ RSpec.describe ProjectsController, type: :controller do
     end
 
     it "do a invalid update" do
-      project = FactoryGirl.build(:project)
+      project = FactoryBot.build(:project)
       project.save!
 
       put :update, params: {id: project.id, project: { name: "" }}
