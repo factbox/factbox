@@ -1,9 +1,3 @@
-PATH
-  remote: ../user_stories
-  specs:
-    user_stories (0.1.0)
-      rails (~> 5.0.7)
-
 GEM
   remote: https://rubygems.org/
   specs:
@@ -247,7 +241,6 @@ DEPENDENCIES
   twitter-bootstrap-rails
   tzinfo-data
   uglifier (>= 1.3.0)
-  user_stories!
   web-console (>= 3.3.0)
 
 BUNDLED WITH
