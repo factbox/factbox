@@ -12,6 +12,6 @@ class Artifact < ApplicationRecord
   validates :description, presence: true, length:{in: 2..100}
 
   def edit_link
-    return "/artifacts/edit/#{id}/#{actable_type.downcase}"
+    "/artifacts/edit/#{self.id}/#{self.actable_type.downcase}"
   end
 end
