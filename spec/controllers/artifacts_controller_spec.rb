@@ -109,6 +109,25 @@ RSpec.describe ArtifactsController, type: :controller do
 
   end
 
+  describe "POST #update" do
+
+    let(:note) { FactoryBot.create(:note) }
+    let(:attr) do
+      { type: 'note', project_id: 1, title: 'Simple note', description: 'Simple note' }
+    end
+
+    before(:each) do
+      user.save!
+      login(user)
+    end
+
+    it "when params is valid" do
+      put :update, id: note.id, artifact: attr
+
+      expect(response).to render_template("edit")
+    end
+  end
+
   describe "GET #show" do
     it "render page" do
       note = FactoryBot.build(:note)
