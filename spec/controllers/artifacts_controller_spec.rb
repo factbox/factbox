@@ -45,6 +45,21 @@ RSpec.describe ArtifactsController, type: :controller do
 
   end
 
+  describe "GET #edit" do
+    before(:each) do
+      login(user)
+    end
+
+    it "when entry in edit page" do
+      note = FactoryBot.build(:note)
+      note.save!
+
+      get :edit, params: { id: note.id, type: 'note' }
+      expect(response).to render_template("edit")
+    end
+
+  end
+
   describe "POST #create" do
 
     let(:project) { FactoryBot.build(:project) }
