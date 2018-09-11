@@ -43,6 +43,9 @@ gem 'jbuilder', '~> 2.5'
 # Cover test coverage
 gem 'codecov', :require => false, :group => :test
 
+# supports reactjs on project
+gem 'react-rails'
+
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
   # gem 'byebug', platform: :mri
