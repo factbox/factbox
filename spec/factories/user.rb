@@ -1,4 +1,4 @@
-FactoryGirl.define do
+FactoryBot.define do
   factory :user do
     id        7
     email     "example@example.com"
@@ -6,6 +6,6 @@ FactoryGirl.define do
     lastName  "Nobody"
     login     "userSample"
     password  "123456"
-    projects  {[FactoryGirl.create(:project)]}
+    projects  {[FactoryBot.create(:project)]}
   end
 end

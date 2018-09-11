@@ -2,7 +2,7 @@ require 'rails_helper'
 
 RSpec.describe ArtifactsController, type: :controller do
 
-  let(:user) { FactoryGirl.build(:user) }
+  let(:user) { FactoryBot.build(:user) }
 
   describe "GET #new" do
     before(:each) do
@@ -28,7 +28,7 @@ RSpec.describe ArtifactsController, type: :controller do
     end
 
     it "when render right page" do
-      project = FactoryGirl.build(:project)
+      project = FactoryBot.build(:project)
       project.save!
 
       get :new_type, params: { id: project.id, type: 'note' }
@@ -36,7 +36,7 @@ RSpec.describe ArtifactsController, type: :controller do
     end
 
     it "when call inexistent artifact" do
-      project = FactoryGirl.build(:project)
+      project = FactoryBot.build(:project)
       project.save!
 
       get :new_type, params: { id: project.id, type: 'XGH' }
@@ -45,9 +45,24 @@ RSpec.describe ArtifactsController, type: :controller do
 
   end
 
+  describe "GET #edit" do
+    before(:each) do
+      login(user)
+    end
+
+    it "when entry in edit page" do
+      note = FactoryBot.build(:note)
+      note.save!
+
+      get :edit, params: { id: note.id, type: 'note' }
+      expect(response).to render_template("edit")
+    end
+
+  end
+
   describe "POST #create" do
 
-    let(:project) { FactoryGirl.build(:project) }
+    let(:project) { FactoryBot.build(:project) }
 
     before(:each) do
       user.save!
@@ -94,9 +109,28 @@ RSpec.describe ArtifactsController, type: :controller do
 
   end
 
+  describe "POST #update" do
+
+    let(:note) { FactoryBot.create(:note) }
+    let(:attr) do
+      { type: 'note', project_id: 1, title: 'Simple note', description: 'Simple note' }
+    end
+
+    before(:each) do
+      user.save!
+      login(user)
+    end
+
+    it "when params is valid" do
+      put :update, id: note.id, artifact: attr
+
+      expect(response).to render_template("edit")
+    end
+  end
+
   describe "GET #show" do
     it "render page" do
-      note = FactoryGirl.build(:note)
+      note = FactoryBot.build(:note)
       note.save!
 
       get :show, params: { id: note.id }

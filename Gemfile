@@ -48,7 +48,7 @@ group :development, :test do
   # gem 'byebug', platform: :mri
   gem 'rspec-rails', '~> 3.5'
   gem 'database_cleaner'
-  gem 'factory_girl_rails'
+  gem "factory_bot_rails"
   gem 'rails-controller-testing'
   gem 'simplecov'
 end

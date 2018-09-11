@@ -1,7 +1,7 @@
 <div class="panel-target widgets row">
   <div class="panel panel-default">
     <div class="panel-heading">
-      Artefatos mantidos no projeto
+      Artifacts
     </div>
     <div class="panel-body">
       <% unless @project.artifacts.empty? %>
@@ -24,6 +24,10 @@
                   <td><%= artifact.author.login %></td>
                   <td><%= artifact.created_at.strftime("%B %d, %Y") %></td>
                   <td><%= artifact.updated_at.strftime("%B %d %Y %H:%M") %></td>
+                  <td>
+                    <a href="<%= artifact.edit_link %>">
+                      <i class="glyphicon glyphicon-edit"></i>
+                    </a>
                   </td>
                 </tr>
               <% end %>

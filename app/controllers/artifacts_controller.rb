@@ -2,6 +2,8 @@ class ArtifactsController < ApplicationController
   include ArtifactsHelper
 
   before_action :authorize, only: [:new, :new_type, :create]
+  before_action :set_artifact, only: [:edit, :update]
+
 
   # Page with all artifacts type that could be created
   # GET /artifacts/new
@@ -21,6 +23,7 @@ class ArtifactsController < ApplicationController
   # Loads view to create selected artifact
   # GET /projects/:id/artifacts/new/:type
   def new_type
+    # The name of resource, artifact name
     type = params[:type]
 
     # Creates artifact dynamically through artifact type
@@ -33,6 +36,22 @@ class ArtifactsController < ApplicationController
       redirect_to_error_page error.message
     end
 
+  end
+
+  # GET /artifacts/edit/:id/:type
+  def edit
+    # The name of resource, artifact name
+    type = params[:type]
+
+    render get_view(type, 'edit')
+  end
+
+  def update
+    if @artifact.update(artifact_params.except(:type))
+      render get_view(@artifact.actable_type, 'edit'), notice: 'Artifact updated with success'
+    else
+      render get_view(@artifact.actable_type, 'edit')
+    end
   end
 
   # Save a instance of specific artifact
@@ -65,6 +84,13 @@ class ArtifactsController < ApplicationController
   def artifact_params
     # permit all params
     params.require(:artifact).permit!
+  end
+
+  def set_artifact
+    type = params[:type] || artifact_params[:type]
+
+    # gets the artifact's class and search by activerecord method
+    @artifact = get_klass(type).find(params[:id])
   end
 
   # TODO Throws error if page null

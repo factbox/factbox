@@ -4,7 +4,6 @@ Rails.application.routes.draw do
   resources :sessions, only: [:create, :destroy]
   resources :users
   resources :projects
-  resources :artifacts
 
   root  'users#index'
 
@@ -18,6 +17,9 @@ Rails.application.routes.draw do
 
   get   '/projects/:id/artifacts/new', to: 'artifacts#new'
   get   '/projects/:id/artifacts/new/:type', to: 'artifacts#new_type'
+
+  get   '/artifacts/edit/:id/:type', to: 'artifacts#edit'
+
   post  '/artifacts/new', to: 'artifacts#create'
 
 end
