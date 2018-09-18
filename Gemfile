@@ -44,6 +44,7 @@ gem 'jbuilder', '~> 2.5'
 gem 'codecov', :require => false, :group => :test
 
 # supports reactjs on project
+gem 'webpacker'
 gem 'react-rails'
 
 group :development, :test do
