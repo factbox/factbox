@@ -22,6 +22,10 @@ class ProjectsController < ApplicationController
   def show
   end
 
+  def traceability
+    render 'traceability'
+  end
+
   # Form page to new projects
   # GET /projects/new
   def new
