@@ -21,7 +21,7 @@ Rails.application.routes.draw do
   get   '/projects/:id/artifacts/new', to: 'artifacts#new'
   get   '/projects/:id/artifacts/new/:type', to: 'artifacts#new_type'
 
-  get   '/artifacts/edit/:id/:type', to: 'artifacts#edit'
+  get   '/:type/edit/:id/', to: 'artifacts#edit'
 
   post  '/artifacts/new', to: 'artifacts#create'
 

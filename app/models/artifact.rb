@@ -15,6 +15,6 @@ class Artifact < ApplicationRecord
   validates :version, presence: true
 
   def edit_link
-    "/artifacts/edit/#{self.id}/#{self.actable_type.downcase}"
+    "/#{self.actable_type.downcase}/edit/#{self.id}"
   end
 end

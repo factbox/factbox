@@ -38,20 +38,24 @@ class ArtifactsController < ApplicationController
 
   end
 
-  # GET /artifacts/edit/:id/:type
+  # GET /:type/edit/:id
   def edit
     # The name of resource, artifact name
-    type = params[:type]
+    @type = params[:type]
 
-    render get_view(type, 'edit')
+    render get_view(@type, 'edit')
   end
 
   def update
+    @type = @artifact.actable_type.downcase
+
     if @artifact.update(artifact_params.except(:type))
-      render get_view(@artifact.actable_type, 'edit'), notice: 'Artifact updated with success'
+      flash[:notice] = "Artifact updated succeed"
     else
-      render get_view(@artifact.actable_type, 'edit')
+      flash[:error] = @artifact.errors
     end
+
+    redirect_to action: "edit", id: @artifact.id, type: @type
   end
 
   # Save a instance of specific artifact
