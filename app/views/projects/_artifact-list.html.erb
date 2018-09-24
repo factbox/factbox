@@ -17,7 +17,7 @@
               </tr>
             </thead>
             <tbody>
-              <% @project.artifacts.each do |artifact| %>
+              <% @project.snapshot_artifacts.each do |artifact| %>
                 <tr>
                   <td><%= artifact.actable_type %></td>
                   <td><%= artifact.title %></td>

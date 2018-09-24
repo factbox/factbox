@@ -69,7 +69,7 @@ class ArtifactsController < ApplicationController
       flash[:error] = @artifact.errors || origin_artifact.errors
     end
 
-    redirect_to action: "edit", id: @artifact.id, type: @type
+    redirect_to action: "edit", id: @artifact.id || origin_artifact.id, type: @type
   end
 
   # Save a instance of specific artifact
