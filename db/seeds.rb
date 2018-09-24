@@ -15,3 +15,6 @@ User.create(
   password: "123456",
   password_confirmation: "123456"
 )
+
+Note.create(title: "This is a test", description: "Only a test", author_id: 1, project_id: 1, content: "")
+Note.create(title: "This is update test", description: "Only a test", author_id: 1, project_id: 1, content: "")

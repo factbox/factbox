@@ -10,20 +10,22 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170801174532) do
+ActiveRecord::Schema.define(version: 20180924001819) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
   create_table "artifacts", force: :cascade do |t|
-    t.integer  "author_id",    null: false
-    t.integer  "project_id",   null: false
-    t.string   "title",        null: false
+    t.integer  "author_id",                         null: false
+    t.integer  "project_id",                        null: false
+    t.string   "title",                             null: false
     t.string   "description"
-    t.datetime "created_at",   null: false
-    t.datetime "updated_at",   null: false
+    t.datetime "created_at",                        null: false
+    t.datetime "updated_at",                        null: false
     t.integer  "actable_id"
-    t.string   "actable_type", null: false
+    t.string   "actable_type",                      null: false
+    t.string   "version",      default: "snapshot"
+    t.integer  "artifact_id"
   end
 
   create_table "metodologies", force: :cascade do |t|
