@@ -49,10 +49,24 @@ class ArtifactsController < ApplicationController
   def update
     @type = @artifact.actable_type.downcase
 
-    if @artifact.update(artifact_params.except(:type))
+    artifact_param = artifact_params.except(:type)
+
+    origin_artifact = Artifact.find(params[:id])
+    artifact_param[:origin_artifact] = origin_artifact
+
+    artifact_param[:author] = origin_artifact.author
+    artifact_param[:project] = origin_artifact.project
+
+    if origin_artifact.version.eql? "snapshot"
+      origin_artifact.version = "snapshot_#{params[:id]}"
+    end
+
+    @artifact = get_request_instance(@type, artifact_param)
+
+    if @artifact.save && origin_artifact.save
       flash[:notice] = "Artifact updated succeed"
     else
-      flash[:error] = @artifact.errors
+      flash[:error] = @artifact.errors || origin_artifact.errors
     end
 
     redirect_to action: "edit", id: @artifact.id, type: @type
