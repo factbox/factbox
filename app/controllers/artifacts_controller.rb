@@ -55,6 +55,8 @@ class ArtifactsController < ApplicationController
     end
   end
 
+  # Update artifact creating a new version
+  # PUT /:type/:id
   def update
     @type = @artifact.actable_type.downcase
 
@@ -63,14 +65,16 @@ class ArtifactsController < ApplicationController
     origin_artifact = Artifact.find(params[:id])
     artifact_param[:origin_artifact] = origin_artifact
 
-    artifact_param[:author] = origin_artifact.author
-    artifact_param[:project] = origin_artifact.project
+    artifact_param[:author_id] = origin_artifact.author_id
+    artifact_param[:project_id] = origin_artifact.project_id
 
     if origin_artifact.version.eql? "snapshot"
       origin_artifact.version = "snapshot_#{params[:id]}"
     end
 
     @artifact = get_request_instance(@type, artifact_param)
+
+    puts @artifact.project_id
 
     if @artifact.save && origin_artifact.save
       flash[:notice] = "Artifact updated succeed"
