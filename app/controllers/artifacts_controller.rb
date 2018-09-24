@@ -40,10 +40,19 @@ class ArtifactsController < ApplicationController
 
   # GET /:type/edit/:id
   def edit
-    # The name of resource, artifact name
-    @type = params[:type]
+    artifact = Artifact.find(params[:id])
 
-    render get_view(@type, 'edit')
+    # The user should not access edit page of previous versions
+    # TODO maybe we could render to a new page, with more explains
+    unless artifact.version.eql? "snapshot"
+      redirect_to controller: 'projects', action: 'show', id: artifact.project_id
+      flash[:alert] = "Sorry but this is a old version and can not be edited..."
+    else
+      # The name of resource, artifact name
+      @type = params[:type]
+
+      render get_view(@type, 'edit')
+    end
   end
 
   def update
