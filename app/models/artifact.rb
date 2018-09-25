@@ -17,4 +17,10 @@ class Artifact < ApplicationRecord
   def edit_link
     "/#{self.actable_type.downcase}/edit/#{self.id}"
   end
+
+  def glyph_icon
+    # to be override for each artifact type
+    klass = self.actable_type.classify.safe_constantize
+    klass.glyph_icon || "glyphicon-file"
+  end
 end

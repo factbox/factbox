@@ -19,7 +19,7 @@
             <tbody>
               <% @project.snapshot_artifacts.each do |artifact| %>
                 <tr>
-                  <td><%= artifact.actable_type %></td>
+                  <td><i class="glyphicon <%= artifact.glyph_icon %>"></i> <%= artifact.actable_type %></td>
                   <td><%= artifact.title %></td>
                   <td><%= artifact.author.login %></td>
                   <td><%= artifact.created_at.strftime("%B %d, %Y") %></td>
