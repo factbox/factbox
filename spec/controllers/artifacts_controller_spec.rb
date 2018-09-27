@@ -122,7 +122,7 @@ RSpec.describe ArtifactsController, type: :controller do
     end
 
     it "when params is valid" do
-      put :update, id: note.id, artifact: attr
+      put :update, params: { id: note.id, artifact: attr }
 
       # Id is (note.id + 1) because this would be the new artifact version id...
       expect(response).to redirect_to action: :edit, id: note.id + 1, type: 'note'

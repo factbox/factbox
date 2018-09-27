@@ -6,6 +6,5 @@ FactoryBot.define do
     lastName  "Nobody"
     login     "userSample"
     password  "123456"
-    projects  {[FactoryBot.create(:project)]}
   end
 end
