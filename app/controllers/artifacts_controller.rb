@@ -95,6 +95,10 @@ class ArtifactsController < ApplicationController
       if @artifact.save
         redirect_to @artifact.project
       else
+        @artifact.errors.full_messages.each do |m|
+          puts m
+        end
+
         render get_view(@artifact.actable_type, 'new')
       end
     rescue ArtifactsHelper::InvalidKlassNameError => error

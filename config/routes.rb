@@ -2,6 +2,7 @@ Rails.application.routes.draw do
 
   resources :artifacts, only: [:new]
   resources :notes, controller: 'artifacts'
+  resources :images, controller: 'artifacts'
   resources :sessions, only: [:create, :destroy]
   resources :users
   resources :projects
