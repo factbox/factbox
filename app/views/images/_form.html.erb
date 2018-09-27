@@ -1,0 +1,15 @@
+<%= simple_form_for(@artifact, as: 'artifact') do |f| %>
+  <%= f.error_notification %>
+
+  <div class="form-inputs">
+    <%= f.input :project_id, as: :hidden, input_html: { value: @artifact.project_id } %>
+    <%= f.input :type, as: :hidden, input_html: { value: 'Image' } %>
+    <%= f.input :title %>
+    <%= f.input :description, as: :text %>
+    <%= f.input :file %>
+  </div>
+
+  <div class="form-actions">
+    <%= f.button :submit, class: 'btn btn-success pull-right' %>
+  </div>
+<% end %>
