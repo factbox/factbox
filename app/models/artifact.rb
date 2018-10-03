@@ -15,7 +15,7 @@ class Artifact < ApplicationRecord
   validates :version, presence: true
 
   def edit_link
-    "/#{self.actable_type.downcase}/edit/#{self.id}"
+    "/#{self.actable_type.downcase}/edit/#{self.actable_id}"
   end
 
   def glyph_icon

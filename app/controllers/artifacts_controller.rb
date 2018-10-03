@@ -74,8 +74,6 @@ class ArtifactsController < ApplicationController
 
     @artifact = get_request_instance(@type, artifact_param)
 
-    puts @artifact.project_id
-
     if @artifact.save && origin_artifact.save
       flash[:notice] = "Artifact updated succeed"
     else
