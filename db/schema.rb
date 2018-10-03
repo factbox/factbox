@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2018_10_03_002659) do
+ActiveRecord::Schema.define(version: 2018_10_03_043405) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -56,6 +56,18 @@ ActiveRecord::Schema.define(version: 2018_10_03_002659) do
     t.string "description"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+  end
+
+  create_table "node_options", force: :cascade do |t|
+    t.bigint "artifact_id"
+    t.string "bg_color"
+    t.string "hover_bg_color"
+    t.string "icon_face"
+    t.string "image_selected"
+    t.string "image_unselected"
+    t.string "title"
+    t.string "label"
+    t.index ["artifact_id"], name: "index_node_options_on_artifact_id"
   end
 
   create_table "notes", id: :serial, force: :cascade do |t|

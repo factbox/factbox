@@ -5,6 +5,7 @@
 # See file app/models/note.rb
 class Artifact < ApplicationRecord
   actable
+  has_one    :node_options
   # previous version of this artifact
   belongs_to :origin_artifact, class_name: 'Artifact', foreign_key: 'artifact_id', optional: true
   belongs_to :project, optional: true

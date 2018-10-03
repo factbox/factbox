@@ -22,7 +22,31 @@ class ProjectsController < ApplicationController
   def show
   end
 
+  # GET /traceability/:id
   def traceability
+    artifacts = Artifact.where(project_id: params[:id], version: "snapshot")
+    @nodes = Array.new
+
+    artifacts.each do |a|
+      unless a.node_options.nil?
+        options = {
+          id: a.id,
+          label: "#{a.actable_type}_#{a.id}",
+          color: {
+            border: "#95a5a6",
+            background: a.node_options.bg_color,
+            hover: {
+              background: a.node_options.hover_bg_color
+            },
+          },
+        }
+
+        @nodes.push options
+      end
+    end
+
+    puts "Have #{@nodes.size} nodes"
+
     render 'traceability'
   end
 
