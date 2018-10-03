@@ -6,7 +6,7 @@
 class Artifact < ApplicationRecord
   actable
   # previous version of this artifact
-  has_one    :origin_artifact, class_name: 'Artifact', foreign_key: 'artifact_id'
+  belongs_to :origin_artifact, class_name: 'Artifact', foreign_key: 'artifact_id', optional: true
   belongs_to :project, optional: true
   belongs_to :author, class_name: 'User', foreign_key: 'author_id', optional: true
 

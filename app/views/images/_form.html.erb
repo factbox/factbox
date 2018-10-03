@@ -7,7 +7,7 @@
     <%= f.input :title %>
 
     <!-- only when edit -->
-    <%= if @artifact.file.attached? then image_tag url_for(@artifact.file) end %>
+    <%= if @artifact.file.attached? then image_tag(url_for(@artifact.file), width: '100%') end %>
 
     <%= f.input :file %>
   </div>
