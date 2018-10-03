@@ -5,7 +5,6 @@
     <%= f.input :project_id, as: :hidden, input_html: { value: @artifact.project_id } %>
     <%= f.input :type, as: :hidden, input_html: { value: 'Image' } %>
     <%= f.input :title %>
-    <%= f.input :description, as: :text %>
 
     <!-- only when edit -->
     <%= if @artifact.file.attached? then image_tag url_for(@artifact.file) end %>

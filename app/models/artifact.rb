@@ -11,7 +11,6 @@ class Artifact < ApplicationRecord
   belongs_to :author, class_name: 'User', foreign_key: 'author_id', optional: true
 
   validates :title, presence: true, length:{in: 2..20}
-  validates :description, presence: true, length:{in: 2..100}
   validates :version, presence: true
 
   def edit_link
