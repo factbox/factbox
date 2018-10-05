@@ -25,6 +25,8 @@ class ArtifactsController < ApplicationController
   def new_type
     # The name of resource, artifact name
     type = params[:type]
+    # Used to select sources
+    @all_artifacts = Artifact.where(project_id: params[:id], version: "snapshot")
 
     # Creates artifact dynamically through artifact type
     begin

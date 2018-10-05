@@ -7,9 +7,14 @@ class Artifact < ApplicationRecord
   actable
   has_one    :node_options
   # previous version of this artifact
-  belongs_to :origin_artifact, class_name: 'Artifact', foreign_key: 'artifact_id', optional: true
+  belongs_to :origin_artifact, class_name: 'Artifact', foreign_key: 'origin_id', optional: true
+
   belongs_to :project, optional: true
   belongs_to :author, class_name: 'User', foreign_key: 'author_id', optional: true
+
+  # reference of artifacts sources
+  has_many   :children, class_name: 'Artifact', foreign_key: 'source_id'
+  belongs_to :source, class_name: 'Artifact', optional: true
 
   validates :title, presence: true, length:{in: 2..20}
   validates :version, presence: true

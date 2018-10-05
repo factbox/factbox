@@ -25,9 +25,20 @@ class ProjectsController < ApplicationController
   # GET /traceability/:id
   def traceability
     artifacts = Artifact.where(project_id: params[:id], version: "snapshot")
+
     @nodes = Array.new
+    @edges = Array.new
 
     artifacts.each do |a|
+      # append edge to children to source
+      unless a.children.empty?
+        a.children.each do |children|
+          edge = { from: children.id, to: a.id }
+          @edges.push edge
+        end
+      end
+
+      # add node option
       unless a.node_options.nil?
         options = {
           id: a.id,
@@ -44,8 +55,6 @@ class ProjectsController < ApplicationController
         @nodes.push options
       end
     end
-
-    puts "Have #{@nodes.size} nodes"
 
     render 'traceability'
   end

@@ -24,21 +24,20 @@ export class TraceabilityGraph extends React.Component {
   constructor(props) {
     super(props);
 
-    const { nodes } = props;
+    const { nodes, edges } = props;
 
     this.state = {
       nodes: JSON.parse(nodes),
+      edges: JSON.parse(edges),
     };
   }
 
   render() {
-    const { nodes } = this.state;
+    const { nodes, edges } = this.state;
 
     const graph = {
       nodes: nodes,
-      edges: [
-          {from: 8, to: 10},
-      ]
+      edges: edges,
     };
 
     return (

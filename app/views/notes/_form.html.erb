@@ -6,6 +6,7 @@
     <%= f.input :type, as: :hidden, input_html: { value: 'Note' } %>
     <%= f.input :title %>
     <%= f.input :content, as: :text %>
+    <%= f.input :source_id, collection: @all_artifacts, prompt: "Select source artifact" %>
   </div>
 
   <div class="form-actions">

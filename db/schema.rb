@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2018_10_03_043405) do
+ActiveRecord::Schema.define(version: 2018_10_03_063034) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -46,6 +46,8 @@ ActiveRecord::Schema.define(version: 2018_10_03_043405) do
     t.string "actable_type", null: false
     t.string "version", default: "snapshot"
     t.integer "artifact_id"
+    t.bigint "source_id"
+    t.index ["source_id"], name: "index_artifacts_on_source_id"
   end
 
   create_table "images", force: :cascade do |t|
