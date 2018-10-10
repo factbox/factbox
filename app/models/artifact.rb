@@ -5,7 +5,6 @@
 # See file app/models/note.rb
 class Artifact < ApplicationRecord
   actable
-  has_one    :node_options
   # previous version of this artifact
   belongs_to :origin_artifact, class_name: 'Artifact', foreign_key: 'origin_id', optional: true
 
@@ -23,9 +22,17 @@ class Artifact < ApplicationRecord
     "/#{self.actable_type.downcase}/edit/#{self.actable_id}"
   end
 
+  # Get glyphicon that should be used by each artifact type
   def glyph_icon
     # to be override for each artifact type
-    klass = self.actable_type.classify.safe_constantize
-    klass.glyph_icon || "glyphicon-file"
+    subclass.glyph_icon || "glyphicon-file"
   end
+
+  private
+
+    # Get real klass of artifact
+    def subclass
+      klass = self.actable_type.classify.safe_constantize
+      return klass
+    end
 end

@@ -30,30 +30,15 @@ class ProjectsController < ApplicationController
     @edges = Array.new
 
     artifacts.each do |a|
-      # append edge to children to source
+      # append edge of children to source
       unless a.children.empty?
         a.children.each do |children|
           edge = { from: children.id, to: a.id }
           @edges.push edge
         end
       end
-
-      # add node option
-      unless a.node_options.nil?
-        options = {
-          id: a.id,
-          label: "#{a.actable_type}_#{a.id}",
-          color: {
-            border: "#95a5a6",
-            background: a.node_options.bg_color,
-            hover: {
-              background: a.node_options.hover_bg_color
-            },
-          },
-        }
-
-        @nodes.push options
-      end
+      # save current artifact as a node
+      @nodes.push a.specific.node_options
     end
 
     render 'traceability'

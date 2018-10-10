@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2018_10_03_063034) do
+ActiveRecord::Schema.define(version: 2018_10_10_153900) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -45,12 +45,15 @@ ActiveRecord::Schema.define(version: 2018_10_03_063034) do
     t.integer "actable_id"
     t.string "actable_type", null: false
     t.string "version", default: "snapshot"
-    t.integer "artifact_id"
+    t.integer "origin_id"
     t.bigint "source_id"
     t.index ["source_id"], name: "index_artifacts_on_source_id"
   end
 
   create_table "images", force: :cascade do |t|
+    t.string "actable_type"
+    t.bigint "actable_id"
+    t.index ["actable_type", "actable_id"], name: "index_images_on_actable_type_and_actable_id"
   end
 
   create_table "metodologies", id: :serial, force: :cascade do |t|
@@ -58,18 +61,6 @@ ActiveRecord::Schema.define(version: 2018_10_03_063034) do
     t.string "description"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-  end
-
-  create_table "node_options", force: :cascade do |t|
-    t.bigint "artifact_id"
-    t.string "bg_color"
-    t.string "hover_bg_color"
-    t.string "icon_face"
-    t.string "image_selected"
-    t.string "image_unselected"
-    t.string "title"
-    t.string "label"
-    t.index ["artifact_id"], name: "index_node_options_on_artifact_id"
   end
 
   create_table "notes", id: :serial, force: :cascade do |t|
