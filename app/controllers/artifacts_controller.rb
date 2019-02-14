@@ -95,9 +95,7 @@ class ArtifactsController < ApplicationController
       if @artifact.save
         redirect_to @artifact.project
       else
-        @artifact.errors.full_messages.each do |m|
-          # TODO show this in view
-        end
+        @all_artifacts = Artifact.where(project_id: artifact_params[:project_id], version: "snapshot")
 
         render get_view(@artifact.actable_type, 'new'), status: 400
       end
