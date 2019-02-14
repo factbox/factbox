@@ -1,40 +1,42 @@
-<nav class="navbar navbar-expand-lg navbar-light bg-light" role="navigation">
-  <div class="container">
-    <a class="navbar-brand" href="/">Factbox</a>
+<header>
+  <nav class="navbar navbar-expand-lg navbar-light bg-light" role="navigation">
+    <div class="container">
+      <a class="navbar-brand" href="/">Factbox</a>
 
-    <ul class="nav navbar-right top-nav">
-      <li class="nav-item dropdown">
-        <% if logged_in? %>
-          <a href="#" class="nav-link dropdown-toggle" role="button" data-toggle="dropdown">
-            <%= current_user.login %>
-  				</a>
-          <div class="dropdown-menu">
-            <a class="dropdown-item" href="/user/<%= current_user.login %>">My profile</a>
-            <a class="dropdown-item" href='/user/settings'>Settings</a>
-            <div class="dropdown-divider"></div>
-            <a class="dropdown-item" href="/logout">Logout</a>
-          </div>
-        <% else %>
-          <ul class="nav pull-right">
-            <li class="dropdown" id="menuLogin">
-              <a href="#" class="nav-link dropdown-toggle" role="button" data-toggle="dropdown">
-                Sign up
-              </a>
-              <div class="dropdown-menu">
-                <li>
-                  <form action="/user/authenticate" class="form-group login-form" method="POST">
-                    <input name="login" type="text" class="form-control" placeholder="Login or email"/>
-                    <input name="password" type="password" class="form-control" placeholder="Password">
-                    <button type="submit" class="btn btn-primary btn-group-justified">
-                      Sign Up
-                    </button>
-                  </form>
-                </li>
-              </div>
-            </li>
-          </ul>
-        <% end %>
-      </li>
-    </ul>
-  </div>
-</nav>
+      <ul class="nav navbar-right top-nav">
+        <li class="nav-item dropdown">
+          <% if logged_in? %>
+            <a href="#" class="nav-link dropdown-toggle" role="button" data-toggle="dropdown">
+              <%= current_user.login %>
+    				</a>
+            <div class="dropdown-menu">
+              <a class="dropdown-item" href="/user/<%= current_user.login %>">My profile</a>
+              <a class="dropdown-item" href='/user/settings'>Settings</a>
+              <div class="dropdown-divider"></div>
+              <a class="dropdown-item" href="/logout">Logout</a>
+            </div>
+          <% else %>
+            <ul class="nav pull-right">
+              <li class="dropdown" id="menuLogin">
+                <a href="#" class="nav-link dropdown-toggle" role="button" data-toggle="dropdown">
+                  Sign up
+                </a>
+                <div class="dropdown-menu">
+                  <li>
+                    <form action="/user/authenticate" class="form-group login-form" method="POST">
+                      <input name="login" type="text" class="form-control" placeholder="Login or email"/>
+                      <input name="password" type="password" class="form-control" placeholder="Password">
+                      <button type="submit" class="btn btn-primary btn-group-justified">
+                        Sign Up
+                      </button>
+                    </form>
+                  </li>
+                </div>
+              </li>
+            </ul>
+          <% end %>
+        </li>
+      </ul>
+    </div>
+  </nav>
+</header>
