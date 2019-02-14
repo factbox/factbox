@@ -96,10 +96,10 @@ class ArtifactsController < ApplicationController
         redirect_to @artifact.project
       else
         @artifact.errors.full_messages.each do |m|
-          puts m
+          # TODO show this in view
         end
 
-        render get_view(@artifact.actable_type, 'new')
+        render get_view(@artifact.actable_type, 'new'), status: 400
       end
     rescue ArtifactsHelper::InvalidKlassNameError => error
       redirect_to_error_page error.message

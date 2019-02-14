@@ -21,7 +21,7 @@ class ApplicationController < ActionController::Base
 
     def redirect_to_error_page(msg)
       @message = msg
-      render 'layouts/error'
+      render 'layouts/error', status: 500
     end
 
     helper_method :current_user, :logged_in?, :authorize

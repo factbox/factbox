@@ -76,7 +76,6 @@ RSpec.describe ArtifactsController, type: :controller do
           type: 'note',
           project_id: project.id,
           title: 'Simple note',
-          description: 'Simple note'
         }
       }
 
@@ -88,7 +87,6 @@ RSpec.describe ArtifactsController, type: :controller do
         artifact: {
           type: 'note',
           project_id: project.id,
-          description: 'Simple note'
         }
       }
 
@@ -113,7 +111,7 @@ RSpec.describe ArtifactsController, type: :controller do
 
     let(:note) { FactoryBot.create(:note) }
     let(:attr) do
-      { type: 'note', project_id: 1, title: 'Simple note', description: 'Simple note' }
+      { type: 'note', project_id: 1, title: 'Simple note' }
     end
 
     before(:each) do
