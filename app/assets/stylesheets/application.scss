@@ -1,0 +1,63 @@
+@import "bootstrap";
+
+html {
+  position: relative;
+  min-height: 100%;
+}
+
+.wrap {
+  height: 100%;
+  min-height: 100%;
+  margin-bottom: 100px;
+}
+
+header {
+	padding: 20px;
+  margin-bottom: 20px;
+  margin-top: 20px;
+}
+
+footer {
+  position: absolute;
+  bottom: 0;
+  width: 100%;
+  background-color: #F2F2F2;
+	padding: 20px;
+}
+
+footer .copyright {
+	color: #000;
+	font-size: 20px;
+}
+
+.error-element {
+  font-size: 16px;
+}
+
+.page-head {
+  padding-bottom: 25px;
+  border-bottom: 1px #DCDCDC solid;
+}
+
+.page-head small {
+  font-size: 16px;
+  color: #808080;
+}
+
+.page-content {
+  padding-top: 25px;
+}
+
+.info {
+  color: #696969;
+}
+
+#centered-box {
+  margin-top: 10%;
+  text-align: center;
+  margin-bottom: 10%;
+}
+
+#centered-box i {
+  font-size: 64px;
+}

@@ -1,13 +1,14 @@
-<% stylesheet_link_tag 'stylesheets/index.css' %>
+<!-- load assets/stylesheets/index.css -->
+<%= stylesheet_link_tag 'index' %>
 
 <div class="wrap">
 	<section class="initial">
 		<div class="container">
 			<div class="row">
-				<div class="col-md-2">
+				<div class="col-sm-2">
 					<img src="factbox.png" width="175px" class="img-fluid" alt="Factbox"/>
 				</div>
-				<div class="col-md-7">
+				<div class="col-sm-7">
 	        <h1>Bem vindo ao Factbox</h1>
 	          <p><small>Simples, adaptavél e aberto</small></p>
 	      </div>
@@ -18,12 +19,12 @@
 
 	<section id="register" class="register home-section">
 		 <div class="container">
-			<div class="row">
-				<div class="col-xs-7 col-md-4 col-md-offset-1">
+			<div class="row justify-content-between">
+				<div class="col-sm-4">
 					<h2>Sign in</h2>
 					<%= render "users/new" %>
 				</div>
-				<div class="col-xs-6 col-md-4 col-md-offset-2">
+				<div class="col-sm-3">
 					<div class="thumbnail">
 						<h1 class="motive">
 							<i class="glyphicon glyphicon-cog"></i> Highly configurable
