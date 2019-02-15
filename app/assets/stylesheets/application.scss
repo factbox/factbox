@@ -58,3 +58,8 @@ footer .copyright {
 #centered-box i {
   font-size: 64px;
 }
+
+/* Remove the top border when a table is missing the header */
+.table > tbody > tr:first-child > td {
+    border: none;
+}
