@@ -1,7 +1,13 @@
 <p id="notice"><%= notice %></p>
 
-<h1><%= @artifact.title %></h1>
-<p><%= @artifact.specific.content %></p>
+<div class="row mb-3">
+  <h1><%= @artifact.title %></h1>
+</div>
+<div class="row">
+  <%= @artifact.specific.content %>
+</div>
 
-<%= link_to 'Edit', edit_note_path(@artifact) %> |
-<%= link_to 'Back', notes_path %>
+<div class="row mt-3">
+  <%= link_to 'Back', project_path(@artifact.project), class: "btn btn-light mr-1" %>
+  <%= link_to 'Edit', edit_note_path(@artifact), class: "btn btn-primary" %>
+</div>

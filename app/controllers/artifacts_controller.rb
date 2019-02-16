@@ -42,16 +42,15 @@ class ArtifactsController < ApplicationController
 
   # GET /:type/edit/:id
   def edit
-    artifact = get_klass(params[:type]).find(params[:id])
+    artifact = Artifact.find(params[:id])
 
     # The user should not access edit page of previous versions
     # TODO maybe we could render to a new page, with more explains
     unless artifact.version.eql? "snapshot"
       redirect_to controller: 'projects', action: 'show', id: artifact.project_id
-      puts "Sorry but this is a old version and can not be edited..."
     else
       # The name of resource, artifact name
-      @type = params[:type]
+      @type = artifact.actable_type.downcase
 
       render get_view(@type, 'edit')
     end
@@ -123,15 +122,12 @@ class ArtifactsController < ApplicationController
   end
 
   def set_artifact
-    type = params[:type] || artifact_params[:type]
-
-    # gets the artifact's class and search by activerecord method
-    @artifact = get_klass(type).find(params[:id])
+    @artifact = Artifact.find(params[:id]).specific
   end
 
   # TODO Throws error if page null
   def get_view(klass, page)
     # The default of the rails views folders is lowercase and plural
-    klass.downcase.pluralize + '/' + page
+    "#{klass.downcase.pluralize}/#{page}"
   end
 end
