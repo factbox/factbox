@@ -105,9 +105,12 @@ class ArtifactsController < ApplicationController
   end
 
   # Shows artifact selected
-  # GET /artifacts/:id
+  # GET :project_id/artifacts/:name
   def show
-    @artifact = Artifact.find(params[:id]).specific
+    @artifact = Artifact.where(
+        project_id: params[:project_id],
+        title: params[:title]
+      ).first
 
     render get_view(@artifact.actable_type, 'show')
   end

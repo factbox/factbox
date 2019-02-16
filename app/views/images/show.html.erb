@@ -1,0 +1,12 @@
+<p id="notice"><%= notice %></p>
+<div class="row mb-3">
+  <h1><%= @artifact.title %></h1>
+</div>
+<div class="row">
+  <%= image_tag url_for(@artifact.specific.file), class: "img-fluid" %>
+</div>
+
+<div class="row mt-3">
+  <%= link_to 'Back', project_path(@artifact.project), class: "btn btn-light" %>
+  <%= link_to 'Edit', edit_note_path(@artifact), class: "btn btn-primary" %>
+</div>

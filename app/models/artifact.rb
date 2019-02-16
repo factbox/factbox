@@ -22,6 +22,10 @@ class Artifact < ApplicationRecord
     "/#{self.actable_type.downcase}/edit/#{self.actable_id}"
   end
 
+  def show_link
+    "/#{self.project_id}/artifact/#{self.title}"
+  end
+
   # Get glyphicon that should be used by each artifact type
   def glyph_icon
     # to be override for each artifact type
