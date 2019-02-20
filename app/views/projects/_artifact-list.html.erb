@@ -6,7 +6,7 @@
           <td><i class="glyphicon <%= artifact.glyph_icon %>"></i> <%= artifact.actable_type %></td>
           <td><%= link_to artifact.title, artifact.show_link  %></td>
           <td><%= artifact.author.login %></td>
-          <td><%= artifact.updated_at.strftime("%B %d %Y %H:%M") %></td>
+          <td><%= time_ago_in_words artifact.updated_at.strftime("%B %d %Y %H:%M") %></td>
           <td>
             <a href="<%= artifact.edit_link %>">
               <i class="glyphicon glyphicon-edit"></i>

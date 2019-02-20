@@ -6,7 +6,7 @@ class ArtifactsController < ApplicationController
 
 
   # Page with all artifacts type that could be created
-  # GET /artifacts/new
+  # GET /projects/:id/artifacts/new
   def new
     @artifacts = Array.new
 

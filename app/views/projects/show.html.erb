@@ -10,9 +10,12 @@
     <div class="description info">
       <%= @project.description %>
     </div>
+    <div class="dropdown-divider"></div>
+    <div class="actions text-center">
+      <a href="/projects/<%= @project.id %>/artifacts/new"  type="button" class="btn btn-light">Criar Artefato</a>
+    </div>
   </div>
   <div class="col-md-9">
-
     <ul class="nav nav-tabs" id="myTab" role="tablist">
       <li class="nav-item">
         <a
