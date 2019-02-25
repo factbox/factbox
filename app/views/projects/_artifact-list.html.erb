@@ -9,7 +9,12 @@
           <td><%= time_ago_in_words artifact.updated_at.strftime("%B %d %Y %H:%M") %></td>
           <td>
             <a href="<%= artifact.edit_link %>">
-              <i class="glyphicon glyphicon-edit"></i>
+              <i class="fa fa-edit"></i>
+            </a>
+          </td>
+          <td>
+            <a href="xpto">
+              <i class="fa fa-trash-alt"></i>
             </a>
           </td>
         </tr>
