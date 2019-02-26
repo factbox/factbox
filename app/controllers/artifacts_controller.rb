@@ -103,6 +103,22 @@ class ArtifactsController < ApplicationController
     end
   end
 
+  # Artifacts are not trully deleted
+  # DELETE /artifact/:id
+  def destroy
+    @artifact = Artifact.find(params[:id])
+
+    @artifact.version = "deleted"
+
+    if @artifact.save
+      flash[:notice] = "The artifact was deleted successfully"
+    else
+      flash[:error] = @artifact.errors
+    end
+
+    redirect_to @artifact.project
+  end
+
   # Shows artifact selected
   # GET :project_id/artifacts/:name
   def show

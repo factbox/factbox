@@ -13,9 +13,9 @@
             </a>
           </td>
           <td>
-            <a href="xpto">
+            <%= link_to artifact, method: :delete do %>
               <i class="fa fa-trash-alt"></i>
-            </a>
+            <% end %>
           </td>
         </tr>
       <% end %>
