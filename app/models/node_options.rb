@@ -1,0 +1,2 @@
+class NodeOptions < ApplicationRecord
+end

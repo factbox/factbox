@@ -76,7 +76,6 @@ RSpec.describe ArtifactsController, type: :controller do
           type: 'note',
           project_id: project.id,
           title: 'Simple note',
-          description: 'Simple note'
         }
       }
 
@@ -88,7 +87,6 @@ RSpec.describe ArtifactsController, type: :controller do
         artifact: {
           type: 'note',
           project_id: project.id,
-          description: 'Simple note'
         }
       }
 
@@ -113,7 +111,7 @@ RSpec.describe ArtifactsController, type: :controller do
 
     let(:note) { FactoryBot.create(:note) }
     let(:attr) do
-      { type: 'note', project_id: 1, title: 'Simple note', description: 'Simple note' }
+      { type: 'note', project_id: 1, title: 'Simple note' }
     end
 
     before(:each) do
@@ -122,9 +120,10 @@ RSpec.describe ArtifactsController, type: :controller do
     end
 
     it "when params is valid" do
-      put :update, id: note.id, artifact: attr
+      put :update, params: { id: note.id, artifact: attr }
 
-      expect(response).to render_template("edit")
+      # Id is (note.id + 1) because this would be the new artifact version id...
+      expect(response).to redirect_to action: :edit, id: note.id + 1, type: 'note'
     end
   end
 
@@ -133,9 +132,9 @@ RSpec.describe ArtifactsController, type: :controller do
       note = FactoryBot.build(:note)
       note.save!
 
-      get :show, params: { id: note.id }
+      get :show, params: { project_id: note.project_id, title: note.title }
       expect(response).to render_template("notes/show")
-      expect(assigns(:artifact)).to eq(note)
+      expect(assigns(:artifact).specific).to eq(note)
     end
   end
 

@@ -1,6 +1,8 @@
 Rails.application.routes.draw do
 
+  resources :artifacts, only: [:new, :destroy]
   resources :notes, controller: 'artifacts'
+  resources :images, controller: 'artifacts'
   resources :sessions, only: [:create, :destroy]
   resources :users
   resources :projects
@@ -15,10 +17,14 @@ Rails.application.routes.draw do
 
   get   '/projects/:id', to: 'projects#show'
 
+  get   '/traceability/:id', to: 'projects#traceability'
+
+  get   '/:project_id/artifact/:title', to: 'artifacts#show'
+
   get   '/projects/:id/artifacts/new', to: 'artifacts#new'
   get   '/projects/:id/artifacts/new/:type', to: 'artifacts#new_type'
 
-  get   '/artifacts/edit/:id/:type', to: 'artifacts#edit'
+  get   '/:type/edit/:id/', to: 'artifacts#edit'
 
   post  '/artifacts/new', to: 'artifacts#create'
 

@@ -16,3 +16,11 @@
 # Ignore Byebug command history file.
 .byebug_history
 coverage
+/public/packs
+/public/packs-test
+/node_modules
+yarn-debug.log*
+.yarn-integrity
+
+# Ignore uploaded files in development
+/storage/*

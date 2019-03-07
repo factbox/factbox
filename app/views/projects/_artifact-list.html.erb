@@ -1,45 +1,29 @@
-<div class="panel-target widgets row">
-  <div class="panel panel-default">
-    <div class="panel-heading">
-      Artifacts
-    </div>
-    <div class="panel-body">
-      <% unless @project.artifacts.empty? %>
-        <div class="panel-body requirements">
-          <table class="table">
-            <thead>
-              <tr>
-                <th>Tipo</th>
-                <th>Título</th>
-                <th>Autor</th>
-                <th>Data de criação</th>
-                <th>Ultima modificação</th>
-              </tr>
-            </thead>
-            <tbody>
-              <% @project.artifacts.each do |artifact| %>
-                <tr>
-                  <td><%= artifact.actable_type %></td>
-                  <td><%= artifact.title %></td>
-                  <td><%= artifact.author.login %></td>
-                  <td><%= artifact.created_at.strftime("%B %d, %Y") %></td>
-                  <td><%= artifact.updated_at.strftime("%B %d %Y %H:%M") %></td>
-                  <td>
-                    <a href="<%= artifact.edit_link %>">
-                      <i class="glyphicon glyphicon-edit"></i>
-                    </a>
-                  </td>
-                </tr>
-              <% end %>
-            </tbody>
-          </table>
-        </div>
-      <% else %>
-        <h4 class="text-center info">
-          <span class="glyphicon glyphicon-info-sign"></span>
-          Não existem requisitos nesse projeto ainda...
-        </h4>
+<% unless @project.artifacts.empty? %>
+  <table class="table">
+    <tbody>
+      <% @project.snapshot_artifacts.each do |artifact| %>
+        <tr>
+          <td><i class="glyphicon <%= artifact.glyph_icon %>"></i> <%= artifact.actable_type %></td>
+          <td><%= link_to artifact.title, artifact.show_link  %></td>
+          <td><%= artifact.author.login %></td>
+          <td><%= time_ago_in_words artifact.updated_at.strftime("%B %d %Y %H:%M") %></td>
+          <td>
+            <a href="<%= artifact.edit_link %>">
+              <i class="fa fa-edit"></i>
+            </a>
+          </td>
+          <td>
+            <%= link_to artifact, method: :delete do %>
+              <i class="fa fa-trash-alt"></i>
+            <% end %>
+          </td>
+        </tr>
       <% end %>
-    </div>
-  </div>
-</div>
+    </tbody>
+  </table>
+<% else %>
+  <h4 class="text-center info">
+    <span class="glyphicon glyphicon-info-sign"></span>
+    Não existem requisitos nesse projeto ainda...
+  </h4>
+<% end %>

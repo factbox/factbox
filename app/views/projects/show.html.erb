@@ -1,42 +1,64 @@
-<div class="col-md-3">
-  <h1><%= @project.name %></h1>
-  <div class="description info">
-    <%= @project.description %>
+<div class="row">
+  <div class="col-md-3">
+    <div class="text-center">
+      <img src="https://is4-ssl.mzstatic.com/image/thumb/Purple115/v4/ee/09/60/ee09606b-da2e-a046-5198-980d6c9eb393/source/512x512bb.jpg"
+        class="rounded img-fluid"
+        alt="Logo"
+      >
+    </div>
+    <h1><%= @project.name %></h1>
+    <div class="description info">
+      <%= @project.description %>
+    </div>
+    <div class="dropdown-divider"></div>
+    <div class="actions text-center">
+      <a href="/projects/<%= @project.id %>/artifacts/new"  type="button" class="btn btn-light">Create Artifact</a>
+    </div>
   </div>
-  <div class="date info">
-    <small>Criado em <%= @project.created_at.strftime("%B %d, %Y") %></small>
-  </div>
-</div>
-<div class="col-md-9">
-  <div class="row">
-    <ul class="nav nav-tabs">
-      <li role="presentation" class="active">
-        <a href="#">Projeto <i class="glyphicon glyphicon-home"></i></a>
+  <div class="col-md-9">
+    <ul class="nav nav-tabs" id="myTab" role="tablist">
+      <li class="nav-item">
+        <a
+          href="#feed"
+          class="nav-link active"
+          id="feed-tab"
+          data-toggle="tab"
+          role="tab"
+          aria-controls="feed"
+          aria-selected="true"
+        >
+          Feed <i class="glyphicon glyphicon-home"></i>
+        </a>
       </li>
-      <li role="presentation">
-        <a href="/projects/<%= @project.id %>/artifacts/new">Criar Artefato <i class="glyphicon glyphicon-plus"></i></a>
-      </li>
-      <li role="presentation">
-        <a href="#">Configurações <i class="glyphicon glyphicon-cog"></i></a>
+      <li class="nav-item">
+        <a
+          href="#artifact"
+          class="nav-link"
+          id="artifact-tab"
+          data-toggle="tab"
+          role="tab"
+          aria-controls="artifact"
+          aria-selected="false"
+        >
+          Artefatos <i class="glyphicon glyphicon-home"></i>
+        </a>
       </li>
     </ul>
-  </div>
-  <div class="panel-target widgets row">
-		<div class="panel panel-default">
-      <div class="panel-heading">
-        Atividades
-      </div>
-			<div class="panel-body">
+
+    <div class="tab-content mt-2" id="myTabContent">
+      <div class="tab-pane fade show active" id="feed" role="tabpanel" aria-labelledby="feed-tab">
         <% if nil %>
-          <div class="panel-body requirements"></div>
+        <div class="panel-body requirements"></div>
         <% else %>
-          <h4 class="text-center info">
-            <span class="glyphicon glyphicon-info-sign"></span>
-            Nenhuma atividade...
-          </h4>
+        <h4 class="text-center info">
+          <span class="glyphicon glyphicon-info-sign"></span>
+          None activity yet...
+        </h4>
         <% end %>
       </div>
-		</div>
-	</div>
-  <%= render 'artifact-list' %>
+      <div class="tab-pane fade" id="artifact" role="tabpanel" aria-labelledby="artifact-tab">
+        <%= render 'artifact-list' %>
+      </div>
+  	</div>
+  </div>
 </div>

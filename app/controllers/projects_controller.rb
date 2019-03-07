@@ -22,6 +22,28 @@ class ProjectsController < ApplicationController
   def show
   end
 
+  # GET /traceability/:id
+  def traceability
+    artifacts = Artifact.where(project_id: params[:id], version: "snapshot")
+
+    @nodes = Array.new
+    @edges = Array.new
+
+    artifacts.each do |a|
+      # append edge of children to source
+      unless a.children.empty?
+        a.children.each do |children|
+          edge = { from: children.id, to: a.id }
+          @edges.push edge
+        end
+      end
+      # save current artifact as a node
+      @nodes.push a.specific.node_options
+    end
+
+    render 'traceability'
+  end
+
   # Form page to new projects
   # GET /projects/new
   def new

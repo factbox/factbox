@@ -27,6 +27,8 @@ module ArtifactsHelper
     end
   end
 
+  # @deprecated
+  # use Artifact.find().specific
   def get_klass(klass_name)
     klass_name.classify.safe_constantize
   end

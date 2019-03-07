@@ -6,12 +6,16 @@
 
     <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track': 'reload' %>
     <%= javascript_include_tag 'application', 'data-turbolinks-track': 'reload' %>
+    <!-- Following this guide:
+      https://michael.minton.io/2018/01/using-font-awesome-5-with-rails-5-turbolinks.html -->
+    <script defer src="https://use.fontawesome.com/releases/v5.0.6/js/all.js"></script>
+    <%= javascript_pack_tag 'application' %>
   </head>
 
   <body>
     <%= render 'layouts/header' %>
     <%= render 'layouts/messages' %>
-    <div class="wrap container">
+    <div class="container wrap">
       <%= yield %>
     </div>
     <%= render 'layouts/footer' %>

@@ -6,7 +6,7 @@ git_source(:github) do |repo_name|
 end
 
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
-gem 'rails', '~> 5.0.3'
+gem 'rails', '~> 5.2.1'
 # Use postgresql as the database for Active Record
 gem 'pg', '~> 0.18'
 # Use Puma as the app server
@@ -18,13 +18,15 @@ gem 'uglifier', '>= 1.3.0'
 # Use CoffeeScript for .coffee assets and views
 gem 'coffee-rails', '~> 4.2'
 # Bootstrap css framework
-gem "twitter-bootstrap-rails"
+gem 'bootstrap', '~> 4.3.1'
 # Authentication
 gem "bcrypt"
 # Facilitates forms
 gem 'simple_form'
 # To use artifacts with multitable strategy
 gem 'active_record-acts_as'
+
+gem 'bootsnap', require: false
 
 # Use jquery as the JavaScript library
 gem 'jquery-rails'
@@ -43,10 +45,13 @@ gem 'jbuilder', '~> 2.5'
 # Cover test coverage
 gem 'codecov', :require => false, :group => :test
 
+gem 'webpacker'
+gem 'react-rails'
+
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
   # gem 'byebug', platform: :mri
-  gem 'rspec-rails', '~> 3.5'
+  gem 'rspec-rails', '~> 3.8'
   gem 'database_cleaner'
   gem "factory_bot_rails"
   gem 'rails-controller-testing'

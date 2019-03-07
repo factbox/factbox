@@ -1,44 +1,36 @@
 <div class="row">
-  <div class="navbar-default sidebar" role="navigation">
-	  <div class="col-md-4">
-      <div class="sidebar-nav">
-        <ul class="nav">
-          <li id="projects">
-            <div class="panel panel-default">
-              <div class="panel-heading">
-                <h3>Your projects</h3>
-              </div>
-              <% unless @user_projects.empty? %>
-              <ul class="list-group text-left">
-                <% @user_projects.each do |project| %>
-                  <li class="list-unstyled list-projects list-group-item">
-                    <a href="projects/<%= project.id %>">
-                      <i class="glyphicon glyphicon-book"></i> <%= project.name %>
-                    </a>
-                  </li>
-                <% end %>
-              </ul>
-              <% else %>
-                <div class="panel-body text-center">
-                  <h4 class="info">
-                    Nenhum projeto ainda...
-                  </h4>
-                  <h4 class="info">
-                    Crie um aqui <i class="glyphicon glyphicon-arrow-down"></i>
-                  </h4>
-                </div>
-              <% end %>
-            </div>
-          </li>
-          <li>
-            <h2>
-              <a href="/projects/new" class="btn btn-success btn-group-justified">
-                <b>Criar projeto <i class="glyphicon glyphicon-plus"></i></b>
-              </a>
-            </h2>
-          </li>
-        </ul>
+  <div class="card col-md-4">
+    <div class="card-body">
+      <div class="row justify-content-between">
+        <div class="col">
+          <h5 class="card-title">Projects</h5>
+        </div>
+        <div class="col">
+          <a class="btn btn-sm btn-primary text-white float-right" href="/projects/new">
+            New <i class="glyphicon glyphicon-plus"></i>
+          </a>
+        </div>
       </div>
+      <% unless @user_projects.empty? %>
+      <ul class="list-group list-group-flush text-left">
+        <% @user_projects.each do |project| %>
+          <li class="list-unstyled list-projects list-group-item">
+            <a href="projects/<%= project.id %>">
+              <i class="glyphicon glyphicon-book"></i> <%= project.name %>
+            </a>
+          </li>
+        <% end %>
+      </ul>
+      <% else %>
+        <div class="panel-body text-center">
+          <h4 class="info">
+            Nenhum projeto ainda...
+          </h4>
+          <h4 class="info">
+            Crie um aqui <i class="glyphicon glyphicon-arrow-down"></i>
+          </h4>
+        </div>
+      <% end %>
     </div>
   </div>
 </div>

@@ -13,7 +13,7 @@ RSpec.describe Artifact, type: :model do
     end
 
     it "has a valid edit link" do
-      expect(@note.edit_link).to eq("/artifacts/edit/#{@note.id}/note")
+      expect(@note.edit_link).to eq("/note/edit/#{@note.id}")
     end
   end
 
