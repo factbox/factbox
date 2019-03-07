@@ -132,9 +132,9 @@ RSpec.describe ArtifactsController, type: :controller do
       note = FactoryBot.build(:note)
       note.save!
 
-      get :show, params: { id: note.id }
+      get :show, params: { project_id: note.project_id, title: note.title }
       expect(response).to render_template("notes/show")
-      expect(assigns(:artifact)).to eq(note)
+      expect(assigns(:artifact).specific).to eq(note)
     end
   end
 
