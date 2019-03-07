@@ -3,11 +3,11 @@ before_script: bundle exec rails db:create db:migrate
 cache: bundler
 language: ruby
 rvm:
-  - 2.3.0
+  - 2.5.1
 sript:
   - bundle exec rspec
-sudo: false
-dist: xenial
+sudo: required
+dist: precise
 branch:
   only:
     - master
