@@ -40,17 +40,25 @@ class ArtifactsController < ApplicationController
 
   end
 
+  # Find artifact and render your edit page
   # GET /:type/edit/:id
   def edit
-    artifact = Artifact.find(params[:id])
+    # TODO treat an error if this where return two ids
+    # Should find first and unique artifact to get your 'specific' reference
+    @artifact = Artifact.where(
+      actable_type: params[:type].capitalize,
+      actable_id: params[:id]
+    ).first.specific
 
     # The user should not access edit page of previous versions
     # TODO maybe we could render to a new page, with more explains
-    unless artifact.version.eql? "snapshot"
-      redirect_to controller: 'projects', action: 'show', id: artifact.project_id
+    unless @artifact.version.eql? "snapshot"
+      redirect_to controller: 'projects', action: 'show', id: @artifact.project_id
     else
       # The name of resource, artifact name
-      @type = artifact.actable_type.downcase
+      @type = @artifact.actable_type.downcase
+
+      @all_artifacts = Artifact.where(project_id: @artifact.project_id)
 
       render get_view(@type, 'edit')
     end
