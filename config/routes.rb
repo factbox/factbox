@@ -1,5 +1,4 @@
 Rails.application.routes.draw do
-
   resources :artifacts, only: [:new, :destroy]
   resources :notes, controller: 'artifacts'
   resources :images, controller: 'artifacts'
@@ -27,5 +26,4 @@ Rails.application.routes.draw do
   get   '/:type/edit/:id/', to: 'artifacts#edit'
 
   post  '/artifacts/new', to: 'artifacts#create'
-
 end

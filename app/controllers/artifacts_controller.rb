@@ -42,7 +42,7 @@ class ArtifactsController < ApplicationController
     # Should find first and unique artifact to get your 'specific' reference
     @artifact = Artifact.where(
       actable_type: params[:type].capitalize,
-      actable_id: params[:id]
+      id: params[:id]
     ).first.specific
 
     # The user should not access edit page of previous versions
@@ -104,6 +104,10 @@ class ArtifactsController < ApplicationController
         project_id: artifact_params[:project_id],
         version: 'snapshot'
       )
+
+      @artifact.errors.full_messages.each do |message|
+        puts message
+      end
 
       render get_view(@artifact.actable_type, 'new'), status: 400
     end

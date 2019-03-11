@@ -19,11 +19,11 @@ class Artifact < ApplicationRecord
   validates :version, presence: true
 
   def edit_link
-    "/#{self.actable_type.downcase}/edit/#{self.actable_id}"
+    "/#{actable_type.downcase}/edit/#{id}"
   end
 
   def show_link
-    "/#{self.project_id}/artifact/#{self.title}"
+    "/#{project_id}/artifact/#{title}"
   end
 
   # Get glyphicon that should be used by each artifact type
