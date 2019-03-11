@@ -1,7 +1,7 @@
 Rails.application.routes.draw do
   resources :artifacts, only: [:new, :destroy]
-  resources :notes, controller: 'artifacts'
-  resources :images, controller: 'artifacts'
+  resources :notes, controller: 'artifacts', except: [:new, :destroy]
+  resources :images, controller: 'artifacts', except: [:new, :destroy]
   resources :sessions, only: [:create, :destroy]
   resources :users
   resources :projects
