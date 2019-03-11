@@ -15,7 +15,7 @@ class Artifact < ApplicationRecord
   has_many   :children, class_name: 'Artifact', foreign_key: 'source_id'
   belongs_to :source, class_name: 'Artifact', optional: true
 
-  validates :title, presence: true, length:{in: 2..20}
+  validates :title, presence: true, length: { in: 2..20 }
   validates :version, presence: true
 
   def edit_link
@@ -29,14 +29,13 @@ class Artifact < ApplicationRecord
   # Get glyphicon that should be used by each artifact type
   def glyph_icon
     # to be override for each artifact type
-    subclass.glyph_icon || "glyphicon-file"
+    subclass.try(:glyph_icon) ? subclass.glyph_icon : 'glyphicon-file'
   end
 
   private
 
-    # Get real klass of artifact
-    def subclass
-      klass = self.actable_type.classify.safe_constantize
-      return klass
-    end
+  # Get real klass of artifact
+  def subclass
+    actable_type.classify.safe_constantize
+  end
 end
