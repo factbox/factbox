@@ -36,17 +36,17 @@ class ArtifactsController < ApplicationController
   # GET /projects/:id/artifacts/new/:type
   def new_type
     # Used to select sources
-    @all_artifacts = Artifact.where project_id: params[:id], version: 'snapshot'
+    @available_artifacts = Artifact.where(
+      project_id: params[:id], version: 'snapshot'
+    )
 
     # Creates artifact dynamically through artifact type
-    begin
-      @artifact = get_request_instance params[:type]
-      @artifact.project_id = params[:id]
+    @artifact = get_request_instance params[:type]
+    @artifact.project_id = params[:id]
 
-      render get_view(params[:type], 'new'), object: @artifact
-    rescue ArtifactsHelper::InvalidKlassNameError => error
-      redirect_to_error_page error.message
-    end
+    render get_view(params[:type], 'new'), object: @artifact
+  rescue ArtifactsHelper::InvalidKlassNameError => error
+    redirect_to_error_page error.message
   end
 
   # Find artifact and render your edit page
@@ -54,47 +54,36 @@ class ArtifactsController < ApplicationController
   def edit
     # TODO: Treat an error if this where return two ids
     # Should find first and unique artifact to get your 'specific' reference
-    @artifact = Artifact.where(
-      actable_type: params[:type].capitalize,
-      id: params[:id]
-    ).first.specific
+    actable_type = params[:type].capitalize
+    @artifact = Artifact.where(actable_type: actable_type, id: params[:id])
+                        .first.specific
 
     # The user should not access edit page of previous versions
-    # TODO maybe we could render to a new page, with more explains
+    # TODO: maybe we could render to a new page, with more explains
     if @artifact.version.eql? 'snapshot'
       # The name of resource, artifact name
       @type = @artifact.actable_type.downcase
 
-      @all_artifacts = Artifact.where(project_id: @artifact.project_id)
+      @available_artifacts = Artifact.where(project_id: @artifact.project_id)
 
       render get_view(@type, 'edit')
     else
-      redirect_to(
-        controller: 'projects',
-        action: 'show',
-        id: @artifact.project_id
-      )
+      project_id = @artifact.project_id
+      redirect_to controller: 'projects', action: 'show', id: project_id
     end
   end
 
   # Update artifact creating a new version
   # PUT /:type/:id
   def update
-    @type = @artifact.actable_type.downcase
-
-    artifact_param = artifact_params.except(:type)
+    @type = artifact_params[:type]
 
     origin_artifact = get_klass(artifact_params[:type]).find(params[:id])
-    artifact_param[:origin_artifact] = origin_artifact.artifact
+    origin_artifact.update_version(params[:id])
 
-    artifact_param[:author_id] = origin_artifact.author_id
-    artifact_param[:project_id] = origin_artifact.project_id
+    artifact_args = generate_artifact_args(origin_artifact)
 
-    if origin_artifact.version.eql? 'snapshot'
-      origin_artifact.version = "snapshot_#{params[:id]}"
-    end
-
-    @artifact = get_request_instance(@type, artifact_param)
+    @artifact = get_request_instance(@type, artifact_args)
 
     if @artifact.save && origin_artifact.save
       flash[:notice] = 'Artifact updated succeed'
@@ -102,7 +91,9 @@ class ArtifactsController < ApplicationController
       flash[:error] = @artifact.errors || origin_artifact.errors
     end
 
-    redirect_to action: 'edit', id: @artifact.id || origin_artifact.id, type: @type
+    specific_id = @artifact.id || origin_artifact.id
+
+    redirect_to action: 'edit', id: specific_id, type: @type
   end
 
   # Save a instance of specific artifact
@@ -161,6 +152,14 @@ class ArtifactsController < ApplicationController
   def artifact_params
     # permit all params
     params.require(:artifact).permit!
+  end
+
+  def generate_artifact_args(origin_artifact)
+    artifact_params.merge(
+      origin_artifact: origin_artifact.artifact,
+      author_id: origin_artifact.author_id,
+      project_id: origin_artifact.project_id
+    )
   end
 
   def set_artifact

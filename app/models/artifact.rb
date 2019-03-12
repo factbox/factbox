@@ -18,6 +18,10 @@ class Artifact < ApplicationRecord
   validates :title, presence: true, length: { in: 2..20 }
   validates :version, presence: true
 
+  def update_version(code)
+    self.version = "snapshot_#{code}" if version.eql? 'snapshot'
+  end
+
   def edit_link
     "/#{actable_type.downcase}/edit/#{id}"
   end
