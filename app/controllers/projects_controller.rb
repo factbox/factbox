@@ -1,5 +1,5 @@
+# Controller for project actions
 class ProjectsController < ApplicationController
-
   before_action :authorize, only: [:index, :new, :create]
   before_action :set_project, only: [:show, :edit, :update]
 
@@ -16,18 +16,33 @@ class ProjectsController < ApplicationController
     end
   end
 
-  # TODO change :id to name with properly encoding
+  # TODO: change :id to name with properly encoding
   # Shows specific project
   # GET /projects/:id
   def show
+    @plugins = []
+    # In production eager_load is active, but development no
+    Rails.application.eager_load!
+
+    ApplicationRecord.descendants.each do |artifact_klass|
+      next unless artifact_klass.is_a? Artifact
+
+      artifact_name = artifact_klass.name.downcase.pluralize
+      next unless template_exists? "#{artifact_name}/index"
+
+      # TODO: Treat when plugin have index file but the model
+      # was not have plugin_name
+      plugin_name = artifact_klass.plugin_name
+      @plugins.push plugin_name
+    end
   end
 
   # GET /traceability/:id
   def traceability
-    artifacts = Artifact.where(project_id: params[:id], version: "snapshot")
+    artifacts = Artifact.where(project_id: params[:id], version: 'snapshot')
 
-    @nodes = Array.new
-    @edges = Array.new
+    @nodes = []
+    @edges = []
 
     artifacts.each do |a|
       # append edge of children to source
@@ -58,7 +73,7 @@ class ProjectsController < ApplicationController
     @project.author_id = current_user.id
 
     if @project.save
-      redirect_to projects_path, notice: "Project created successful"
+      redirect_to projects_path, notice: 'Project created successful'
     else
       render :new
     end
@@ -66,8 +81,7 @@ class ProjectsController < ApplicationController
 
   # Page for edit projects
   # GET /projects/:id/edit
-  def edit
-  end
+  def edit; end
 
   # Action to update projects
   # PUT /projects/:id

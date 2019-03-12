@@ -41,9 +41,24 @@
           aria-controls="artifact"
           aria-selected="false"
         >
-          <i class="fa fa-list-alt"></i> Artefatos 
+          <i class="fa fa-list-alt"></i> Artefatos
         </a>
       </li>
+      <% @plugins.each do |plugin| %>
+        <li class="nav-item">
+          <a
+            href="#artifact_<%= plugin %>"
+            class="nav-link"
+            id="_<%= plugin %>-tab"
+            data-toggle="tab"
+            role="tab"
+            aria-controls="_<%= plugin %>"
+            aria-selected="false"
+          >
+            <i class="fa fa-puzzle-piece"></i> <%= plugin %>
+          </a>
+        </li>
+      <% end %>
     </ul>
 
     <div class="tab-content mt-2" id="myTabContent">
