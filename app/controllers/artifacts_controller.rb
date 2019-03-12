@@ -5,6 +5,20 @@ class ArtifactsController < ApplicationController
   before_action :authorize, only: [:new, :new_type, :create]
   before_action :set_artifact, only: [:edit, :update]
 
+  # List all specific artifact types
+  # GET /{artifact}
+  def index
+    Rails.application.routes.router.recognize(request) do |route, _|
+      # The architecture is expecting this name in plural
+      pluralized_artifact = route.name
+
+      artifact_klass = get_klass(pluralized_artifact.singularize)
+      @artifacts = artifact_klass.all
+
+      render "#{pluralized_artifact}/index"
+    end
+  end
+
   # Page with all artifacts type that could be created
   # GET /projects/:id/artifacts/new
   def new
