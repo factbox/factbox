@@ -41,7 +41,7 @@ class ArtifactsController < ApplicationController
     )
 
     # Creates artifact dynamically through artifact type
-    @artifact = get_request_instance params[:type]
+    @artifact = instantiate_artifact(params[:type])
     @artifact.project_id = params[:id]
 
     render get_view(params[:type], 'new'), object: @artifact
@@ -83,7 +83,7 @@ class ArtifactsController < ApplicationController
 
     artifact_args = generate_artifact_args(origin_artifact)
 
-    @artifact = get_request_instance(@type, artifact_args)
+    @artifact = instantiate_artifact(@type, artifact_args)
 
     if @artifact.save && origin_artifact.save
       flash[:notice] = 'Artifact updated succeed'
@@ -99,7 +99,7 @@ class ArtifactsController < ApplicationController
   # Save a instance of specific artifact
   # POST /artifacts/new
   def create
-    @artifact = get_request_instance(artifact_params[:type], artifact_params)
+    @artifact = instantiate_artifact(artifact_params[:type], artifact_params)
     @artifact.author_id = current_user.id
 
     if @artifact.save

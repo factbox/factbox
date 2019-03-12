@@ -12,7 +12,7 @@ module ArtifactsHelper
   # See the follow links to understand this parser
   #   - https://apidock.com/rails/ActiveSupport/Inflector/classify
   #   - https://apidock.com/rails/ActiveSupport/Inflector/safe_constantize
-  def get_request_instance(klass_name, params = nil)
+  def instantiate_artifact(klass_name, params = nil)
     klass = get_klass klass_name
 
     if params
