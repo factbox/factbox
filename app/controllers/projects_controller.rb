@@ -33,7 +33,9 @@ class ProjectsController < ApplicationController
       # TODO: Treat when plugin have index file but the model
       # was not have plugin_name
       plugin_name = artifact_klass.plugin_name
-      @plugins.push plugin_name
+      plugin_opt = { name: plugin_name, resource: artifact_name }
+
+      @plugins.push plugin_opt
     end
   end
 

@@ -1,4 +1,6 @@
 Rails.application.routes.draw do
+  resources :stories, controller: 'artifacts'
+
   resources :artifacts, only: [:new, :destroy]
 
   resources :notes, controller: 'artifacts', except: [:new, :destroy, :index]
@@ -28,4 +30,6 @@ Rails.application.routes.draw do
   get   '/:type/edit/:id/', to: 'artifacts#edit'
 
   post  '/artifacts/new', to: 'artifacts#create'
+
+  get   '/:project_id/:resource', to: 'artifacts#index'
 end

@@ -6,17 +6,15 @@ class ArtifactsController < ApplicationController
   before_action :set_artifact, only: [:edit, :update]
 
   # List all specific artifact types
-  # GET /{artifact}
+  # GET /:project_id/:resource
   def index
-    Rails.application.routes.router.recognize(request) do |route, _|
-      # The architecture is expecting this name in plural
-      pluralized_artifact = route.name
+    # The architecture is expecting this name in plural
+    pluralized_artifact = params[:resource]
 
-      artifact_klass = get_klass(pluralized_artifact.singularize)
-      @artifacts = artifact_klass.all
+    artifact_klass = get_klass(pluralized_artifact.singularize)
+    @artifacts = artifact_klass.where(project_id: params[:project_id])
 
-      render "#{pluralized_artifact}/index"
-    end
+    render "#{pluralized_artifact}/index"
   end
 
   # Page with all artifacts type that could be created

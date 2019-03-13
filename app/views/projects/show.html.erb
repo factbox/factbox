@@ -47,15 +47,10 @@
       <% @plugins.each do |plugin| %>
         <li class="nav-item">
           <a
-            href="#artifact_<%= plugin %>"
+            href="/<%=@project.id%>/<%=plugin[:resource]%>"
             class="nav-link"
-            id="_<%= plugin %>-tab"
-            data-toggle="tab"
-            role="tab"
-            aria-controls="_<%= plugin %>"
-            aria-selected="false"
           >
-            <i class="fa fa-puzzle-piece"></i> <%= plugin %>
+            <i class="fa fa-puzzle-piece"></i> <%= plugin[:name] %>
           </a>
         </li>
       <% end %>
