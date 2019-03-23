@@ -11,17 +11,17 @@ class Note < ApplicationRecord
 
   # See Artifact#node_options
   def node_options
-    superklass = self.acting_as
+    superklass = acting_as
     {
       id: superklass.id,
       label: "#{superklass.actable_type}_#{superklass.id}",
       color: {
-        border: "#95a5a6",
-        background: "#3498db",
+        border: '#95a5a6',
+        background: '#3498db',
         hover: {
-          background: "#2980b9"
-        },
-      },
+          background: '#2980b9'
+        }
+      }
     }
   end
 end

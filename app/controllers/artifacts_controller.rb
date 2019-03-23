@@ -139,12 +139,23 @@ class ArtifactsController < ApplicationController
   # Shows artifact selected
   # GET :project_id/artifacts/:name
   def show
-    @artifact = Artifact.where(
-      project_id: params[:project_id],
-      title: params[:title]
-    ).first
+    @artifact = find_by_project_and_title
 
     render get_view(@artifact.actable_type, 'show')
+  end
+
+  # Show previous versions of one Artifact
+  # GET :project_id/versions/:name
+  def show_versions
+    @artifact = find_by_project_and_title
+
+    @versions = [@artifact]
+
+    version = @artifact.origin_artifact
+    until version.nil?
+      @versions.push version
+      version = version.origin_artifact
+    end
   end
 
   private
@@ -154,12 +165,17 @@ class ArtifactsController < ApplicationController
     params.require(:artifact).permit!
   end
 
+  # Used in update to copy properties of source
   def generate_artifact_args(origin_artifact)
     artifact_params.merge(
       origin_artifact: origin_artifact.artifact,
       author_id: origin_artifact.author_id,
       project_id: origin_artifact.project_id
     )
+  end
+
+  def find_by_project_and_title
+    Artifact.where(project_id: params[:project_id], title: params[:title]).first
   end
 
   def set_artifact
