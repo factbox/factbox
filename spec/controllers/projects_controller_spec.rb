@@ -57,6 +57,8 @@ RSpec.describe ProjectsController, type: :controller do
       get :traceability, params: { id: project.id }
 
       expect(assigns(:nodes).size).to eq(notes.size)
+      expect(assigns(:edges).size).to eq(note1.children.size)
+      expect(response).to render_template('traceability')
     end
   end
 
