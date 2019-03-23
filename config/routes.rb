@@ -1,6 +1,4 @@
 Rails.application.routes.draw do
-  resources :stories, controller: 'artifacts'
-
   resources :artifacts, only: [:new, :destroy]
 
   resources :notes, controller: 'artifacts', except: [:new, :destroy, :index]
@@ -19,17 +17,13 @@ Rails.application.routes.draw do
   get   '/user/:login', to: 'users#show'
 
   get   '/projects/:id', to: 'projects#show'
-
   get   '/traceability/:id', to: 'projects#traceability'
 
-  get   '/:project_id/artifact/:title', to: 'artifacts#show'
-
-  get   '/projects/:id/artifacts/new', to: 'artifacts#new'
-  get   '/projects/:id/artifacts/new/:type', to: 'artifacts#new_type'
-
-  get   '/:type/edit/:id/', to: 'artifacts#edit'
-
   post  '/artifacts/new', to: 'artifacts#create'
-
+  get   '/:type/edit/:id/', to: 'artifacts#edit'
   get   '/:project_id/:resource', to: 'artifacts#index'
+  get   '/projects/:id/artifacts/new', to: 'artifacts#new'
+  get   '/:project_id/artifact/:title', to: 'artifacts#show'
+  get   '/:project_id/versions/:title', to: 'artifacts#show_versions'
+  get   '/projects/:id/artifacts/new/:type', to: 'artifacts#new_type'
 end
