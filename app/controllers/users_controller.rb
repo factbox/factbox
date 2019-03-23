@@ -1,5 +1,5 @@
+# Controller for users actions
 class UsersController < ApplicationController
-
   # Control of index dependent of user login
   # GET /
   def index
@@ -7,7 +7,7 @@ class UsersController < ApplicationController
       redirect_to '/projects'
     else
       @user = User.new
-      render layout: "unstyled"
+      render layout: 'unstyled'
     end
   end
 
@@ -19,26 +19,25 @@ class UsersController < ApplicationController
       session[:user_id] = @user.id
       render 'sucessful_register'
     else
-      render :index, layout: "unstyled"
+      render :index, layout: 'unstyled'
     end
   end
 
   # Page with user settings
   # GET /user/settings
-  def settings
-  end
+  def settings; end
 
   # GET  /users/:login
   def show
     # Result is a array, login should refers to unique user
     result = User.where(login: params[:login])
 
-    if result.length == 1
-      @user = result.first
-    else
-      # Throws invalid duplication error
-      raise NotImplementedError('System keep 2 user with same login!')
+    # Throws invalid duplication error
+    if result.length != 1
+      raise NotImplementedError, 'System keep 2 user with same login!'
     end
+
+    @user = result.first
   end
 
   private

@@ -12,11 +12,10 @@ class User < ApplicationRecord
   # Override method that gets all projects where user belongs
   # like membership or author
   def projects
-    all_projects = Array.new
+    all_projects = []
     all_projects += Project.where(author_id: id)
     all_projects += super
 
-    return all_projects
+    all_projects
   end
-
 end

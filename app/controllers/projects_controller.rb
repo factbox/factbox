@@ -7,13 +7,7 @@ class ProjectsController < ApplicationController
   # GET /projects
   def index
     # Check User#projects to see this overrided method
-    if current_user
-      @user_projects = current_user.projects
-    else
-      # this flux means that user was not found in database
-      session[:user_id] = nil
-      redirect_to root_path # root path should be login page
-    end
+    @user_projects = current_user.projects
   end
 
   # TODO: change :id to name with properly encoding
