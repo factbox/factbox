@@ -1,10 +1,20 @@
 <p id="notice"><%= notice %></p>
 
 <div class="row mb-3">
-  <h1><%= @artifact.title %></h1>
+  <h1><%= @artifact.title %> <small>versions</small></h1>
 </div>
 
-<div class="row mt-3">
-  <%= link_to 'Back', project_path(@artifact.project), class: "btn btn-light mr-1" %>
-  <%= link_to 'Edit', edit_note_path(@artifact), class: "btn btn-primary" %>
+<div class="row">
+  <% @versions.each do |v| %>
+    <div class="card w-100">
+      <div class="card-body">
+        <h5 class="card-title">
+          <%= v.title %>
+          <small class="float-right">
+            <%= v.version %>
+          </small>
+        </h5>
+      </div>
+    </div>
+  <% end %>
 </div>

@@ -35,7 +35,7 @@ class ProjectsController < ApplicationController
 
   # GET /traceability/:id
   def traceability
-    artifacts = Artifact.where(project_id: params[:id], version: 'snapshot')
+    artifacts = find_last_versions
 
     @nodes = []
     @edges = []
@@ -93,6 +93,10 @@ class ProjectsController < ApplicationController
 
   def set_project
     @project = Project.find(params[:id])
+  end
+
+  def find_last_versions
+    Artifact.where(project_id: params[:id], last_version: true)
   end
 
   def project_params

@@ -4,6 +4,8 @@
 # To use it, you need use the gem active_record-acts_as, like does Note model.
 # See file app/models/note.rb
 class Artifact < ApplicationRecord
+  include Versionable
+
   actable
   # previous version of this artifact
   belongs_to :origin_artifact, class_name: 'Artifact', foreign_key: 'origin_id', optional: true
@@ -16,11 +18,9 @@ class Artifact < ApplicationRecord
   belongs_to :source, class_name: 'Artifact', optional: true
 
   validates :title, presence: true, length: { in: 2..20 }
-  validates :version, presence: true
 
-  def update_version(code)
-    self.version = "snapshot_#{code}" if version.eql? 'snapshot'
-  end
+  # method in Versionable concern
+  before_validation :generate_version
 
   def edit_link
     "/#{actable_type.downcase}/edit/#{id}"

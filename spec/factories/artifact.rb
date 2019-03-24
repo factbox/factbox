@@ -5,5 +5,6 @@ FactoryBot.define do
     author_id { 7 }
     project_id { 1 }
     actable_type { 'Note' }
+    last_version { true }
   end
 end

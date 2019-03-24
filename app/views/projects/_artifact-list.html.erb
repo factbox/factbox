@@ -1,7 +1,7 @@
 <% unless @project.artifacts.empty? %>
   <table class="table">
     <tbody>
-      <% @project.snapshot_artifacts.each do |artifact| %>
+      <% @project.last_versions.each do |artifact| %>
         <tr>
           <td><i class="glyphicon <%= artifact.glyph_icon %>"></i> <%= artifact.actable_type %></td>
           <td><%= link_to artifact.title, artifact.show_link  %></td>

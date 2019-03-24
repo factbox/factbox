@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2018_10_10_153900) do
+ActiveRecord::Schema.define(version: 2019_03_24_155521) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -44,9 +44,10 @@ ActiveRecord::Schema.define(version: 2018_10_10_153900) do
     t.datetime "updated_at", null: false
     t.integer "actable_id"
     t.string "actable_type", null: false
-    t.string "version", default: "snapshot"
+    t.string "version", null: false
     t.integer "origin_id"
     t.bigint "source_id"
+    t.boolean "last_version", default: true
     t.index ["source_id"], name: "index_artifacts_on_source_id"
   end
 

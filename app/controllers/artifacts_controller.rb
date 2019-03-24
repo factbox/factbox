@@ -37,7 +37,7 @@ class ArtifactsController < ApplicationController
   def new_type
     # Used to select sources
     @available_artifacts = Artifact.where(
-      project_id: params[:id], version: 'snapshot'
+      project_id: params[:id], last_version: true
     )
 
     # Creates artifact dynamically through artifact type
@@ -60,11 +60,15 @@ class ArtifactsController < ApplicationController
 
     # The user should not access edit page of previous versions
     # TODO: maybe we could render to a new page, with more explains
-    if @artifact.version.eql? 'snapshot'
+    puts "Last version? #{@artifact.last_version}"
+    if @artifact.last_version
       # The name of resource, artifact name
       @type = @artifact.actable_type.downcase
 
-      @available_artifacts = Artifact.where(project_id: @artifact.project_id)
+      @available_artifacts = Artifact.where(
+        project_id: @artifact.project_id,
+        last_version: true
+      )
 
       render get_view(@type, 'edit')
     else
@@ -79,11 +83,12 @@ class ArtifactsController < ApplicationController
     @type = artifact_params[:type]
 
     origin_artifact = get_klass(artifact_params[:type]).find(params[:id])
-    origin_artifact.update_version(params[:id])
+    origin_artifact.discontinue
 
     artifact_args = generate_artifact_args(origin_artifact)
 
     @artifact = instantiate_artifact(@type, artifact_args)
+    @artifact.generate_version
 
     if @artifact.save && origin_artifact.save
       flash[:notice] = 'Artifact updated succeed'
@@ -101,13 +106,14 @@ class ArtifactsController < ApplicationController
   def create
     @artifact = instantiate_artifact(artifact_params[:type], artifact_params)
     @artifact.author_id = current_user.id
+    @artifact.generate_version
 
     if @artifact.save
       redirect_to @artifact.project
     else
       @all_artifacts = Artifact.where(
         project_id: artifact_params[:project_id],
-        version: 'snapshot'
+        last_version: true
       )
 
       @artifact.errors.full_messages.each do |message|
@@ -148,7 +154,6 @@ class ArtifactsController < ApplicationController
   # GET :project_id/versions/:name
   def show_versions
     @artifact = find_by_project_and_title
-
     @versions = [@artifact]
 
     version = @artifact.origin_artifact
@@ -168,14 +173,18 @@ class ArtifactsController < ApplicationController
   # Used in update to copy properties of source
   def generate_artifact_args(origin_artifact)
     artifact_params.merge(
-      origin_artifact: origin_artifact.artifact,
+      origin_artifact: origin_artifact.acting_as,
       author_id: origin_artifact.author_id,
       project_id: origin_artifact.project_id
     )
   end
 
   def find_by_project_and_title
-    Artifact.where(project_id: params[:project_id], title: params[:title]).first
+    Artifact.where(
+      project_id: params[:project_id],
+      title: params[:title],
+      last_version: true
+    ).first
   end
 
   def set_artifact
