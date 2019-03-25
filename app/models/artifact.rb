@@ -22,6 +22,10 @@ class Artifact < ApplicationRecord
   # method in Versionable concern
   before_validation :generate_version
 
+  def time_creation
+    created_at.strftime('%B %d %Y %H:%M')
+  end
+
   def edit_link
     "/#{actable_type.downcase}/edit/#{id}"
   end
