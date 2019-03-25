@@ -163,6 +163,15 @@ class ArtifactsController < ApplicationController
     end
   end
 
+  # Show specific version
+  # GET /:project_id/version/:hash
+  def show_version
+    options = { project_id: params[:project_id], version: [params[:hash]] }
+    @artifact = Artifact.where(options).first
+
+    render get_view(@artifact.actable_type, 'show')
+  end
+
   private
 
   def artifact_params

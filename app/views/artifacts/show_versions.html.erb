@@ -8,14 +8,16 @@
   <% @versions.each do |v| %>
     <div class="card w-100 <%= "bg-light" if v.last_version%>">
       <div class="card-body">
-        <h5 class="card-title">
-          <%= v.title %>
-          <small class="float-right">
+        <a href="/<%= @artifact.project_id %>/version/<%= v.version %>">
+          <span class="font-weight-bold">
+            <%= v.title %>
+          </span>
+          <div class="float-right">
             <%= v.version %>
-          </small>
-        </h5>
+          </div>
+        </a>
         <p class="card-text">
-          <a href="#"><%= v.author.login %></a>
+          <a href="/user/<%= v.author.login %>"><%= v.author.login %></a>
           updated <%= time_ago_in_words v.time_creation %>
         </p>
       </div>

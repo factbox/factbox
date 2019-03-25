@@ -8,6 +8,12 @@
           <td><%= artifact.author.login %></td>
           <td><%= time_ago_in_words artifact.time_creation %></td>
           <td>
+            <a href="<%= "/#{artifact.project_id}/versions/#{artifact.title}" %>"
+               alt="Show versions">
+              <i class="fa fa-code-branch"></i>
+            </a>
+          </td>
+          <td>
             <a href="<%= artifact.edit_link %>">
               <i class="fa fa-edit"></i>
             </a>
