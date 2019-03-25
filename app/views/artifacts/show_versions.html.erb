@@ -6,7 +6,7 @@
 
 <div class="row">
   <% @versions.each do |v| %>
-    <div class="card w-100">
+    <div class="card w-100 <%= "bg-light" if v.last_version%>">
       <div class="card-body">
         <h5 class="card-title">
           <%= v.title %>
@@ -14,6 +14,10 @@
             <%= v.version %>
           </small>
         </h5>
+        <p class="card-text">
+          <a href="#"><%= v.author.login %></a>
+          updated <%= time_ago_in_words v.time_creation %>
+        </p>
       </div>
     </div>
   <% end %>
