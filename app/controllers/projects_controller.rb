@@ -55,7 +55,7 @@ class ProjectsController < ApplicationController
       end
 
       # save current artifact as a node
-      @nodes.push a.specific.node_options
+      @nodes.push a.node_options
     end
 
     render 'traceability'

@@ -40,6 +40,21 @@ class Artifact < ApplicationRecord
     subclass.try(:glyph_icon) ? subclass.glyph_icon : 'glyphicon-file'
   end
 
+  # That options are used in /traceability/project_title.
+  # In each artifact kind we can add properties
+  # to style this representation in traceability graph.
+  # All properties are available in:
+  # http://visjs.org/docs/network/nodes.html
+  def node_options
+    options = {
+      id: id,
+      label: title,
+      shape: 'dot'
+    }
+
+    options.merge(actable.node_options) unless actable.node_options.nil?
+  end
+
   private
 
   # Get real klass of artifact

@@ -13,9 +13,6 @@ class Note < ApplicationRecord
   def node_options
     superklass = acting_as
     {
-      id: superklass.id,
-      label: superklass.title,
-      shape: 'dot',
       color: {
         border: '#34495e',
         background: last_version ? '#f1c40f' : '#7f8c8d'
