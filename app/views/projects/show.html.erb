@@ -18,7 +18,7 @@
 
   <div class="col-md-9">
     <ul class="nav nav-tabs" id="myTab" role="tablist">
-      <li class="nav-item">
+      <!-- <li class="nav-item">
         <a
           href="#feed"
           class="nav-link active"
@@ -30,16 +30,16 @@
         >
           <i class="fa fa-home"></i> Feed
         </a>
-      </li>
+      </li> -->
       <li class="nav-item">
         <a
           href="#artifact"
-          class="nav-link"
+          class="nav-link active"
           id="artifact-tab"
           data-toggle="tab"
           role="tab"
           aria-controls="artifact"
-          aria-selected="false"
+          aria-selected="true"
         >
           <i class="fa fa-list-alt"></i> Artefatos
         </a>
@@ -65,7 +65,7 @@
     </ul>
 
     <div class="tab-content mt-2" id="myTabContent">
-      <div class="tab-pane fade show active" id="feed" role="tabpanel" aria-labelledby="feed-tab">
+      <!-- <div class="tab-pane fade show active" id="feed" role="tabpanel" aria-labelledby="feed-tab">
         <% if nil %>
         <div class="panel-body requirements"></div>
         <% else %>
@@ -74,8 +74,8 @@
           None activity yet...
         </h4>
         <% end %>
-      </div>
-      <div class="tab-pane fade" id="artifact" role="tabpanel" aria-labelledby="artifact-tab">
+      </div> -->
+      <div class="tab-pane fade show active" id="artifact" role="tabpanel" aria-labelledby="artifact-tab">
         <%= render 'artifact-list' %>
       </div>
   	</div>
