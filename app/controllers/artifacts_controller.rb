@@ -60,7 +60,6 @@ class ArtifactsController < ApplicationController
 
     # The user should not access edit page of previous versions
     # TODO: maybe we could render to a new page, with more explains
-    puts "Last version? #{@artifact.last_version}"
     if @artifact.last_version
       # The name of resource, artifact name
       @type = @artifact.actable_type.downcase
@@ -80,25 +79,21 @@ class ArtifactsController < ApplicationController
   # Update artifact creating a new version
   # PUT /:type/:id
   def update
-    @type = artifact_params[:type]
+    @type = artifact_params[:type].downcase
 
     origin_artifact = get_klass(artifact_params[:type]).find(params[:id])
     origin_artifact.discontinue
 
     artifact_args = generate_artifact_args(origin_artifact)
 
-    @artifact = instantiate_artifact(@type, artifact_args)
+    @artifact = instantiate_artifact(artifact_params[:type], artifact_args)
     @artifact.generate_version
 
     if @artifact.save && origin_artifact.save
-      flash[:notice] = 'Artifact updated succeed'
-    else
-      flash[:error] = @artifact.errors || origin_artifact.errors
+      flash[:success] = 'Artifact updated succeed'
     end
 
-    specific_id = @artifact.id || origin_artifact.id
-
-    redirect_to action: 'edit', id: specific_id, type: @type
+    render get_view(@type, 'edit')
   end
 
   # Save a instance of specific artifact
@@ -109,6 +104,7 @@ class ArtifactsController < ApplicationController
     @artifact.generate_version
 
     if @artifact.save
+      flash[:success] = 'Artifact created with success.'
       redirect_to @artifact.project
     else
       @all_artifacts = Artifact.where(
@@ -131,10 +127,10 @@ class ArtifactsController < ApplicationController
   def destroy
     @artifact = Artifact.find(params[:id])
 
-    @artifact.version = 'deleted'
+    @artifact.last_version = false
 
     if @artifact.save
-      flash[:notice] = 'The artifact was deleted successfully'
+      flash[:success] = 'The artifact was deleted successfully'
     else
       flash[:error] = @artifact.errors
     end
