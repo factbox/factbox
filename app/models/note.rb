@@ -11,7 +11,6 @@ class Note < ApplicationRecord
 
   # See Artifact#node_options
   def node_options
-    superklass = acting_as
     {
       color: {
         border: '#34495e',
