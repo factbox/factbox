@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_03_24_155521) do
+ActiveRecord::Schema.define(version: 2019_03_27_030015) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -52,9 +52,6 @@ ActiveRecord::Schema.define(version: 2019_03_24_155521) do
   end
 
   create_table "images", force: :cascade do |t|
-    t.string "actable_type"
-    t.bigint "actable_id"
-    t.index ["actable_type", "actable_id"], name: "index_images_on_actable_type_and_actable_id"
   end
 
   create_table "metodologies", id: :serial, force: :cascade do |t|
