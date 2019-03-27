@@ -4,7 +4,7 @@ class Project < ApplicationRecord
   has_many :artifacts
 
   validates :name, presence: true, length: { in: 2..20 }
-  validates :description, presence: true, length: { in: 2..50 }
+  validates :description, presence: true, length: { in: 2..100 }
 
   def last_versions
     Artifact.where(project_id: id, last_version: true)
