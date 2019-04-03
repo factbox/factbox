@@ -112,8 +112,7 @@ RSpec.describe ArtifactsController, type: :controller do
       put :update, params: { id: note.id, artifact: attr }
 
       # Id is (note.id + 1) because this would be the new artifact version id...
-      expect(response).to redirect_to action: :edit, id: note.id + 1,
-                                      type: 'note'
+      expect(response).to render_template('notes/edit')
     end
   end
 
