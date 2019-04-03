@@ -113,6 +113,7 @@ RSpec.describe ArtifactsController, type: :controller do
 
       # Id is (note.id + 1) because this would be the new artifact version id...
       expect(response).to render_template('notes/edit')
+      expect(response).to have_http_status(:ok)
     end
   end
 
