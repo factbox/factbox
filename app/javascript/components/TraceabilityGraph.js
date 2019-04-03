@@ -36,7 +36,29 @@ export class TraceabilityGraph extends React.Component {
     };
 
     return (
-      <Graph graph={graph} options={options} events={events} />
+      <div>
+        <Graph graph={graph} options={options} events={events} />
+        <div class="container">
+          <div class="row">
+            <div class="col-md-2 ml-2">
+              <hr
+                style={{
+                  backgroundColor: '#FFF', borderTop: '1px solid #000'
+                }}
+              />
+              Source
+            </div>
+            <div class="col-md-2">
+              <hr
+                style={{
+                  backgroundColor: '#FFF', borderTop: '1px dashed #000'
+                }}
+              />
+              Next version
+            </div>
+          </div>
+        </div>
+      </div>
     );
   }
 }
