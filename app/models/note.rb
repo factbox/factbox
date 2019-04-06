@@ -6,22 +6,16 @@ class Note < ApplicationRecord
 
   # See Artifact#glyphicon
   def self.glyph_icon
-    "glyphicon-comment"
+    'glyphicon-comment'
   end
 
   # See Artifact#node_options
   def node_options
-    superklass = self.acting_as
     {
-      id: superklass.id,
-      label: "#{superklass.actable_type}_#{superklass.id}",
       color: {
-        border: "#95a5a6",
-        background: "#3498db",
-        hover: {
-          background: "#2980b9"
-        },
-      },
+        border: '#34495e',
+        background: last_version ? '#f1c40f' : '#7f8c8d'
+      }
     }
   end
 end

@@ -1,4 +1,3 @@
-<p id="notice"><%= notice %></p>
 <div class="row mb-3">
   <h1><%= @artifact.title %></h1>
 </div>
@@ -8,5 +7,5 @@
 
 <div class="row mt-3">
   <%= link_to 'Back', project_path(@artifact.project), class: "btn btn-light mr-1" %>
-  <%= link_to 'Edit', edit_image_path(@artifact), class: "btn btn-primary" %>
+  <%= link_to 'Edit', @artifact.edit_link, class: "btn btn-primary" %>
 </div>

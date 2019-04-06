@@ -1,23 +1,18 @@
-import React from "react"
-import PropTypes from "prop-types"
-import Graph from "react-graph-vis"
+import React from 'react';
+import PropTypes from 'prop-types';
+import Graph from 'react-graph-vis';
 
 const options = {
   height: window.innerHeight * 0.8,
   width: '100%',
-  // layout: {
-  //   hierarchical: true
-  // },
   edges: {
-    color: "#3498db"
-  }
+    color: '#3498db',
+  },
 };
 
 const events = {
-    select: function(event) {
-        var { nodes, edges } = event;
-    }
-}
+
+};
 
 export class TraceabilityGraph extends React.Component {
 
@@ -36,14 +31,41 @@ export class TraceabilityGraph extends React.Component {
     const { nodes, edges } = this.state;
 
     const graph = {
-      nodes: nodes,
-      edges: edges,
+      nodes,
+      edges,
     };
 
     return (
-      <Graph graph={graph} options={options} events={events} />
+      <div>
+        <Graph graph={graph} options={options} events={events} />
+        <div class="container">
+          <div class="row">
+            <div class="col-md-2 ml-2">
+              <hr
+                style={{
+                  backgroundColor: '#FFF', borderTop: '1px solid #000'
+                }}
+              />
+              Source
+            </div>
+            <div class="col-md-2">
+              <hr
+                style={{
+                  backgroundColor: '#FFF', borderTop: '1px dashed #000'
+                }}
+              />
+              Next version
+            </div>
+          </div>
+        </div>
+      </div>
     );
   }
 }
+
+TraceabilityGraph.propTypes = {
+  nodes: PropTypes.isRequired,
+  edges: PropTypes.isRequired,
+};
 
 export default TraceabilityGraph;
