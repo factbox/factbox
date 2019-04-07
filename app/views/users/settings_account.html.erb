@@ -26,10 +26,10 @@
       Deleting your account will lose all your user data.
       If anyway, you are sure, type 'Yes I agree' and click the button below.
     </p>
-    <form class="form-inline">
-      <input type="text" class="text-danger ">
+    <%= form_for current_user, class: "form-inline", method: :delete do |f| %>
+      <input type="password" name="password" class="text-danger">
       <button class="btn btn-danger">Delete your account</button>
-    </form>
+    <% end %>
   </div>
 </div>
 
