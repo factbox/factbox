@@ -42,18 +42,19 @@ class UsersController < ApplicationController
   # GET /user/settings/account
   def settings_account; end
 
+  # Update user password
+  # POST /user/settings/update_password
   def update_password
-    authenticated = current_user.authenticate(password_params[:old_password])
-    password_data = password_params.except(:old_password)
-    if authenticated
-      if current_user.update_attributes(password_data)
+    if authenticated?
+      if current_user.update_attributes(password_params.except(:old_password))
         flash[:success] = 'Password successfully updated.'
       else
-        flash[:danger] = 'Password confirmation is invalid'
+        flash[:danger] = 'Password confirmation is invalid.'
       end
     else
       flash[:danger] = 'The current password are wrong.'
     end
+
     render 'settings_account'
   end
 
@@ -71,6 +72,10 @@ class UsersController < ApplicationController
   end
 
   private
+
+  def authenticated?
+    current_user.authenticate(password_params[:old_password])
+  end
 
   def user_params
     params.require(:user)
