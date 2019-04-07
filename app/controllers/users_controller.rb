@@ -23,6 +23,21 @@ class UsersController < ApplicationController
     end
   end
 
+  # GET  /users/:login
+  def show
+    # Result is a array, login should refers to unique user
+    result = User.where(login: params[:login])
+
+    # Throws invalid duplication error
+    if result.length != 1
+      raise NotImplementedError, 'System keep 2 user with same login!'
+    end
+
+    @user = result.first
+  end
+
+  # Update user profile data
+  # PUT /users
   def update
     # Fetch user data from database
     @user = User.find(current_user.id)
@@ -32,15 +47,6 @@ class UsersController < ApplicationController
     end
     render 'settings'
   end
-
-  # Page with profile settings
-  # GET /user/settings
-  def settings; end
-
-  # Page with sensitive account settings like
-  # account delete and password confirmation
-  # GET /user/settings/account
-  def settings_account; end
 
   # Update user password
   # POST /user/settings/update_password
@@ -58,18 +64,14 @@ class UsersController < ApplicationController
     render 'settings_account'
   end
 
-  # GET  /users/:login
-  def show
-    # Result is a array, login should refers to unique user
-    result = User.where(login: params[:login])
+  # Page with profile settings
+  # GET /user/settings
+  def settings; end
 
-    # Throws invalid duplication error
-    if result.length != 1
-      raise NotImplementedError, 'System keep 2 user with same login!'
-    end
-
-    @user = result.first
-  end
+  # Page with sensitive account settings like
+  # account delete and password confirmation
+  # GET /user/settings/account
+  def settings_account; end
 
   private
 
