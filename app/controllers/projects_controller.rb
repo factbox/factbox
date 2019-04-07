@@ -89,6 +89,8 @@ class ProjectsController < ApplicationController
   # Action to update projects
   # PUT /projects/:id
   def update
+    @project = Project.find(params[:id])
+
     if @project.update_attributes(project_params)
       flash[:success] = 'Project successful updated'
       redirect_to action: :edit, name: @project.name
@@ -108,6 +110,6 @@ class ProjectsController < ApplicationController
   end
 
   def project_params
-    params.require(:project).permit(:name, :description)
+    params.require(:project).permit(:name, :description, :logo)
   end
 end
