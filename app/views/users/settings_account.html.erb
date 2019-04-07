@@ -1,0 +1,33 @@
+<div class="row">
+  <div class="col-md-12">
+    <h1>Account settings</h1>
+    <p class="text-muted">More sensitive settings.</p>
+    <%= render 'settings_tabs', active: 'account' %>
+  </div>
+</div>
+<%= simple_form_for(current_user) do |f| %>
+  <div class="row mt-3">
+    <div class="col-md-4">
+      <h4>Change password</h4>
+      <%= f.input :password %>
+      <%= f.input :password_confirmation %>
+      <%= f.input :old_password %>
+      <%= f.button :submit, 'Update Profile', class: 'btn btn-success' %>
+    </div>
+    <div class="col-md-4 offset-md-4">
+
+    </div>
+  </div>
+<% end %>
+
+<div class="row mt-3">
+  <div class="col-md-4">
+    <h4>Delete account</h4>
+    <p class="text-danger">
+      Deleting your account will lose all your user data. If you are sure, click the button below.
+    </p>
+    <button class="btn btn-danger">Delete your account</button>
+  </div>
+</div>
+
+</div>

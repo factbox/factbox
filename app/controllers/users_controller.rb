@@ -33,9 +33,13 @@ class UsersController < ApplicationController
     render 'settings'
   end
 
-  # Page with user settings
+  # Page with profile settings
   # GET /user/settings
   def settings; end
+
+  # Page with account settings
+  # GET /user/settings/account
+  def settings_account; end
 
   # GET  /users/:login
   def show

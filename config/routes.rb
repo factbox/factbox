@@ -14,6 +14,7 @@ Rails.application.routes.draw do
   get   '/logout' => 'sessions#destroy'
 
   get   '/user/settings', to: 'users#settings'
+  get   '/user/settings/account', to: 'users#settings_account'
   get   '/user/:login', to: 'users#show'
 
   get   '/projects/:id', to: 'projects#show'
