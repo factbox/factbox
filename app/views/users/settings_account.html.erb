@@ -5,14 +5,16 @@
     <%= render 'settings_tabs', active: 'account' %>
   </div>
 </div>
-<%= simple_form_for(current_user) do |f| %>
+<%= simple_form_for current_user,
+                    url: user_settings_update_password_path,
+                    method: 'POST' do |f| %>
   <div class="row mt-3">
     <div class="col-md-4">
       <h4>Change password</h4>
       <%= f.input :password %>
       <%= f.input :password_confirmation %>
       <%= f.input :old_password %>
-      <%= f.button :submit, 'Update Profile', class: 'btn btn-success' %>
+      <%= f.button :submit, 'Update password', class: 'btn btn-success' %>
     </div>
     <div class="col-md-4 offset-md-4">
 

@@ -37,9 +37,25 @@ class UsersController < ApplicationController
   # GET /user/settings
   def settings; end
 
-  # Page with account settings
+  # Page with sensitive account settings like
+  # account delete and password confirmation
   # GET /user/settings/account
   def settings_account; end
+
+  def update_password
+    authenticated = current_user.authenticate(password_params[:old_password])
+    password_data = password_params.except(:old_password)
+    if authenticated
+      if current_user.update_attributes(password_data)
+        flash[:success] = 'Password successfully updated.'
+      else
+        flash[:danger] = 'Password confirmation is invalid'
+      end
+    else
+      flash[:danger] = 'The current password are wrong.'
+    end
+    render 'settings_account'
+  end
 
   # GET  /users/:login
   def show
@@ -62,4 +78,8 @@ class UsersController < ApplicationController
                   :password_confirmation, :avatar)
   end
 
+  def password_params
+    params.require(:user)
+          .permit(:password, :password_confirmation, :old_password)
+  end
 end
