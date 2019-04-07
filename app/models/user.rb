@@ -20,4 +20,8 @@ class User < ApplicationRecord
 
     all_projects
   end
+
+  def default_avatar
+    "http://tinygraphs.com/labs/isogrids/hexa16/#{self[:login]}?theme=frogideas&numcolors=4&size=220&fmt=svg"
+  end
 end
