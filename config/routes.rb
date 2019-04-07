@@ -6,7 +6,7 @@ Rails.application.routes.draw do
 
   resources :sessions, only: [:create, :destroy]
   resources :users, except: [:show]
-  resources :projects, except: [:show]
+  resources :projects, except: [:show, :edit]
 
   root  'users#index'
 
@@ -19,6 +19,7 @@ Rails.application.routes.draw do
   get   '/user/:login', to: 'users#show'
 
   get   '/projects/:name', to: 'projects#show'
+  get   '/projects/:name/settings', to: 'projects#edit'
   get   '/traceability/:id', to: 'projects#traceability'
 
   post  '/artifacts/new', to: 'artifacts#create'

@@ -2,7 +2,9 @@
   <%= f.error_notification %>
 
   <div class="form-inputs">
-    <%= f.input :name, placeholder: 'Short and memorable names are more attractive' %>
+    <div class="w-50">
+      <%= f.input :name, placeholder: 'Short names are memorable' %>
+    </div>
     <%= f.input :description, as: :text, placeholder: 'Tell us a little about what the project is about.' %>
   </div>
 

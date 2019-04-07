@@ -89,8 +89,9 @@ class ProjectsController < ApplicationController
   # Action to update projects
   # PUT /projects/:id
   def update
-    if @project.update(project_params)
-      redirect_to @project, notice: 'Projeto atualizado com sucesso'
+    if @project.update_attributes(project_params)
+      flash[:success] = 'Project successful updated'
+      redirect_to action: :edit, name: @project.name
     else
       render :edit
     end

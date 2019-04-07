@@ -44,6 +44,7 @@
           <i class="fa fa-list-alt"></i> Artifacts
         </a>
       </li>
+
       <li class="nav-item">
         <a
           href="/traceability/<%=@project.id%>"
@@ -52,6 +53,7 @@
           <i class="fa fa-circle"></i> Traceability
         </a>
       </li>
+
       <% @plugins.each do |plugin| %>
         <li class="nav-item">
           <a
@@ -62,6 +64,15 @@
           </a>
         </li>
       <% end %>
+
+      <li class="nav-item">
+        <a
+          href="/projects/<%=@project.name%>/settings"
+          class="nav-link"
+        >
+          <i class="fa fa-cog"></i> Settings
+        </a>
+      </li>
     </ul>
 
     <div class="tab-content mt-2" id="myTabContent">
