@@ -6,7 +6,7 @@ Rails.application.routes.draw do
 
   resources :sessions, only: [:create, :destroy]
   resources :users, except: [:show]
-  resources :projects
+  resources :projects, except: [:show]
 
   root  'users#index'
 
@@ -18,8 +18,7 @@ Rails.application.routes.draw do
   post  '/user/settings/update_password', to: 'users#update_password'
   get   '/user/:login', to: 'users#show'
 
-
-  get   '/projects/:id', to: 'projects#show'
+  get   '/projects/:name', to: 'projects#show'
   get   '/traceability/:id', to: 'projects#traceability'
 
   post  '/artifacts/new', to: 'artifacts#create'

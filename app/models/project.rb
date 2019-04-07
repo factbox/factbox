@@ -7,6 +7,10 @@ class Project < ApplicationRecord
   validates :name, presence: true, length: { in: 2..20 }
   validates :description, presence: true, length: { in: 2..100 }
 
+  def uri_name
+    CGI.escape(self[:name])
+  end
+
   def last_versions
     Artifact.where(project_id: id, last_version: true)
   end

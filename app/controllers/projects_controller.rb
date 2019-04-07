@@ -1,7 +1,9 @@
 # Controller for project actions
 class ProjectsController < ApplicationController
   before_action :authorize, only: [:index, :new, :create]
-  before_action :set_project, only: [:show, :edit, :update]
+
+  before_action :set_project, only: [:update]
+  before_action :set_project_by_name, only: [:show, :edit]
 
   # Used like home page of logged users
   # GET /projects
@@ -10,9 +12,8 @@ class ProjectsController < ApplicationController
     @user_projects = current_user.projects
   end
 
-  # TODO: change :id to name with properly encoding
   # Shows specific project
-  # GET /projects/:id
+  # GET /projects/:name
   def show
     @plugins = []
     # In production eager_load is active, but development no
@@ -99,6 +100,10 @@ class ProjectsController < ApplicationController
 
   def set_project
     @project = Project.find(params[:id])
+  end
+
+  def set_project_by_name
+    @project = Project.find_by_name(CGI.unescape(params[:name]))
   end
 
   def project_params
