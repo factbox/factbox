@@ -1,0 +1,18 @@
+<ul class="nav nav-tabs" role="tablist">
+  <li class="nav-item">
+    <a
+      href="/user/settings"
+      class="nav-link <%= if active.eql? 'profile' then 'active' end%>"
+    >
+      <i class="fa fa-id-card"></i> Profile
+    </a>
+  </li>
+  <li class="nav-item">
+    <a
+      href="/user/settings/account"
+      class="nav-link <%= if active.eql? 'account' then 'active' end%>"
+    >
+      <i class="fa fa-lock"></i> Account
+    </a>
+  </li>
+</ul>

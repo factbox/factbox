@@ -31,7 +31,7 @@ class Artifact < ApplicationRecord
   end
 
   def show_link
-    "/#{project_id}/artifact/#{title}"
+    "/#{self[:project_id]}/artifact/#{self[:title]}"
   end
 
   # Get glyphicon that should be used by each artifact type
@@ -47,8 +47,8 @@ class Artifact < ApplicationRecord
   # http://visjs.org/docs/network/nodes.html
   def node_options
     options = {
-      id: id,
-      label: title,
+      id: self[:id],
+      label: self[:title],
       shape: 'dot'
     }
 

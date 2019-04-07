@@ -1,5 +1,5 @@
+# Controller for users session
 class SessionsController < ApplicationController
-
   # POST /sessions
   # Login - Creates user session
   def create
@@ -8,7 +8,7 @@ class SessionsController < ApplicationController
     if user && user.authenticate(params[:password])
       session[:user_id] = user.id
     else
-      flash[:notice] = "Credenciais inválidas"
+      flash[:notice] = 'Invalid credentials'
     end
 
     redirect_to root_url
@@ -18,6 +18,6 @@ class SessionsController < ApplicationController
   # Logout - Destroy user session
   def destroy
     session[:user_id] = nil
-    redirect_to root_url, notice: 'Deslogado com sucesso'
+    redirect_to root_url, notice: 'Successfull logout'
   end
 end
