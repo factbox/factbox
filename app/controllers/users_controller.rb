@@ -90,7 +90,7 @@ class UsersController < ApplicationController
   private
 
   def authenticated?(password)
-    !!current_user.authenticate(password)
+    current_user.authenticate(password)
   end
 
   def user_params
