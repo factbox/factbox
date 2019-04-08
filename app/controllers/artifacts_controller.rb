@@ -105,7 +105,7 @@ class ArtifactsController < ApplicationController
 
     if @artifact.save
       flash[:success] = 'Artifact created with success.'
-      redirect_to @artifact.project
+      redirect_to project_show_url(@artifact.project.uri_name)
     else
       @all_artifacts = Artifact.where(
         project_id: artifact_params[:project_id],

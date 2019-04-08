@@ -18,7 +18,7 @@ Rails.application.routes.draw do
   post  '/user/settings/update_password', to: 'users#update_password'
   get   '/user/:login', to: 'users#show'
 
-  get   '/projects/:name', to: 'projects#show'
+  get   '/projects/:name', to: 'projects#show', as: 'project_show'
   post  '/projects/invite', to: 'projects#invite'
   get   '/projects/:name/settings', to: 'projects#edit'
   get   '/traceability/:id', to: 'projects#traceability'
