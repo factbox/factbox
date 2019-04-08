@@ -3,6 +3,7 @@ class Project < ApplicationRecord
   belongs_to :author, class_name: 'User', foreign_key: 'author_id', optional: true
   has_many :artifacts
   has_one_attached :logo
+  has_and_belongs_to_many :users
 
   validates_uniqueness_of :name
   validates :name, presence: true, length: { in: 2..20 }

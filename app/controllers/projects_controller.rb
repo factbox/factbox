@@ -1,6 +1,6 @@
 # Controller for project actions
 class ProjectsController < ApplicationController
-  before_action :authorize, only: [:index, :new, :create]
+  before_action :authorize, only: [:index, :new, :create, :invite]
 
   before_action :set_project, only: [:update]
   before_action :set_project_by_name, only: [:show, :edit]
@@ -82,6 +82,27 @@ class ProjectsController < ApplicationController
     end
   end
 
+  # Invite one user to project
+  # POST /projects/invite/:project_id
+  def invite
+    collaborator = User.find_by_login(user_invited)
+    @project = Project.find(params[:project][:id])
+
+    if collaborator && !@project.users.include?(collaborator)
+      @project.users.push(collaborator)
+      if @project.save
+        flash[:success] = "#{user_invited} added to #{@project.name}"
+      else
+        flash[:warning] = 'Invitation could not be made'
+      end
+    else
+      flash[:warning] = "User #{user_invited} could not be invited, \
+       because does not exist or already in project"
+    end
+
+    redirect_to action: :edit, name: @project.name
+  end
+
   # Page for edit projects
   # GET /projects/:id/edit
   def edit; end
@@ -89,8 +110,6 @@ class ProjectsController < ApplicationController
   # Action to update projects
   # PUT /projects/:id
   def update
-    @project = Project.find(params[:id])
-
     if @project.update_attributes(project_params)
       flash[:success] = 'Project successful updated'
       redirect_to action: :edit, name: @project.name
@@ -107,6 +126,10 @@ class ProjectsController < ApplicationController
 
   def set_project_by_name
     @project = Project.find_by_name(CGI.unescape(params[:name]))
+  end
+
+  def user_invited
+    params[:user][:login]
   end
 
   def project_params

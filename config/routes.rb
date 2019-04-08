@@ -19,6 +19,7 @@ Rails.application.routes.draw do
   get   '/user/:login', to: 'users#show'
 
   get   '/projects/:name', to: 'projects#show'
+  post  '/projects/invite', to: 'projects#invite'
   get   '/projects/:name/settings', to: 'projects#edit'
   get   '/traceability/:id', to: 'projects#traceability'
 
