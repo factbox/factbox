@@ -34,9 +34,9 @@ class ProjectsController < ApplicationController
     end
   end
 
-  # GET /traceability/:id
+  # GET /traceability/:name
   def traceability
-    artifacts = Artifact.where(project_id: params[:id])
+    artifacts = Project.find_by_name(CGI.unescape(params[:name])).artifacts
 
     @nodes = []
     @edges = []

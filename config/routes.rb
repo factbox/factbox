@@ -21,7 +21,7 @@ Rails.application.routes.draw do
   get   '/projects/:name', to: 'projects#show', as: 'project_show'
   post  '/projects/invite', to: 'projects#invite'
   get   '/projects/:name/settings', to: 'projects#edit'
-  get   '/traceability/:id', to: 'projects#traceability'
+  get   '/traceability/:name', to: 'projects#traceability'
 
   post  '/artifacts/new', to: 'artifacts#create'
   get   '/:type/edit/:id/', to: 'artifacts#edit'
