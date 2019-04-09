@@ -8,7 +8,7 @@
     <ul class="artifact-types">
       <% @artifacts.each do |artifact| %>
         <li>
-          <a href="/projects/<%= params[:id] %>/artifacts/new/<%= artifact.name %>">
+          <a href="/projects/<%= params[:name] %>/artifacts/new/<%= artifact.name %>">
             <%= artifact.name %>
           </a>
         </li>
