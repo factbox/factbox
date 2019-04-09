@@ -28,7 +28,7 @@ RSpec.describe ArtifactsController, type: :controller do
       project = FactoryBot.build(:project)
       project.save!
 
-      get :new_type, params: { id: project.id, type: 'note' }
+      get :new_type, params: { name: project.uri_name, type: 'note' }
       expect(response).to render_template('notes/new')
     end
 
@@ -36,7 +36,7 @@ RSpec.describe ArtifactsController, type: :controller do
       project = FactoryBot.build(:project)
       project.save!
 
-      get :new_type, params: { id: project.id, type: 'XGH' }
+      get :new_type, params: {  name: project.uri_name, type: 'XGH' }
       expect(response).to render_template('layouts/error')
     end
   end
