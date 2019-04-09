@@ -20,7 +20,7 @@ class ArtifactsController < ApplicationController
   end
 
   # Page with all artifacts type that could be created
-  # GET /projects/:id/artifacts/new
+  # GET /projects/:name/artifacts/new
   def new
     @artifacts = []
 
@@ -33,16 +33,18 @@ class ArtifactsController < ApplicationController
   end
 
   # Loads view to create selected artifact
-  # GET /projects/:id/artifacts/new/:type
+  # GET /projects/:name/artifacts/new/:type
   def new_type
+    project = Project.find_by_name(CGI.unescape(params[:name]))
+
     # Used to select sources
     @available_artifacts = Artifact.where(
-      project_id: params[:id], last_version: true
+      project_id: project.id, last_version: true
     )
 
     # Creates artifact dynamically through artifact type
     @artifact = instantiate_artifact(params[:type])
-    @artifact.project_id = params[:id]
+    @artifact.project = project
 
     render get_view(params[:type], 'new'), object: @artifact
   rescue ArtifactsHelper::InvalidKlassNameError => error
@@ -105,7 +107,7 @@ class ArtifactsController < ApplicationController
 
     if @artifact.save
       flash[:success] = 'Artifact created with success.'
-      redirect_to @artifact.project
+      redirect_to project_show_url(@artifact.project.uri_name)
     else
       @all_artifacts = Artifact.where(
         project_id: artifact_params[:project_id],
@@ -135,7 +137,7 @@ class ArtifactsController < ApplicationController
       flash[:error] = @artifact.errors
     end
 
-    redirect_to @artifact.project
+    redirect_to project_show_url(@artifact.project.uri_name)
   end
 
   # Shows artifact selected

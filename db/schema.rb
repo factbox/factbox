@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_03_27_030015) do
+ActiveRecord::Schema.define(version: 2019_04_07_171945) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -68,7 +68,7 @@ ActiveRecord::Schema.define(version: 2019_03_27_030015) do
   create_table "projects", id: :serial, force: :cascade do |t|
     t.string "name"
     t.string "description"
-    t.integer "author_id", null: false
+    t.integer "author_id"
     t.integer "metodology_id"
     t.boolean "is_public", default: true
     t.datetime "created_at", null: false

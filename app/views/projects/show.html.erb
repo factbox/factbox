@@ -1,10 +1,7 @@
 <div class="row">
   <div class="col-md-3">
     <div class="text-center">
-      <img src="/factbox.png"
-        class="rounded img-fluid"
-        alt="Logo"
-      >
+      <%= render 'logo' %>
     </div>
     <h1><%= @project.name %></h1>
     <div class="description info">
@@ -12,7 +9,9 @@
     </div>
     <div class="dropdown-divider"></div>
     <div class="actions text-center">
-      <a href="/projects/<%= @project.id %>/artifacts/new"  type="button" class="btn btn-light">Create Artifact</a>
+      <a href="/projects/<%= @project.uri_name %>/artifacts/new" type="button" class="btn btn-primary">
+        Create Artifact<i class="fa fa-plus-square ml-3"></i>
+      </a>
     </div>
   </div>
 
@@ -44,14 +43,16 @@
           <i class="fa fa-list-alt"></i> Artifacts
         </a>
       </li>
+
       <li class="nav-item">
         <a
-          href="/traceability/<%=@project.id%>"
+          href="/traceability/<%=@project.uri_name%>"
           class="nav-link"
         >
           <i class="fa fa-circle"></i> Traceability
         </a>
       </li>
+
       <% @plugins.each do |plugin| %>
         <li class="nav-item">
           <a
@@ -62,6 +63,15 @@
           </a>
         </li>
       <% end %>
+
+      <li class="nav-item">
+        <a
+          href="/projects/<%=@project.name%>/settings"
+          class="nav-link"
+        >
+          <i class="fa fa-cog"></i> Settings
+        </a>
+      </li>
     </ul>
 
     <div class="tab-content mt-2" id="myTabContent">

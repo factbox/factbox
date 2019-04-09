@@ -2,11 +2,14 @@
   <%= f.error_notification %>
 
   <div class="form-inputs">
-    <%= f.input :name %>
-    <%= f.input :description, as: :text %>
+    <div class="w-50">
+      <%= f.input :name, placeholder: 'Short names are memorable' %>
+    </div>
+    <%= f.input :description, as: :text, placeholder: 'Tell us a little about what the project is about.' %>
   </div>
 
   <div class="form-actions">
+    <%= link_to 'Back', projects_path, class: 'btn btn-default pull-left'  %>
     <%= f.button :submit, class: 'btn btn-success pull-right' %>
   </div>
 <% end %>

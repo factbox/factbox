@@ -1,7 +1,9 @@
 # Controller for project actions
 class ProjectsController < ApplicationController
-  before_action :authorize, only: [:index, :new, :create]
-  before_action :set_project, only: [:show, :edit, :update]
+  before_action :authorize, only: [:index, :new, :create, :invite]
+
+  before_action :set_project, only: [:update]
+  before_action :set_project_by_name, only: [:show, :edit]
 
   # Used like home page of logged users
   # GET /projects
@@ -10,9 +12,8 @@ class ProjectsController < ApplicationController
     @user_projects = current_user.projects
   end
 
-  # TODO: change :id to name with properly encoding
   # Shows specific project
-  # GET /projects/:id
+  # GET /projects/:name
   def show
     @plugins = []
     # In production eager_load is active, but development no
@@ -33,9 +34,9 @@ class ProjectsController < ApplicationController
     end
   end
 
-  # GET /traceability/:id
+  # GET /traceability/:name
   def traceability
-    artifacts = Artifact.where(project_id: params[:id])
+    artifacts = Project.find_by_name(CGI.unescape(params[:name])).artifacts
 
     @nodes = []
     @edges = []
@@ -75,10 +76,31 @@ class ProjectsController < ApplicationController
     @project.author_id = current_user.id
 
     if @project.save
-      redirect_to projects_path, notice: 'Project created successful'
+      redirect_to projects_path, success: 'Project created successful'
     else
       render :new
     end
+  end
+
+  # Invite one user to project
+  # POST /projects/invite/:project_id
+  def invite
+    collaborator = User.find_by_login(user_invited)
+    @project = Project.find(params[:project][:id])
+
+    if collaborator && !@project.users.include?(collaborator)
+      @project.users.push(collaborator)
+      if @project.save
+        flash[:success] = "#{user_invited} added to #{@project.name}"
+      else
+        flash[:warning] = 'Invitation could not be made'
+      end
+    else
+      flash[:warning] = "User #{user_invited} could not be invited, \
+       because does not exist or already in project"
+    end
+
+    redirect_to action: :edit, name: @project.name
   end
 
   # Page for edit projects
@@ -88,8 +110,9 @@ class ProjectsController < ApplicationController
   # Action to update projects
   # PUT /projects/:id
   def update
-    if @project.update(project_params)
-      redirect_to @project, notice: 'Projeto atualizado com sucesso'
+    if @project.update_attributes(project_params)
+      flash[:success] = 'Project successful updated'
+      redirect_to action: :edit, name: @project.name
     else
       render :edit
     end
@@ -101,7 +124,15 @@ class ProjectsController < ApplicationController
     @project = Project.find(params[:id])
   end
 
+  def set_project_by_name
+    @project = Project.find_by_name(CGI.unescape(params[:name]))
+  end
+
+  def user_invited
+    params[:user][:login]
+  end
+
   def project_params
-    params.require(:project).permit(:name, :description)
+    params.require(:project).permit(:name, :description, :logo)
   end
 end

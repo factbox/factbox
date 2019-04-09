@@ -41,7 +41,7 @@ RSpec.describe ProjectsController, type: :controller do
 
     # Work just in prod
     it 'when not have plugins' do
-      get :show, params: { id: project.id }
+      get :show, params: { name: project.uri_name }
 
       expect(assigns(:plugins).size).to eq(0)
     end
@@ -54,7 +54,7 @@ RSpec.describe ProjectsController, type: :controller do
 
     it 'when project have 3 nodes and 2 edges' do
       notes = [note1, note2, note3]
-      get :traceability, params: { id: project.id }
+      get :traceability, params: {  name: project.uri_name }
 
       expect(assigns(:nodes).size).to eq(notes.size)
       expect(assigns(:edges).size).to eq(note1.children.size)

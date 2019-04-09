@@ -22,6 +22,7 @@ class User < ApplicationRecord
   end
 
   def default_avatar
-    "http://tinygraphs.com/labs/isogrids/hexa16/#{self[:login]}?theme=frogideas&numcolors=4&size=220&fmt=svg"
+    avatar_opt = 'theme=frogideas&numcolors=4&size=220&fmt=svg'
+    "http://tinygraphs.com/labs/isogrids/hexa16/#{self[:login]}?#{avatar_opt}"
   end
 end
