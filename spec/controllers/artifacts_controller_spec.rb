@@ -72,7 +72,7 @@ RSpec.describe ArtifactsController, type: :controller do
           title: 'Simple note'
         }
       }
-      expect(response).to redirect_to("/projects/#{project.id}")
+      expect(response).to redirect_to("/projects/#{project.uri_name}")
     end
 
     it 'when params is invalid' do
