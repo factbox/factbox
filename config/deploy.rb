@@ -6,7 +6,7 @@ set :repo_url, 'git@github.com:factbox/factbox.git'
 
 set :deploy_to, '/root/deploy/factbox/'
 
-append :linked_files, 'config/database.yml', 'config/secrets.yml'
+append :linked_files, 'config/database.yml', 'config/secrets.yml', 'config/storage.yml'
 
 append :linked_dirs, 'log', 'tmp/pids', 'tmp/cache', 'tmp/sockets', 'public/system'
 
