@@ -279,6 +279,7 @@ PLATFORMS
   ruby
 
 DEPENDENCIES
+  actionview (>= 5.2.2.1)
   active_record-acts_as
   bcrypt
   bootsnap
@@ -298,6 +299,7 @@ DEPENDENCIES
   puma (~> 3.0)
   rails (~> 5.2.1)
   rails-controller-testing
+  railties (>= 5.2.2.1)
   react-rails
   rspec-rails (~> 3.8)
   sass-rails (~> 5.0)
