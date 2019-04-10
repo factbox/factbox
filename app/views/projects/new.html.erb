@@ -1,13 +1,11 @@
-<div class="col-md-8 col-md-offset-2">
+<div class="col-md-12 col-md-offset-2">
   <div class="page-head">
     <h1> Create a new Project </h1>
     <small>You will keep requirements into this project</small>
   </div>
-
+</div>
+<div class="col-md-6">
   <div class="page-content">
-    <%= render 'form', note: @project %>
+    <%= render 'form', note: @project, backbutton: true %>
   </div>
-
-  <%= link_to 'Back', projects_path, class: 'btn btn-default pull-left'  %>
-
 </div>

@@ -1,0 +1,15 @@
+<%= form_for @project,
+             url: projects_invite_path,
+             method: :post,
+             class: 'form-inline' do |f| %>
+  <div class="input-group mb-2 mr-sm-2">
+    <div class="input-group-prepend">
+      <div class="input-group-text">@</div>
+    </div>
+    <%= hidden_field(:project, :id, value: @project.id)%>
+    <%= text_field(:user, :login, placeholder: "Type user login", class: "form-control") %>
+    <button type="submit" class="btn btn-success">
+      Add <i class="ml-2 fa fa-user-plus"></i>
+    </button>
+  </div>
+<% end %>

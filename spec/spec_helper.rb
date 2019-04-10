@@ -18,12 +18,15 @@
 # See http://rubydoc.info/gems/rspec-core/RSpec/Core/Configuration
 require 'support/spec_login_helper'
 require 'support/database_cleaner_helper'
-require 'simplecov'
 
+require 'simplecov'
 SimpleCov.start
 
-require 'codecov'
-SimpleCov.formatter = SimpleCov::Formatter::Codecov
+# Run just in travis
+if ENV['CI'] == 'true'
+  require 'codecov'
+  SimpleCov.formatter = SimpleCov::Formatter::Codecov
+end
 
 RSpec.configure do |config|
   # rspec-expectations config goes here. You can use an alternate

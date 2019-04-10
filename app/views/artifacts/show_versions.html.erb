@@ -1,0 +1,26 @@
+<p id="notice"><%= notice %></p>
+
+<div class="row mb-3">
+  <h1><%= @artifact.title %> <small>versions</small></h1>
+</div>
+
+<div class="row">
+  <% @versions.each do |v| %>
+    <div class="card w-100 <%= "bg-light" if v.last_version%>">
+      <div class="card-body">
+        <a href="/<%= @artifact.project_id %>/version/<%= v.version %>">
+          <span class="font-weight-bold">
+            <%= v.title %>
+          </span>
+          <div class="float-right">
+            <%= v.version %>
+          </div>
+        </a>
+        <p class="card-text">
+          <a href="/user/<%= v.author.login %>"><%= v.author.login %></a>
+          updated <%= time_ago_in_words v.time_creation %>
+        </p>
+      </div>
+    </div>
+  <% end %>
+</div>

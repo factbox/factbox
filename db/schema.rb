@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2018_10_10_153900) do
+ActiveRecord::Schema.define(version: 2019_04_07_171945) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -44,16 +44,14 @@ ActiveRecord::Schema.define(version: 2018_10_10_153900) do
     t.datetime "updated_at", null: false
     t.integer "actable_id"
     t.string "actable_type", null: false
-    t.string "version", default: "snapshot"
+    t.string "version", null: false
     t.integer "origin_id"
     t.bigint "source_id"
+    t.boolean "last_version", default: true
     t.index ["source_id"], name: "index_artifacts_on_source_id"
   end
 
   create_table "images", force: :cascade do |t|
-    t.string "actable_type"
-    t.bigint "actable_id"
-    t.index ["actable_type", "actable_id"], name: "index_images_on_actable_type_and_actable_id"
   end
 
   create_table "metodologies", id: :serial, force: :cascade do |t|
@@ -70,7 +68,7 @@ ActiveRecord::Schema.define(version: 2018_10_10_153900) do
   create_table "projects", id: :serial, force: :cascade do |t|
     t.string "name"
     t.string "description"
-    t.integer "author_id", null: false
+    t.integer "author_id"
     t.integer "metodology_id"
     t.boolean "is_public", default: true
     t.datetime "created_at", null: false

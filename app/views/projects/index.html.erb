@@ -7,20 +7,13 @@
         </div>
         <div class="col">
           <a class="btn btn-sm btn-primary text-white float-right" href="/projects/new">
-            New <i class="glyphicon glyphicon-plus"></i>
+            New <i class="fa fa-plus"></i>
           </a>
         </div>
       </div>
+
       <% unless @user_projects.empty? %>
-      <ul class="list-group list-group-flush text-left">
-        <% @user_projects.each do |project| %>
-          <li class="list-unstyled list-projects list-group-item">
-            <a href="projects/<%= project.id %>">
-              <i class="glyphicon glyphicon-book"></i> <%= project.name %>
-            </a>
-          </li>
-        <% end %>
-      </ul>
+        <%= render 'projects/project_list', projects: @user_projects %>
       <% else %>
         <div class="panel-body text-center">
           <h4 class="info">

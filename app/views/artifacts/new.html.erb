@@ -1,19 +1,30 @@
-<div class="col-md-8 col-md-offset-2">
-  <div class="page-head">
-    <h1>Choose the type of artifact</h1>
-    <small>These are the currently supported artifacts</small>
+<div class="d-flex flex-column">
+  <div class="row">
+    <div class="col-md-12">
+      <div class="page-head">
+        <h1>Choose the type of artifact</h1>
+        <small>These are the currently supported artifacts</small>
+      </div>
+    </div>
   </div>
 
-  <div class="page-content">
-    <ul class="artifact-types">
-      <% @artifacts.each do |artifact| %>
-        <li>
-          <a href="/projects/<%= params[:id] %>/artifacts/new/<%= artifact.name %>">
-            <%= artifact.name %>
-          </a>
-        </li>
-      <% end %>
-    </ul>
-    <%= link_to 'Back', "/projects/#{params[:id]}", class: 'btn btn-light pull-left'  %>
+  <div class="row">
+    <div class="col-md-8 p-4">
+      <div class="page-content">
+        <ul class="artifact-types">
+          <% @artifacts.each do |artifact| %>
+            <li>
+              <a href="/projects/<%= params[:name] %>/artifacts/new/<%= artifact.name %>">
+                <%= artifact.name %>
+              </a>
+            </li>
+          <% end %>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <div class="row ml-1">
+    <%= link_to 'Back to project', :back, class: 'btn btn-light pull-left'  %>
   </div>
 </div>

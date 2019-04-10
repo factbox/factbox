@@ -1,0 +1,12 @@
+<% unless projects.empty? %>
+  <ul class="list-group">
+    <% projects.each do |project| %>
+      <li class="list-unstyled">
+        <i class="fa fa-book mr-1"></i>
+        <a href="projects/<%= project.uri_name %>">
+          <%= project.name %>
+        </a>
+      </li>
+    <% end %>
+  </ul>
+<% end %>
