@@ -39,17 +39,6 @@
 
   <h5>Projects</h5>
 
-  <% unless @user.projects.empty? %>
-    <ul class="list-group">
-      <% @user.projects.each do |project| %>
-        <li class="list-unstyled">
-          <i class="fa fa-book mr-1"></i>
-          <a href="projects/<%= project.id %>">
-            <%= project.name %>
-          </a>
-        </li>
-      <% end %>
-    </ul>
-  <% end %>
+  <%= render 'projects/project_list', projects: @user.projects %>
 
 </div>
