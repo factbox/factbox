@@ -9,7 +9,7 @@
       collection: @available_artifacts, prompt: "Select source artifact" %>
 
   <div class="row mt-3">
-    <%= link_to 'Back', project_path(@artifact.project), class: "btn btn-light mr-1" %>
+    <%= link_to 'Back', :back, class: "btn btn-light mr-1" %>
     <%= f.button :submit, class: 'btn btn-success pull-right' %>
   </div>
 <% end %>
