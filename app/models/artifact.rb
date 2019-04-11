@@ -30,8 +30,16 @@ class Artifact < ApplicationRecord
     "/#{actable_type.downcase}/edit/#{id}"
   end
 
-  def show_link
-    "/#{self[:project_id]}/artifact/#{self[:title]}"
+  def show_link(project_name)
+    "/#{project_name}/artifact/#{uri_name}"
+  end
+
+  def show_version(project_name)
+    "#{project_name}/artifact/version/#{self[:version]}"
+  end
+
+  def show_versions_link(project_name)
+    "/#{project_name}/versions/#{uri_name}"
   end
 
   # Get glyphicon that should be used by each artifact type
@@ -53,6 +61,10 @@ class Artifact < ApplicationRecord
     }
 
     options.merge(actable.node_options) unless actable.node_options.nil?
+  end
+
+  def uri_name
+    CGI.escape(self[:title])
   end
 
   private

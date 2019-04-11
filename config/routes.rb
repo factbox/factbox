@@ -27,8 +27,8 @@ Rails.application.routes.draw do
   get   '/:type/edit/:id/', to: 'artifacts#edit'
   get   '/:project_id/:resource', to: 'artifacts#index'
   get   '/projects/:name/artifacts/new', to: 'artifacts#new'
-  get   '/:project_id/artifact/:title', to: 'artifacts#show'
-  get   '/:project_id/versions/:title', to: 'artifacts#show_versions'
-  get   '/:project_id/version/:hash', to: 'artifacts#show_version'
+  get   '/:project_name/artifact/:title', to: 'artifacts#show'
+  get   '/:project_name/versions/:title', to: 'artifacts#show_versions'
+  get   '/:project_name/artifact/version/:hash', to: 'artifacts#show_version'
   get   '/projects/:name/artifacts/new/:type', to: 'artifacts#new_type'
 end

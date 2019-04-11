@@ -4,6 +4,7 @@ class ArtifactsController < ApplicationController
 
   before_action :authorize, only: [:new, :new_type, :create]
   before_action :set_artifact, only: [:edit, :update]
+  before_action :find_by_project_and_title, only: [:show_versions, :show]
 
   # List all specific artifact types
   # GET /:project_id/:resource
@@ -141,17 +142,14 @@ class ArtifactsController < ApplicationController
   end
 
   # Shows artifact selected
-  # GET :project_id/artifacts/:name
+  # GET :project_name/artifacts/:name
   def show
-    @artifact = find_by_project_and_title
-
     render get_view(@artifact.actable_type, 'show')
   end
 
   # Show previous versions of one Artifact
-  # GET :project_id/versions/:name
+  # GET :project_name/versions/:name
   def show_versions
-    @artifact = find_by_project_and_title
     @versions = [@artifact]
 
     version = @artifact.origin_artifact
@@ -162,9 +160,11 @@ class ArtifactsController < ApplicationController
   end
 
   # Show specific version
-  # GET /:project_id/version/:hash
+  # GET /:project_name/version/:hash
   def show_version
-    options = { project_id: params[:project_id], version: [params[:hash]] }
+    project = Project.find_by_name(CGI.unescape(params[:project_name]))
+    options = { project_id: project.id, version: [params[:hash]] }
+
     @artifact = Artifact.where(options).first
 
     render get_view(@artifact.actable_type, 'show')
@@ -187,9 +187,11 @@ class ArtifactsController < ApplicationController
   end
 
   def find_by_project_and_title
-    Artifact.where(
-      project_id: params[:project_id],
-      title: params[:title],
+    project = Project.find_by_name(CGI.unescape(params[:project_name]))
+
+    @artifact = Artifact.where(
+      project_id: project.id,
+      title: CGI.unescape(params[:title]),
       last_version: true
     ).first
   end
