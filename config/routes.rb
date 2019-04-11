@@ -24,7 +24,7 @@ Rails.application.routes.draw do
   get   '/traceability/:name', to: 'projects#traceability'
 
   post  '/artifacts/new', to: 'artifacts#create'
-  get   '/:type/edit/:id/', to: 'artifacts#edit'
+  get   '/:project_name/:type/edit/:title/', to: 'artifacts#edit'
   get   '/:project_id/:resource', to: 'artifacts#index'
   get   '/projects/:name/artifacts/new', to: 'artifacts#new'
   get   '/:project_name/artifact/:title', to: 'artifacts#show'

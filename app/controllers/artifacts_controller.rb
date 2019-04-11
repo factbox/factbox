@@ -3,7 +3,7 @@ class ArtifactsController < ApplicationController
   include ArtifactsHelper
 
   before_action :authorize, only: [:new, :new_type, :create]
-  before_action :set_artifact, only: [:edit, :update]
+  before_action :set_artifact, only: [:edit]
   before_action :find_by_project_and_title, only: [:show_versions, :show]
 
   # List all specific artifact types
@@ -53,29 +53,23 @@ class ArtifactsController < ApplicationController
   end
 
   # Find artifact and render your edit page
-  # GET /:type/edit/:id
+  # GET /:type/edit/:title
   def edit
-    # TODO: Treat an error if this where return two ids
-    # Should find first and unique artifact to get your 'specific' reference
-    actable_type = params[:type].capitalize
-    @artifact = Artifact.where(actable_type: actable_type, id: params[:id])
-                        .first.specific
-
     # The user should not access edit page of previous versions
-    # TODO: maybe we could render to a new page, with more explains
-    if @artifact.last_version
+    if @artifact && @artifact.specific.last_version
+      # artifact should not point to self as source
+      @available_artifacts = find_latest_versions.reject { |v| v == @artifact }
+
+      # Views are prepared to receive specific
+      @artifact = @artifact.specific
+
       # The name of resource, artifact name
       @type = @artifact.actable_type.downcase
 
-      @available_artifacts = Artifact.where(
-        project_id: @artifact.project_id,
-        last_version: true
-      )
-
       render get_view(@type, 'edit')
     else
-      project_id = @artifact.project_id
-      redirect_to controller: 'projects', action: 'show', id: project_id
+      flash[:warning] = 'Sorry, but previous artifacts can not be edited...'
+      redirect_to project_show_url(@project, name: @project.name)
     end
   end
 
@@ -186,8 +180,12 @@ class ArtifactsController < ApplicationController
     )
   end
 
+  def find_project_by_name
+    Project.find_by_name(CGI.unescape(params[:project_name]))
+  end
+
   def find_by_project_and_title
-    project = Project.find_by_name(CGI.unescape(params[:project_name]))
+    project = find_project_by_name
 
     @artifact = Artifact.where(
       project_id: project.id,
@@ -196,13 +194,24 @@ class ArtifactsController < ApplicationController
     ).first
   end
 
-  def set_artifact
-    @artifact = Artifact.find(params[:id]).specific
-  end
-
   # TODO: Throws error if page null
   def get_view(klass, page)
     # The default of the rails views folders is lowercase and plural
     "#{klass.downcase.pluralize}/#{page}"
+  end
+
+  def find_latest_versions
+    Artifact.where(project_id: @artifact.project_id, last_version: true)
+  end
+
+  # TODO: Treat an error if this where return two ids
+  # Should find first and unique artifact to get your 'specific' reference
+  def set_artifact
+    actable_type = params[:type].capitalize
+    @project = find_project_by_name
+    @artifact = Artifact.where(project_id: @project.id,
+                               actable_type: actable_type,
+                               last_version: true,
+                               title: CGI.unescape(params[:title])).first
   end
 end

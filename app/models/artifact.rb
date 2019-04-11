@@ -26,8 +26,8 @@ class Artifact < ApplicationRecord
     created_at.strftime('%B %d %Y %H:%M')
   end
 
-  def edit_link
-    "/#{actable_type.downcase}/edit/#{id}"
+  def edit_link(project_name = nil)
+    "/#{project_name || self.project.uri_name}/#{actable_type.downcase}/edit/#{uri_name}"
   end
 
   def show_link(project_name)
