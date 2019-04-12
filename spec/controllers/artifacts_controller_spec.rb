@@ -47,10 +47,11 @@ RSpec.describe ArtifactsController, type: :controller do
     end
 
     it 'when entry in edit page' do
-      note = FactoryBot.build(:note)
-      note.save!
+      note = FactoryBot.create(:note)
+      project = FactoryBot.create(:project)
 
-      get :edit, params: { id: note.id, type: 'note' }
+      get :edit, params: { project_name: project.uri_name, type: 'note',
+                           title: note.title }
       expect(response).to render_template('edit')
     end
   end

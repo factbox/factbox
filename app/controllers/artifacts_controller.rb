@@ -101,6 +101,7 @@ class ArtifactsController < ApplicationController
     @artifact = instantiate_artifact(artifact_params[:type], artifact_params)
     @artifact.author_id = current_user.id
     @artifact.generate_version
+    @artifact.is_new = true
 
     if @artifact.save
       flash[:success] = 'Artifact created with success.'

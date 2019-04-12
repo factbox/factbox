@@ -6,18 +6,27 @@
 class Artifact < ApplicationRecord
   include Versionable
 
+  # used just in artifact#create
+  attr_accessor :is_new
+
   actable
+
   # previous version of this artifact
-  belongs_to :origin_artifact, class_name: 'Artifact', foreign_key: 'origin_id', optional: true
+  belongs_to :origin_artifact, class_name: 'Artifact', foreign_key: 'origin_id',
+                               optional: true
 
   belongs_to :project, optional: true
-  belongs_to :author, class_name: 'User', foreign_key: 'author_id', optional: true
+  belongs_to :author, class_name: 'User', foreign_key: 'author_id',
+                      optional: true
 
   # reference of artifacts sources
   has_many   :children, class_name: 'Artifact', foreign_key: 'source_id'
   belongs_to :source, class_name: 'Artifact', optional: true
 
   validates :title, presence: true, length: { in: 2..20 }
+  validates_uniqueness_of :title, scope: :project_id, on: :create,
+                                  message: 'Title redundancy is not permitted',
+                                  if: proc { |a| a.is_new }
 
   # method in Versionable concern
   before_validation :generate_version
