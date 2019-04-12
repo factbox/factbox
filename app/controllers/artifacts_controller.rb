@@ -74,23 +74,25 @@ class ArtifactsController < ApplicationController
   end
 
   # Update artifact creating a new version
-  # PUT /:type/:id
+  # PUT /type/:id
   def update
     @type = artifact_params[:type].downcase
 
     origin_artifact = get_klass(artifact_params[:type]).find(params[:id])
     origin_artifact.discontinue
 
-    artifact_args = generate_artifact_args(origin_artifact)
-
-    @artifact = instantiate_artifact(artifact_params[:type], artifact_args)
-    @artifact.generate_version
+    generate_new_version(origin_artifact)
 
     if @artifact.save && origin_artifact.save
       flash[:success] = 'Artifact updated succeed'
+      redirect_to action: :edit,
+                  project_name: @artifact.project.uri_name,
+                  type: @type, title: @artifact.uri_name
+    else
+      # reassign @artifact to validate form
+      build_artifact_to_form(origin_artifact)
+      render get_view(@type, 'edit')
     end
-
-    render get_view(@type, 'edit')
   end
 
   # Save a instance of specific artifact
@@ -171,6 +173,28 @@ class ArtifactsController < ApplicationController
     params.require(:artifact).permit!
   end
 
+  # Used in update, when request fails.
+  # Basically we need build @artifact mounted in edit action
+  # because this reference is reassign to origin_artifact
+  def build_artifact_to_form(origin_artifact)
+    form_attributes = params[:artifact].to_h
+    # type is useless for artifact.specific
+    form_attributes.delete :type
+
+    # save errors
+    errors = @artifact.errors
+
+    # reassign to persisted object
+    @artifact = origin_artifact
+
+    # Overwrite with form data
+    @artifact.assign_attributes form_attributes
+    # Add each validation throwed
+    errors.each do |k, e|
+      @artifact.errors.add k, e
+    end
+  end
+
   # Used in update to copy properties of source
   def generate_artifact_args(origin_artifact)
     artifact_params.merge(
@@ -178,6 +202,14 @@ class ArtifactsController < ApplicationController
       author_id: origin_artifact.author_id,
       project_id: origin_artifact.project_id
     )
+  end
+
+  # Check versionable.rb to understand discontinue and generate_version
+  def generate_new_version(origin_artifact)
+    artifact_args = generate_artifact_args(origin_artifact)
+
+    @artifact = instantiate_artifact(artifact_params[:type], artifact_args)
+    @artifact.generate_version
   end
 
   def find_project_by_name
