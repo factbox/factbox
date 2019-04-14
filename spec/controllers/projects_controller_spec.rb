@@ -41,7 +41,7 @@ RSpec.describe ProjectsController, type: :controller do
 
     # Work just in prod
     it 'when not have plugins' do
-      get :show, params: { name: project.uri_name }
+      get :show, params: { project_name: project.uri_name }
 
       expect(assigns(:plugins).size).to eq(0)
     end
@@ -54,7 +54,7 @@ RSpec.describe ProjectsController, type: :controller do
 
     it 'when project have 3 nodes and 2 edges' do
       notes = [note1, note2, note3]
-      get :traceability, params: {  name: project.uri_name }
+      get :traceability, params: {  project_name: project.uri_name }
 
       expect(assigns(:nodes).size).to eq(notes.size)
       expect(assigns(:edges).size).to eq(note1.children.size)
@@ -64,7 +64,6 @@ RSpec.describe ProjectsController, type: :controller do
 
   describe 'POST #create' do
     before(:each) do
-      user.save!
       login(user)
     end
 
@@ -95,21 +94,19 @@ RSpec.describe ProjectsController, type: :controller do
   end
 
   describe 'PUT #update' do
-    it 'do a valid update' do
-      project = FactoryBot.build(:project)
-      project.save!
+    before(:each) do
+      login(user)
+    end
 
-      put :update, params: {id: project.id, project: { name: 'A valid title' }}
+    it 'do a valid update' do
+      put :update, params: { id: project.id, project: { name: 'Factbox' } }
 
       project.reload
-      expect(project.name).to eq('A valid title')
+      expect(project.name).to eq('Factbox')
     end
 
     it 'do a invalid update' do
-      project = FactoryBot.build(:project)
-      project.save!
-
-      put :update, params: {id: project.id, project: { name: '' }}
+      put :update, params: { id: project.id, project: { name: '' } }
 
       expect(response).to render_template('edit')
     end
