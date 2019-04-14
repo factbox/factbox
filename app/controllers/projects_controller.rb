@@ -1,7 +1,7 @@
 # Controller for project actions
 class ProjectsController < ApplicationController
-  before_action :authorize, except: [:show]
-  before_action :check_project_privacity, only: [:show]
+  before_action :authorize, except: [:show, :traceability]
+  before_action :check_project_privacity, only: [:show, :traceability]
   before_action :set_project, only: [:update]
   before_action :set_project_by_name, only: [:show, :edit, :traceability]
 
@@ -112,7 +112,7 @@ class ProjectsController < ApplicationController
   def update
     if @project.update_attributes(project_params)
       flash[:success] = 'Project successful updated'
-      redirect_to action: :edit, name: @project.name
+      redirect_to action: :edit, project_name: @project.name
     else
       render :edit
     end
