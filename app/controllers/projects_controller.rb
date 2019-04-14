@@ -100,7 +100,7 @@ class ProjectsController < ApplicationController
        because does not exist or already in project"
     end
 
-    redirect_to action: :edit, name: @project.name
+    redirect_to action: :edit, project_name: @project.name
   end
 
   # Page for edit projects
