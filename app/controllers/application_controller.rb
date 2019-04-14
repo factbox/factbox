@@ -12,14 +12,14 @@ class ApplicationController < ActionController::Base
   end
 
   # used in check_project_privacity
-  def user_belongs_to_project
-    @current_user && @current_user.projects.exists?(project)
+  def user_belongs_to_project(project)
+    current_user && project && project.users.exists?(current_user.id)
   end
 
   def check_project_privacity
     project = Project.find_by_name(CGI.unescape(params[:project_name]))
-    is_allowed = project.is_public || user_belongs_to_project
-    redirect_to root_path unless is_allowed
+    is_allowed = project.is_public || user_belongs_to_project(project)
+    redirect_to not_found_path unless is_allowed
   end
 
   def logged_in?

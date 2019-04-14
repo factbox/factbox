@@ -10,8 +10,10 @@ Rails.application.routes.draw do
 
   root  'users#index'
 
-  post  '/authenticate' => 'sessions#create'
-  get   '/logout' => 'sessions#destroy'
+  get   'notfound', to: 'errors#not_found', as: 'not_found'
+
+  post  '/authenticate', to: 'sessions#create'
+  get   '/logout', to: 'sessions#destroy'
 
   get   '/user/settings', to: 'users#settings'
   get   '/user/settings/account', to: 'users#settings_account'
