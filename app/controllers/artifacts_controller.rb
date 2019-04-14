@@ -3,7 +3,8 @@ class ArtifactsController < ApplicationController
   include ArtifactsHelper
 
   before_action :authorize, only: [:new, :new_type, :create]
-  before_action :set_artifact, only: [:edit, :update]
+  before_action :set_artifact, only: [:edit]
+  before_action :find_by_project_and_title, only: [:show_versions, :show]
 
   # List all specific artifact types
   # GET /:project_id/:resource
@@ -52,50 +53,46 @@ class ArtifactsController < ApplicationController
   end
 
   # Find artifact and render your edit page
-  # GET /:type/edit/:id
+  # GET /:type/edit/:title
   def edit
-    # TODO: Treat an error if this where return two ids
-    # Should find first and unique artifact to get your 'specific' reference
-    actable_type = params[:type].capitalize
-    @artifact = Artifact.where(actable_type: actable_type, id: params[:id])
-                        .first.specific
-
     # The user should not access edit page of previous versions
-    # TODO: maybe we could render to a new page, with more explains
-    if @artifact.last_version
+    if @artifact && @artifact.specific.last_version
+      # artifact should not point to self as source
+      @available_artifacts = find_latest_versions.reject { |v| v == @artifact }
+
+      # Views are prepared to receive specific
+      @artifact = @artifact.specific
+
       # The name of resource, artifact name
       @type = @artifact.actable_type.downcase
 
-      @available_artifacts = Artifact.where(
-        project_id: @artifact.project_id,
-        last_version: true
-      )
-
       render get_view(@type, 'edit')
     else
-      project_id = @artifact.project_id
-      redirect_to controller: 'projects', action: 'show', id: project_id
+      flash[:warning] = 'Sorry, but previous artifacts can not be edited...'
+      redirect_to project_show_url(@project, name: @project.name)
     end
   end
 
   # Update artifact creating a new version
-  # PUT /:type/:id
+  # PUT /type/:id
   def update
     @type = artifact_params[:type].downcase
 
     origin_artifact = get_klass(artifact_params[:type]).find(params[:id])
     origin_artifact.discontinue
 
-    artifact_args = generate_artifact_args(origin_artifact)
-
-    @artifact = instantiate_artifact(artifact_params[:type], artifact_args)
-    @artifact.generate_version
+    generate_new_version(origin_artifact)
 
     if @artifact.save && origin_artifact.save
       flash[:success] = 'Artifact updated succeed'
+      redirect_to action: :edit,
+                  project_name: @artifact.project.uri_name,
+                  type: @type, title: @artifact.uri_name
+    else
+      # reassign @artifact to validate form
+      build_artifact_to_form(origin_artifact)
+      render get_view(@type, 'edit')
     end
-
-    render get_view(@type, 'edit')
   end
 
   # Save a instance of specific artifact
@@ -104,6 +101,7 @@ class ArtifactsController < ApplicationController
     @artifact = instantiate_artifact(artifact_params[:type], artifact_params)
     @artifact.author_id = current_user.id
     @artifact.generate_version
+    @artifact.is_new = true
 
     if @artifact.save
       flash[:success] = 'Artifact created with success.'
@@ -141,17 +139,14 @@ class ArtifactsController < ApplicationController
   end
 
   # Shows artifact selected
-  # GET :project_id/artifacts/:name
+  # GET :project_name/artifacts/:name
   def show
-    @artifact = find_by_project_and_title
-
     render get_view(@artifact.actable_type, 'show')
   end
 
   # Show previous versions of one Artifact
-  # GET :project_id/versions/:name
+  # GET :project_name/versions/:name
   def show_versions
-    @artifact = find_by_project_and_title
     @versions = [@artifact]
 
     version = @artifact.origin_artifact
@@ -162,9 +157,11 @@ class ArtifactsController < ApplicationController
   end
 
   # Show specific version
-  # GET /:project_id/version/:hash
+  # GET /:project_name/version/:hash
   def show_version
-    options = { project_id: params[:project_id], version: [params[:hash]] }
+    project = Project.find_by_name(CGI.unescape(params[:project_name]))
+    options = { project_id: project.id, version: [params[:hash]] }
+
     @artifact = Artifact.where(options).first
 
     render get_view(@artifact.actable_type, 'show')
@@ -177,6 +174,28 @@ class ArtifactsController < ApplicationController
     params.require(:artifact).permit!
   end
 
+  # Used in update, when request fails.
+  # Basically we need build @artifact mounted in edit action
+  # because this reference is reassign to origin_artifact
+  def build_artifact_to_form(origin_artifact)
+    form_attributes = params[:artifact].to_h
+    # type is useless for artifact.specific
+    form_attributes.delete :type
+
+    # save errors
+    errors = @artifact.errors
+
+    # reassign to persisted object
+    @artifact = origin_artifact
+
+    # Overwrite with form data
+    @artifact.assign_attributes form_attributes
+    # Add each validation throwed
+    errors.each do |k, e|
+      @artifact.errors.add k, e
+    end
+  end
+
   # Used in update to copy properties of source
   def generate_artifact_args(origin_artifact)
     artifact_params.merge(
@@ -186,21 +205,46 @@ class ArtifactsController < ApplicationController
     )
   end
 
-  def find_by_project_and_title
-    Artifact.where(
-      project_id: params[:project_id],
-      title: params[:title],
-      last_version: true
-    ).first
+  # Check versionable.rb to understand discontinue and generate_version
+  def generate_new_version(origin_artifact)
+    artifact_args = generate_artifact_args(origin_artifact)
+
+    @artifact = instantiate_artifact(artifact_params[:type], artifact_args)
+    @artifact.generate_version
   end
 
-  def set_artifact
-    @artifact = Artifact.find(params[:id]).specific
+  def find_project_by_name
+    Project.find_by_name(CGI.unescape(params[:project_name]))
+  end
+
+  def find_by_project_and_title
+    project = find_project_by_name
+
+    @artifact = Artifact.where(
+      project_id: project.id,
+      title: CGI.unescape(params[:title]),
+      last_version: true
+    ).first
   end
 
   # TODO: Throws error if page null
   def get_view(klass, page)
     # The default of the rails views folders is lowercase and plural
     "#{klass.downcase.pluralize}/#{page}"
+  end
+
+  def find_latest_versions
+    Artifact.where(project_id: @artifact.project_id, last_version: true)
+  end
+
+  # TODO: Treat an error if this where return two ids
+  # Should find first and unique artifact to get your 'specific' reference
+  def set_artifact
+    actable_type = params[:type].capitalize
+    @project = find_project_by_name
+    @artifact = Artifact.where(project_id: @project.id,
+                               actable_type: actable_type,
+                               last_version: true,
+                               title: CGI.unescape(params[:title])).first
   end
 end

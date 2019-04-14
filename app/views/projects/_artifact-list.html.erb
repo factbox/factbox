@@ -4,17 +4,17 @@
       <% @project.last_versions.each do |artifact| %>
         <tr>
           <td><i class="glyphicon <%= artifact.glyph_icon %>"></i> <%= artifact.actable_type %></td>
-          <td><%= link_to artifact.title, artifact.show_link  %></td>
+          <td><%= link_to artifact.title, artifact.show_link(@project.uri_name)  %></td>
           <td><%= artifact.author.login %></td>
           <td><%= time_ago_in_words artifact.time_creation %></td>
           <td>
-            <a href="<%= "/#{artifact.project_id}/versions/#{artifact.title}" %>"
+            <a href="<%= artifact.show_versions_link(@project.uri_name) %>"
                alt="Show versions">
               <i class="fa fa-code-branch"></i>
             </a>
           </td>
           <td>
-            <a href="<%= artifact.edit_link %>">
+            <a href="<%= artifact.edit_link(@project.uri_name) %>">
               <i class="fa fa-edit"></i>
             </a>
           </td>
