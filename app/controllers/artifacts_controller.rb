@@ -58,8 +58,7 @@ class ArtifactsController < ApplicationController
   def edit
     # The user should not access edit page of previous versions
     if @artifact && @artifact.specific.last_version
-      # artifact should not point to self as source
-      @available_artifacts = find_latest_versions.reject { |v| v == @artifact }
+      load_available_artifacts
 
       # Views are prepared to receive specific
       @artifact = @artifact.specific
@@ -92,6 +91,7 @@ class ArtifactsController < ApplicationController
     else
       # reassign @artifact to validate form
       build_artifact_to_form(origin_artifact)
+      load_available_artifacts
       render get_view(@type, 'edit')
     end
   end
@@ -108,14 +108,7 @@ class ArtifactsController < ApplicationController
       flash[:success] = 'Artifact created with success.'
       redirect_to project_show_url(@artifact.project.uri_name)
     else
-      @all_artifacts = Artifact.where(
-        project_id: artifact_params[:project_id],
-        last_version: true
-      )
-
-      @artifact.errors.full_messages.each do |message|
-        puts message
-      end
+      load_available_artifacts
 
       render get_view(@artifact.actable_type, 'new'), status: 400
     end
@@ -195,6 +188,12 @@ class ArtifactsController < ApplicationController
     errors.each do |k, e|
       @artifact.errors.add k, e
     end
+  end
+
+  # Load all artifacts to use as source
+  def load_available_artifacts
+    # artifact should not point to self as source
+    @available_artifacts = find_latest_versions.reject { |v| v == @artifact }
   end
 
   # Used in update to copy properties of source
