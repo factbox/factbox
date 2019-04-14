@@ -200,7 +200,7 @@ class ArtifactsController < ApplicationController
   def generate_artifact_args(origin_artifact)
     artifact_params.merge(
       origin_artifact: origin_artifact.acting_as,
-      author_id: origin_artifact.author_id,
+      author_id: current_user.id,
       project_id: origin_artifact.project_id
     )
   end
