@@ -9,6 +9,10 @@ html {
   height: 100%;
 }
 
+.help-block {
+  color: 'danger-text';
+}
+
 footer {
   width: 100%;
   background-color: #F2F2F2;
@@ -18,10 +22,6 @@ footer {
 footer .copyright {
 	color: #000;
 	font-size: 20px;
-}
-
-.error-element {
-  font-size: 16px;
 }
 
 .page-head {
