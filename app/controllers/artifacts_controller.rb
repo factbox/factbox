@@ -2,7 +2,7 @@
 class ArtifactsController < ApplicationController
   include ArtifactsHelper
 
-  before_action :authorize, only: [:new, :new_type, :create]
+  before_action :authorize
   before_action :set_artifact, only: [:edit]
   before_action :find_by_project_and_title, only: [:show_versions, :show]
 

@@ -1,6 +1,6 @@
 # Controller for project actions
 class ProjectsController < ApplicationController
-  before_action :authorize, only: [:index, :new, :create, :invite]
+  before_action :authorize
 
   before_action :set_project, only: [:update]
   before_action :set_project_by_name, only: [:show, :edit]
