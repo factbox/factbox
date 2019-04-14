@@ -1,9 +1,9 @@
 # Controller for project actions
 class ProjectsController < ApplicationController
-  before_action :authorize
-
+  before_action :authorize, except: [:show]
+  before_action :check_project_privacity, only: [:show]
   before_action :set_project, only: [:update]
-  before_action :set_project_by_name, only: [:show, :edit]
+  before_action :set_project_by_name, only: [:show, :edit, :traceability]
 
   # Used like home page of logged users
   # GET /projects
@@ -36,7 +36,7 @@ class ProjectsController < ApplicationController
 
   # GET /traceability/:name
   def traceability
-    artifacts = Project.find_by_name(CGI.unescape(params[:name])).artifacts
+    artifacts = @project.artifacts
 
     @nodes = []
     @edges = []
@@ -125,7 +125,7 @@ class ProjectsController < ApplicationController
   end
 
   def set_project_by_name
-    @project = Project.find_by_name(CGI.unescape(params[:name]))
+    @project = Project.find_by_name(CGI.unescape(params[:project_name]))
   end
 
   def user_invited
