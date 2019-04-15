@@ -14,7 +14,7 @@ class Image < ApplicationRecord
     {
       color: {
         border: '#34495e',
-        background: '#2ecc71'
+        background: last_version ? '#2ecc71' : '#7f8c8d'
       }
     }
   end
