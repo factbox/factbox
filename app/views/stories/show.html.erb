@@ -1,13 +1,7 @@
-<div class="container" style="min-height: 80vh">
-  <div class="row mb-3">
-    <h1><%= @artifact.title %></h1>
-  </div>
-  <div class="row">
-    <%= @artifact.specific.story %>
-  </div>
+<div class="row mb-3">
+  <h1><%= @artifact.title %></h1>
+</div>
 
-  <div class="row align-items-end">
-    <%= link_to 'Back', project_path(@artifact.project), class: "btn btn-light mr-1" %>
-    <%= link_to 'Edit', "/#{@artifact.actable_type}/edit/#{@artifact.id}", class: "btn btn-primary" %>
-  </div>
+<div class="row ml-3">
+  <%= @artifact.specific.story %>
 </div>
