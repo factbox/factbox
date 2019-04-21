@@ -1,4 +1,6 @@
 Rails.application.routes.draw do
+  get '/kanban/:id/move/:layer', to: 'layers#move'
+  resources :stories, controller: 'artifacts'
   resources :artifacts, only: [:new, :destroy]
 
   resources :notes, controller: 'artifacts', except: [:new, :destroy, :index]

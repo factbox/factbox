@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_04_07_171945) do
+ActiveRecord::Schema.define(version: 2019_04_21_034020) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -80,6 +80,11 @@ ActiveRecord::Schema.define(version: 2019_04_07_171945) do
     t.integer "project_id", null: false
     t.index ["project_id", "user_id"], name: "index_projects_users_on_project_id_and_user_id"
     t.index ["user_id", "project_id"], name: "index_projects_users_on_user_id_and_project_id"
+  end
+
+  create_table "stories", id: :serial, force: :cascade do |t|
+    t.string "story"
+    t.integer "layer", default: 0
   end
 
   create_table "users", id: :serial, force: :cascade do |t|

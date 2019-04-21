@@ -7,6 +7,12 @@ GIT
       capistrano-bundler
       puma (~> 3.4)
 
+PATH
+  remote: ../kanban
+  specs:
+    kanban (0.1.0)
+      rails (~> 5.2.1)
+
 GEM
   remote: https://rubygems.org/
   specs:
@@ -293,6 +299,7 @@ DEPENDENCIES
   factory_bot_rails
   jbuilder (~> 2.5)
   jquery-rails
+  kanban!
   listen (~> 3.0.5)
   pg (~> 0.18)
   puma (~> 3.0)

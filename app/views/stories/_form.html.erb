@@ -1,0 +1,20 @@
+<%= simple_form_for(@artifact, as: 'artifact') do |f| %>
+  <%= f.error_notification %>
+
+  <div class="form-inputs">
+    <%= f.input :project_id, as: :hidden, input_html: { value: @artifact.project_id } %>
+    <!-- Common attributes -->
+    <%= f.input :type, as: :hidden, input_html: { value: 'stories' } %>
+    <%= f.input :title %>
+    <!-- Specific attributes -->
+    <%= f.input :story, as: :text %>
+    <!-- Source of story -->
+    <%= f.input :source_id, selected: @artifact.source_id,
+        collection: @available_artifacts, prompt: "Select source artifact" %>
+  </div>
+
+  <div class="row align-items-end">
+    <%= link_to 'Back', project_path(@artifact.project), class: "btn btn-light mr-1" %>
+    <%= f.button :submit, class: 'btn btn-success pull-right' %>
+  </div>
+<% end %>
