@@ -1,5 +1,5 @@
 # default branch to deploy, it is recommended deploy with master
-set :branch, 'develop'
+set :branch, 'deploy'
 
 # set your address here
 set :server_address, 'factbox.app'
