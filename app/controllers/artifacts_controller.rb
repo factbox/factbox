@@ -14,9 +14,9 @@ class ArtifactsController < ApplicationController
     pluralized_artifact = params[:resource]
 
     artifact_klass = get_klass(pluralized_artifact.singularize)
-    @artifacts = artifact_klass.where(project_id: params[:project_id])
+    @project = Project.find_by_name(params[:project_name])
 
-    @project = Project.find(params[:project_id])
+    @artifacts = artifact_klass.where(project_id: @project.id)
 
     render "#{pluralized_artifact}/index"
   end
