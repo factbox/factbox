@@ -56,7 +56,7 @@
       <% @plugins.each do |plugin| %>
         <li class="nav-item">
           <a
-            href="/<%=@project.id%>/<%=plugin[:resource]%>"
+            href="/<%=@project.name%>/<%=plugin[:resource]%>"
             class="nav-link"
           >
             <i class="fa fa-puzzle-piece"></i> <%= plugin[:name] %>
