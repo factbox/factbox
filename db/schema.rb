@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_04_21_034020) do
+ActiveRecord::Schema.define(version: 2019_04_21_073639) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -54,6 +54,11 @@ ActiveRecord::Schema.define(version: 2019_04_21_034020) do
   create_table "images", force: :cascade do |t|
   end
 
+  create_table "layers", force: :cascade do |t|
+    t.integer "project_id"
+    t.string "name"
+  end
+
   create_table "metodologies", id: :serial, force: :cascade do |t|
     t.string "name"
     t.string "description"
@@ -84,7 +89,7 @@ ActiveRecord::Schema.define(version: 2019_04_21_034020) do
 
   create_table "stories", id: :serial, force: :cascade do |t|
     t.string "story"
-    t.integer "layer", default: 0
+    t.integer "layer_id"
   end
 
   create_table "users", id: :serial, force: :cascade do |t|

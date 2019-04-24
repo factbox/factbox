@@ -1,2 +1,10 @@
 <!-- erb: paste this in view -->
-<%= react_component("Kanban", { artifacts: @artifacts.to_json, project: @project }) %>
+<%=
+  react_component(
+    "Kanban",
+    { artifacts: (@artifacts.select{|a| a.last_version }).to_json,
+      project: @project,
+      layers: Layer.where(project_id: @project.id).records.to_json
+    }
+  )
+%>
