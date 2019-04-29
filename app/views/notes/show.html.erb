@@ -2,6 +2,8 @@
   <h1><%= @artifact.title %></h1>
 </div>
 
-<div class="row">
-  <%= @artifact.specific.content %>
-</div>
+<%=
+  opts = { auto_ids: "false" }
+  markdown = Kramdown::Document.new(@artifact.specific.content, opts).to_html
+  render html: markdown.html_safe
+%>
