@@ -1,5 +1,3 @@
-require 'kramdown'
-
 # Controller for manage all existing artifacts types, including plugins.
 class ArtifactsController < ApplicationController
   include ArtifactsHelper

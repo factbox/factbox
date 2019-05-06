@@ -46,9 +46,6 @@ gem 'jbuilder', '~> 2.5'
 gem 'react-rails'
 gem 'webpacker'
 
-# To markdown support
-gem 'kramdown'
-
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
   # gem 'byebug', platform: :mri

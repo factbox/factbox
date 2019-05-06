@@ -2,8 +2,4 @@
   <h1><%= @artifact.title %></h1>
 </div>
 
-<%=
-  opts = { auto_ids: "false" }
-  markdown = Kramdown::Document.new(@artifact.specific.content, opts).to_html
-  render html: markdown.html_safe
-%>
+<%= react_component("Markdown", { content: @artifact.specific.content }) %>
