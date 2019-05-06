@@ -4,6 +4,9 @@ import MarkdownIt from 'markdown-it';
 
 const md = new MarkdownIt();
 
+/**
+ * Markdown form with 2 tabs: preview and textarea
+ */
 class MarkdownForm extends React.Component {
   constructor(props) {
     super(props);
@@ -14,8 +17,14 @@ class MarkdownForm extends React.Component {
     this.textarea = React.createRef();
   }
 
+  /**
+   * Update markdown
+   */
   setMarkdown = markdown => this.setState({ markdown });
 
+  /**
+   * Change textarea
+   */
   handleChange = (evt) => {
     const { value } = evt.target;
 
@@ -24,6 +33,9 @@ class MarkdownForm extends React.Component {
     });
   }
 
+  /**
+   * Fires event to setup current new markdown
+   */
   handlePreview = () => {
     const content = this.textarea.current.value;
     const markdown = md.render(content);
@@ -89,9 +101,6 @@ class MarkdownForm extends React.Component {
           <div className="tab-pane fade" id="nav-preview" role="tabpanel" aria-labelledby="nav-preview-tab">
             <div
               dangerouslySetInnerHTML={{ __html: markdown }}
-              style={{
-                height: this.textarea.current ? this.textarea.current.clientHeight : '100%'
-              }}
               className="border mt-2 p-3"
             >
               {/* markdown will be rendered here */}
