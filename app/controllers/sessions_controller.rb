@@ -1,5 +1,7 @@
 # Controller for users session
 class SessionsController < ApplicationController
+  skip_before_action :verify_authenticity_token
+
   # POST /sessions
   # Login - Creates user session
   def create
