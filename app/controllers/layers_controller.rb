@@ -1,5 +1,7 @@
 # API controller for Layers, used in Kanban
 class LayersController < ActionController::API
+  before_action :set_story, only: [:move]
+
   # GET /kanban/move
   # Move specific artifact to layer
   def move
