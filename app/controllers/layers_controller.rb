@@ -20,7 +20,25 @@ class LayersController < ActionController::API
     @layer = Layer.new(layer_params)
 
     if @layer.save
-      render status: 200, json: { message: 'Layer created' }.to_json
+      render status: 200, json: @layer.to_json
+    else
+      render status: 500, json: { error: @layer.errors }.to_json
+    end
+  end
+
+  def destroy
+    @layer = Layer.find(params[:id])
+
+    if @layer.destroy
+      # return stories of this layer, to update front
+      stories = Story.where(layer_id: params[:id])
+
+      stories.each do |s|
+        s.layer_id = nil
+        s.save
+      end
+
+      render status: 200, json: stories.to_json
     else
       render status: 500, json: { error: @layer.errors }.to_json
     end

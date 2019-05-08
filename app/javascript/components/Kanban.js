@@ -8,8 +8,8 @@ import {
   Droppable,
   Draggable,
 } from 'react-beautiful-dnd';
-import LayerForm from './LayerForm';
 import axios from 'axios';
+import LayerForm from './LayerForm';
 
 const getItemStyle = (isDragging, draggableStyle) => ({
   // some basic styles to make the items look a bit nicer
@@ -29,7 +29,8 @@ const Layer = (props) => {
     title,
     stories,
     projectName,
-    isDetached
+    deleteCallback,
+    isDetached,
   } = props;
 
   return (
@@ -37,11 +38,21 @@ const Layer = (props) => {
       {provided => (
         <div
           ref={provided.innerRef}
-          className={isDetached ? "col-md-12" : "col-md-3"}
+          className={isDetached ? 'col-md-12' : 'col-md-3'}
           {...provided.droppableProps}
         >
           <div className="card">
             <div className="card-body">
+              <button
+                hidden={id === -1}
+                onClick={() => deleteCallback(id)}
+                type="button"
+                className="close"
+                data-dismiss="alert"
+                aria-label="Close"
+              >
+                <span aria-hidden="true">&times;</span>
+              </button>
               <h4 className="card-title text-truncate py-2">
                 {title}
               </h4>
@@ -81,7 +92,7 @@ const Layer = (props) => {
       )}
     </Droppable>
   );
-}
+};
 
 // a little function to help us with reordering the result
 const reorder = (list, startIndex, endIndex) => {
@@ -113,6 +124,14 @@ const move = (source, destination, droppableSource, droppableDestination) => {
   return result;
 };
 
+const initialState = {
+  alert: {
+    type: '',
+    message: '',
+    visible: false,
+  },
+};
+
 class Kanban extends React.Component {
   constructor(props) {
     super(props);
@@ -120,18 +139,29 @@ class Kanban extends React.Component {
     const stories = JSON.parse(props.artifacts);
     const layers = JSON.parse(props.layers);
 
-    stories.forEach(s => {
-      if (s.layer_id === null) {
-        s.layer_id = -1;
-      }
-    });
-
     this.state = {
+      alert: initialState.alert,
       error: null,
-      stories,
+      stories: this.updateEmptyId(stories),
       layers,
       isLayerFormOpen: false,
     };
+
+    this.deleteLayer = this.deleteLayer.bind(this);
+  }
+
+  /**
+   * Generate new array with non-nullable values
+   */
+  updateEmptyId = (stories) => {
+    const list = [];
+
+    stories.forEach((s) => {
+      if (s.layer_id === null) {
+        list.push(Object.assign(s, { layer_id: -1 }));
+      }
+    });
+    return stories;
   }
 
   /**
@@ -172,9 +202,6 @@ class Kanban extends React.Component {
       const sourceId = source.droppableId;
       const destinationId = destination.droppableId;
 
-      console.info(sourceId);
-      console.info(destinationId);
-
       // get story before move
       const story = this.getList(sourceId)[source.index];
 
@@ -190,7 +217,12 @@ class Kanban extends React.Component {
       const updatedStories = [].concat(...Object.values(resultAfterMove));
 
       this.setState(prevState => ({
-        stories: [...prevState.stories, updatedStories]
+        stories: [...prevState.stories, updatedStories],
+        alert: {
+          type: 'primary',
+          message: 'Story moved in kanban',
+          visible: true,
+        },
       }));
     }
   };
@@ -203,89 +235,168 @@ class Kanban extends React.Component {
       id: story.id,
       layer: layer === -1 ? null : layer, // controller expect default layer has null
     };
-    axios.post(`/kanban/move`, data);
+    axios.post('/kanban/move', data);
   }
 
   /**
    * Request Rails API to create a new layer
    */
   createLayer = (layer) => {
-    axios.post(`/layers`, layer)
+    axios.post('/layers', layer)
       .then((res) => {
-        const { response } = res.data;
-        this.setState({
+        const { data } = res;
+
+        this.setState(prevState => ({
+          layers: [...prevState.layers, data],
           error: null,
           isLayerFormOpen: false,
-        });
+          alert: {
+            type: 'success',
+            message: 'New list created with success.',
+            visible: true,
+          },
+        }));
       })
       .catch((err) => {
         const { error } = err.response.data;
         this.setState({
-          error
+          error,
+          alert: {
+            type: 'error',
+            message: 'Some error was happening...',
+            visible: true,
+          },
         });
       });
   }
 
+  /**
+   * Request Rails API to destroy a layer
+   * @param layer is your id
+   */
+  deleteLayer = (layer) => {
+    axios.delete(`/layers/${layer}`)
+      .then((res) => {
+        this.setState(prevState => ({
+          layers: prevState.layers.filter(l => l.id !== layer),
+          stories: [...prevState.stories, ...this.updateEmptyId(res.data)], // TODO: treat this, replicate data
+          alert: {
+            type: 'primary',
+            message: 'List was deleted.',
+            visible: true,
+          },
+        }));
+      })
+      .catch((err) => {
+        const { error } = err.response.data;
+        this.setState({
+          error,
+          alert: {
+            type: 'danger',
+            message: 'Layer can not be deleted.',
+            visible: true,
+          },
+        });
+      });
+  }
+
+  /**
+   * Clean alert object
+   */
+  dismissAlert = () => this.setState({ alert: initialState.alert });
+
   toogleLayerForm = () => {
     this.setState(prevState => ({
       isLayerFormOpen: !prevState.isLayerFormOpen,
-    }))
+    }));
   }
 
   render() {
     const { project } = this.props;
-    const { stories, layers, error, isLayerFormOpen } = this.state;
+    const {
+      stories,
+      layers,
+      alert,
+      error,
+      isLayerFormOpen,
+    } = this.state;
 
     return (
-        <div className="container-fluid pt-3">
-          <div className="row">
-            <div className="col-md-auto">
-              <h3>
-                {project.name}
-                <small> Kanban</small>
-              </h3>
-            </div>
-            <div className="col-md-3">
-              <div className="dropdown">
-                <button
-                  className="btn btn-secondary"
-                  type="button"
-                  onClick={this.toogleLayerForm}
-                >
-                  Add List
-                </button>
-                { isLayerFormOpen ? (
-                  <div className="dropdown-menu px-2 show">
-                    <LayerForm projectId={project.id} createLayer={this.createLayer} error={error}/>
-                  </div> ) : null
-                }
-              </div>
-            </div>
+      <div className="container-fluid pt-3">
+        <div className="row">
+          <div className="col-md-auto">
+            <h3>
+              {project.name}
+              <small> Kanban</small>
+            </h3>
           </div>
-          <DragDropContext onDragEnd={this.onDragEnd}>
-            <div className="row mt-3">
-                <Layer
-                  id={-1}
-                  projectName={project.name}
-                  title={<span>Detached <i className="fa fa-thumbtack"></i></span>}
-                  stories={stories.filter(s => s.layer_id === -1)}
-                  isDetached
-                />
-            </div>
-            <div className="row flex-row flex-sm-nowrap mt-3">
-              {
-                layers.map(l => (
-                  <Layer
-                    id={l.id}
-                    projectName={project.name}
-                    title={l.name}
-                    stories={stories.filter(s => s.layer_id === l.id)}
-                  />
-                ))
+          <div className="col-md-3">
+            <div className="dropdown">
+              <button
+                className="btn btn-secondary"
+                type="button"
+                onClick={this.toogleLayerForm}
+              >
+                Add List
+              </button>
+              { isLayerFormOpen ? (
+                <div className="dropdown-menu px-2 show">
+                  <LayerForm projectId={project.id} createLayer={this.createLayer} error={error} />
+                </div>
+              ) : null
               }
             </div>
-          </DragDropContext>
+          </div>
         </div>
+
+        { alert.visible ? (
+          <div className="row">
+            <div className={`alert alert-${alert.type} alert-dismissible w-100 mt-3`} role="alert">
+              {alert.message}
+              <button
+                onClick={() => this.dismissAlert()}
+                type="button"
+                className="close"
+                data-dismiss="alert"
+                aria-label="Close"
+              >
+                <span aria-hidden="true">&times;</span>
+              </button>
+            </div>
+          </div>
+        ) : null
+        }
+
+        <DragDropContext onDragEnd={this.onDragEnd}>
+          <div className="row mt-3">
+            <Layer
+              id={-1}
+              projectName={project.name}
+              title={(
+                <span>
+                  {'Detached '}
+                  <i className="fa fa-thumbtack" />
+                </span>
+              )}
+              stories={stories.filter(s => s.layer_id === -1)}
+              isDetached
+            />
+          </div>
+          <div className="row flex-row flex-sm-nowrap mt-3">
+            {
+              layers.map(l => (
+                <Layer
+                  deleteCallback={this.deleteLayer}
+                  id={l.id}
+                  projectName={project.name}
+                  title={l.name}
+                  stories={stories.filter(s => s.layer_id === l.id)}
+                />
+              ))
+            }
+          </div>
+        </DragDropContext>
+      </div>
     );
   }
 }
