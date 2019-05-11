@@ -2,7 +2,12 @@ require 'rails_helper'
 
 RSpec.describe ArtifactsController, type: :controller do
   let(:user) { FactoryBot.create(:user) }
-  let(:project) { FactoryBot.create(:project) }
+  let(:project) {
+    p = FactoryBot.create(:project)
+    p.users = [user]
+    p.save!
+    return p
+  }
 
   describe 'GET #new' do
     before(:each) do
@@ -10,12 +15,12 @@ RSpec.describe ArtifactsController, type: :controller do
     end
 
     it 'when entry in page to choose the artifact that should be create' do
-      get :new
+      get :new, params: { name: project.uri_name }
       expect(response).to render_template('new')
     end
 
     it 'to load all @artifacts avaliable in system' do
-      get :new
+      get :new, params: { name: project.uri_name }
       expect(assigns(:artifacts)).to_not be_empty
     end
   end
