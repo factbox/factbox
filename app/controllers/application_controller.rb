@@ -17,8 +17,7 @@ class ApplicationController < ActionController::Base
   end
 
   def check_project_permission
-    # TODO not allowed error
-    redirect_to not_found_path unless user_belongs_to_project
+    redirect_to not_authorized_path unless user_belongs_to_project
   end
 
   def check_project_privacity
