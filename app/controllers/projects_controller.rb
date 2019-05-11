@@ -2,6 +2,7 @@
 class ProjectsController < ApplicationController
   before_action :authorize, except: [:show, :traceability]
   before_action :check_project_privacity, only: [:show, :traceability]
+  before_action :check_project_permission, only: [:edit]
   before_action :set_project, only: [:update]
   before_action :set_project_by_name, only: [:show, :edit, :traceability]
 
