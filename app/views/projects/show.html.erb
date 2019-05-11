@@ -66,14 +66,16 @@
         </li>
       <% end %>
 
-      <li class="nav-item">
-        <a
-          href="/projects/<%=@project.name%>/settings"
-          class="nav-link"
-        >
-          <i class="fa fa-cog"></i> Settings
-        </a>
-      </li>
+      <% if @project.users.exists?(current_user.id) %>
+        <li class="nav-item">
+          <a
+            href="/projects/<%=@project.name%>/settings"
+            class="nav-link"
+          >
+            <i class="fa fa-cog"></i> Settings
+          </a>
+        </li>
+      <% end %>
     </ul>
 
     <div class="tab-content mt-2" id="myTabContent">
