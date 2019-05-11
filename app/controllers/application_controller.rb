@@ -13,14 +13,11 @@ class ApplicationController < ActionController::Base
 
   # used in check_project_privacity
   def user_belongs_to_project
-    puts current_user.inspect
-    puts current_project.users.inspect
     current_user && current_project && current_project.users.exists?(current_user.id)
   end
 
   def check_project_permission
     # TODO not allowed error
-    puts "User belongs to project? #{user_belongs_to_project}"
     redirect_to not_found_path unless user_belongs_to_project
   end
 
