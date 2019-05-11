@@ -40,7 +40,9 @@ class ApplicationController < ActionController::Base
   end
 
   def current_project
-    Project.find_by_name(CGI.unescape(params[:project_name]))
+    # TODO standize all to project_name
+    project_name = params[:project_name] || params[:name]
+    Project.find_by_name(CGI.unescape(project_name))
   end
 
   helper_method :current_user, :logged_in?, :authorize, :check_project_privacity
