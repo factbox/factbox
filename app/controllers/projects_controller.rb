@@ -74,6 +74,7 @@ class ProjectsController < ApplicationController
     @project = Project.new(project_params)
 
     @project.author_id = current_user.id
+    @project.users = [current_user]
 
     if @project.save
       redirect_to projects_path, success: 'Project created successful'
@@ -88,7 +89,7 @@ class ProjectsController < ApplicationController
     collaborator = User.find_by_login(user_invited)
     @project = Project.find(params[:project][:id])
 
-    if collaborator && !@project.users.include?(collaborator)
+    if collaborator && !colaborator.projects.include?(@project)
       @project.users.push(collaborator)
       if @project.save
         flash[:success] = "#{user_invited} added to #{@project.name}"
