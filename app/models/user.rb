@@ -11,16 +11,6 @@ class User < ApplicationRecord
   validates_format_of :email, with: /\A([^@\s]+)@((?:[-a-z0-9]+\.)+[a-z]{2,})\z/i
   validates :password, presence: true, on: :create, length: { minimum: 6 }, confirmation: true
 
-  # Override method that gets all projects where user belongs
-  # like membership or author
-  def projects
-    all_projects = []
-    all_projects += Project.where(author_id: id)
-    all_projects += super
-
-    all_projects
-  end
-
   def default_avatar
     avatar_opt = 'theme=frogideas&numcolors=4&size=220&fmt=svg'
     "http://tinygraphs.com/labs/isogrids/hexa16/#{self[:login]}?#{avatar_opt}"

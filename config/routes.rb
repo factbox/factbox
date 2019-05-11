@@ -15,6 +15,7 @@ Rails.application.routes.draw do
   root  'users#index'
 
   get   'notfound', to: 'errors#not_found', as: 'not_found'
+  get   'notauthorized', to: 'errors#not_authorized', as: 'not_authorized'
 
   post  '/authenticate', to: 'sessions#create'
   get   '/logout', to: 'sessions#destroy'
