@@ -2,6 +2,18 @@
   <h1><%= @artifact.title %></h1>
 </div>
 
-<div class="row ml-3">
+<h4>Story</h4>
+
+<div class="row ml-3 mb-3">
   <%= @artifact.specific.story %>
 </div>
+
+<% unless @artifact.specific.criterias.empty? %>
+  <h4>Acceptance criteria</h4>
+
+  <ul>
+    <% @artifact.specific.criterias.each do |c| %>
+      <li><%= c.content %></li>
+    <% end %>
+  </ul>
+<% end %>

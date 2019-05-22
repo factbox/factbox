@@ -8,6 +8,9 @@
     <%= f.input :title %>
     <!-- Specific attributes -->
     <%= f.input :story, as: :text %>
+
+    <%= react_component("CriteriaForm") %>
+
     <!-- Source of story -->
     <%= f.input :source_id, selected: @artifact.source_id,
         collection: @available_artifacts, prompt: "Select source artifact" %>

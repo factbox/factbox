@@ -1,4 +1,6 @@
 Rails.application.routes.draw do
+  get '/kanban/:id/move/:layer', to: 'layers#move'
+  resources :stories, controller: 'artifacts'
   post '/kanban/move', to: 'layers#move'
   resources :layers, only: [:create, :destroy]
 

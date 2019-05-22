@@ -1,7 +1,9 @@
 # Simple functional artifact.
 class Story < ApplicationRecord
-  acts_as :artifact
+  acts_as   :artifact
   validates :story, presence: false
+  has_many  :criterias, dependent: :destroy
+  accepts_nested_attributes_for :criterias, allow_destroy: true
 
   def self.plugin_name
     'Kanban'
