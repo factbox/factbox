@@ -54,11 +54,6 @@ ActiveRecord::Schema.define(version: 2019_04_21_073639) do
   create_table "images", force: :cascade do |t|
   end
 
-  create_table "layers", force: :cascade do |t|
-    t.integer "project_id"
-    t.string "name"
-  end
-
   create_table "metodologies", id: :serial, force: :cascade do |t|
     t.string "name"
     t.string "description"
@@ -85,11 +80,6 @@ ActiveRecord::Schema.define(version: 2019_04_21_073639) do
     t.integer "project_id", null: false
     t.index ["project_id", "user_id"], name: "index_projects_users_on_project_id_and_user_id"
     t.index ["user_id", "project_id"], name: "index_projects_users_on_user_id_and_project_id"
-  end
-
-  create_table "stories", id: :serial, force: :cascade do |t|
-    t.string "story"
-    t.integer "layer_id"
   end
 
   create_table "users", id: :serial, force: :cascade do |t|
