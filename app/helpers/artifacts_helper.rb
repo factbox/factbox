@@ -13,7 +13,7 @@ module ArtifactsHelper
   #   - https://apidock.com/rails/ActiveSupport/Inflector/classify
   #   - https://apidock.com/rails/ActiveSupport/Inflector/safe_constantize
   def instantiate_artifact(klass_name, params = nil)
-    klass = get_klass klass_name
+    klass = get_klass(klass_name.strip)
 
     if params
       klass.new(params.except(:type))
@@ -21,12 +21,12 @@ module ArtifactsHelper
       klass.new
     end
   rescue NoMethodError => _
-    raise InvalidKlassNameError, "Please verify if exists artifact named '
-      #{klass_name}'"
+    raise InvalidKlassNameError,
+          "Please verify if exists artifact named '#{klass_name}'"
   end
 
-  # @deprecated
-  # use Artifact.find().specific
+  # Used in instantiate artifact
+  # @deprecated to find, instead use Artifact.find().specific
   def get_klass(klass_name)
     klass_name.classify.safe_constantize
   end
