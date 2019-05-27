@@ -1,15 +1,22 @@
 import React from 'react';
 
-const InputCriteria = ({ id, remove }) => (
+const InputCriteria = ({ content, id, remove }) => (
   <div className="input-group mt-2">
     <input
       id={`criteria-${id}`}
       className="form-control string required"
       type="text"
+      placeholder="Type one acceptance criteria"
       name="artifact[criterias_attributes][][content]"
+      value={content}
     />
     <div className="input-group-prepend">
-      <button onClick={() => remove()} type="button" className="btn btn-light">
+      <button
+        onClick={() => remove()}
+        type="button"
+        className="btn btn-light"
+        alt="Delete criteria"
+      >
         <i className="fa fa-times" />
       </button>
     </div>
@@ -22,14 +29,32 @@ class CriteriaForm extends React.Component {
 
     this.state = {
       idCount: 1,
-      criterias: {
-        0: <InputCriteria id={0} remove={() => this.remove(0)} />,
-      }
+      criterias: props.criterias.length > 0 ?
+        this.createCriteriaInputs(props.criterias)
+        :
+        {
+          0: <InputCriteria id={0} remove={() => this.remove(0)} />,
+        },
     };
+  };
+
+  createCriteriaInputs = (criterias) => {
+    const inputCriterias = {};
+
+    criterias.forEach((obj, i) => {
+      inputCriterias[i] = (
+        <InputCriteria
+          id={i}
+          remove={() => this.remove(i)}
+          content={obj.content}
+        />
+      );
+    }, {});
+
+    return inputCriterias;
   }
 
   remove = id => {
-    console.info(id);
     this.setState(prevState=> ({
       criterias: {...prevState.criterias, [id]: undefined },
     }));
