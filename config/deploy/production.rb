@@ -2,7 +2,7 @@
 set :branch, 'develop'
 
 # set your address here
-set :server_address, '178.128.149.22'
+set :server_address, 'factbox.app'
 
 # Not asks for password, expect that ssh is set up
 ask(:password, nil, echo: false)

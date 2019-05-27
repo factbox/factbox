@@ -10,25 +10,28 @@ Rails.application.routes.draw do
 
   root  'users#index'
 
-  post  '/authenticate' => 'sessions#create'
-  get   '/logout' => 'sessions#destroy'
+  get   'notfound', to: 'errors#not_found', as: 'not_found'
+  get   'notauthorized', to: 'errors#not_authorized', as: 'not_authorized'
+
+  post  '/authenticate', to: 'sessions#create'
+  get   '/logout', to: 'sessions#destroy'
 
   get   '/user/settings', to: 'users#settings'
   get   '/user/settings/account', to: 'users#settings_account'
   post  '/user/settings/update_password', to: 'users#update_password'
   get   '/user/:login', to: 'users#show'
 
-  get   '/projects/:name', to: 'projects#show', as: 'project_show'
+  get   '/projects/:project_name', to: 'projects#show', as: 'project_show'
   post  '/projects/invite', to: 'projects#invite'
-  get   '/projects/:name/settings', to: 'projects#edit'
-  get   '/traceability/:name', to: 'projects#traceability'
+  get   '/projects/:project_name/settings', to: 'projects#edit', as: 'settings'
+  get   '/traceability/:project_name', to: 'projects#traceability', as: 'traceability'
 
   post  '/artifacts/new', to: 'artifacts#create'
-  get   '/:type/edit/:id/', to: 'artifacts#edit'
-  get   '/:project_id/:resource', to: 'artifacts#index'
+  get   '/:project_name/:type/edit/:title/', to: 'artifacts#edit'
   get   '/projects/:name/artifacts/new', to: 'artifacts#new'
-  get   '/:project_id/artifact/:title', to: 'artifacts#show'
-  get   '/:project_id/versions/:title', to: 'artifacts#show_versions'
-  get   '/:project_id/version/:hash', to: 'artifacts#show_version'
+  get   '/:project_name/artifact/:title', to: 'artifacts#show'
+  get   '/:project_name/versions/:title', to: 'artifacts#show_versions'
+  get   '/:project_name/artifact/version/:hash', to: 'artifacts#show_version'
   get   '/projects/:name/artifacts/new/:type', to: 'artifacts#new_type'
+  get   '/:project_name/:resource', to: 'artifacts#index'
 end

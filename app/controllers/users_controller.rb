@@ -1,5 +1,7 @@
 # Controller for users actions
 class UsersController < ApplicationController
+  before_action :authorize, except: [:create, :index]
+
   # Control of index dependent of user login
   # GET /
   def index

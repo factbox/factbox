@@ -2,11 +2,4 @@
   <h1><%= @artifact.title %></h1>
 </div>
 
-<div class="row">
-  <%= @artifact.specific.content %>
-</div>
-
-<div class="row mt-3">
-  <%= link_to 'Back', :back, class: "btn btn-light mr-1" %>
-  <%= link_to 'Edit', @artifact.edit_link, class: "btn btn-primary" %>
-</div>
+<%= react_component("Markdown", { content: @artifact.specific.content }) %>

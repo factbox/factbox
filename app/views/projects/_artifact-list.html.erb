@@ -4,32 +4,34 @@
       <% @project.last_versions.each do |artifact| %>
         <tr>
           <td><i class="glyphicon <%= artifact.glyph_icon %>"></i> <%= artifact.actable_type %></td>
-          <td><%= link_to artifact.title, artifact.show_link  %></td>
+          <td><%= link_to artifact.title, artifact.show_link(@project.uri_name)  %></td>
           <td><%= artifact.author.login %></td>
           <td><%= time_ago_in_words artifact.time_creation %></td>
           <td>
-            <a href="<%= "/#{artifact.project_id}/versions/#{artifact.title}" %>"
+            <a href="<%= artifact.show_versions_link(@project.uri_name) %>"
                alt="Show versions">
               <i class="fa fa-code-branch"></i>
             </a>
           </td>
           <td>
-            <a href="<%= artifact.edit_link %>">
+            <a href="<%= artifact.edit_link(@project.uri_name) %>">
               <i class="fa fa-edit"></i>
             </a>
           </td>
-          <td>
-            <%= link_to artifact, method: :delete do %>
-              <i class="fa fa-trash-alt"></i>
-            <% end %>
-          </td>
+          <% if @project.users.exists?(current_user.id) %>
+            <td>
+              <%= link_to artifact, method: :delete do %>
+                <i class="fa fa-trash-alt"></i>
+              <% end %>
+            </td>
+          <% end %>
         </tr>
       <% end %>
     </tbody>
   </table>
 <% else %>
-  <h4 class="text-center info">
+  <h4 class="text-center info mt-5">
     <span class="glyphicon glyphicon-info-sign"></span>
-    Não existem requisitos nesse projeto ainda...
+    There are no artifacts in this project yet...
   </h4>
 <% end %>
