@@ -1,0 +1,17 @@
+<div class="p-2 mt-1">
+  <p>
+    <i class="fa fa-puzzle-piece"></i> Available Plugins
+  </p>
+
+  <% @plugins.each do |plugin| %>
+    <span class="badge badge-light">
+      <a
+        href="/<%=@project.name%>/<%=plugin[:resource]%>"
+        class="nav-link"
+      >
+        <%= plugin[:name] %>
+      </a>
+    </span>
+  <% end %>
+
+</div>
