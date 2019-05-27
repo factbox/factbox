@@ -12,8 +12,14 @@
     <%= react_component("CriteriaForm", { criterias: @artifact.criterias }) %>
 
     <!-- Source of story -->
-    <%= f.input :source_id, selected: @artifact.source_id,
-        collection: @available_artifacts, prompt: "Select source artifact" %>
+    <div class="w-50">
+      <%= f.input :source_id,
+          selected: @artifact.source_id,
+          collection: @available_artifacts,
+          prompt: "Select one artifact that is the input of this",
+          label: "Source of information"
+      %>
+    </div>
   </div>
 
   <div class="row align-items-end">
