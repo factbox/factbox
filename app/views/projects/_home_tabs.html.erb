@@ -19,6 +19,15 @@
     </a>
   </li>
 
+  <li class="nav-item">
+    <a
+      href="/projects/<%=@project.uri_name%>/artifacts/new"
+      class="nav-link"
+    >
+      <i class="fa fa-plus"></i> New Artifact
+    </a>
+  </li>
+
   <% if @project.users.exists?(current_user.id) %>
     <li class="nav-item">
       <a
