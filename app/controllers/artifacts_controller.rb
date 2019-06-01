@@ -61,6 +61,9 @@ class ArtifactsController < ApplicationController
     if @artifact && @artifact.specific.last_version
       load_available_artifacts
 
+      # source should be empty by default
+      @artifact.source = nil
+
       # Views are prepared to receive specific
       @artifact = @artifact.specific
 
