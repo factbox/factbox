@@ -43,10 +43,6 @@ class Artifact < ApplicationRecord
     "/#{project_name}/artifact/#{uri_name}"
   end
 
-  def show_version(project_name)
-    "#{project_name}/artifact/version/#{self[:version]}"
-  end
-
   def show_versions_link(project_name)
     "/#{project_name}/versions/#{uri_name}"
   end

@@ -10,7 +10,7 @@
   <% @versions.each do |v| %>
     <div class="card w-100 <%= "bg-light" if v.last_version%>">
       <div class="card-body">
-        <a href="/<%= @artifact.show_version(params[:project_name]) %>">
+        <a href="/<%= @artifact.project.name %>/artifact/version/<%= v.version %>">
           <span class="font-weight-bold">
             <%= v.title %>
           </span>
