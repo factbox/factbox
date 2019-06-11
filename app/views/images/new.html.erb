@@ -1,3 +1,7 @@
+<%= render 'layouts/breadcrumb',
+    project_name: @artifact.project.name,
+    current_page: 'New image' %>
+
 <h1>New Image</h1>
 
 <%= render 'images/form', note: @artifact %>
