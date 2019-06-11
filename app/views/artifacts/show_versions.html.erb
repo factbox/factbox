@@ -1,4 +1,6 @@
-<p id="notice"><%= notice %></p>
+<%= render 'layouts/breadcrumb',
+    project_name: @artifact.project.name,
+    current_page: 'Artifact versions' %>
 
 <div class="row mb-3">
   <h1><%= @artifact.title %> <small>versions</small></h1>

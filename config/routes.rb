@@ -28,7 +28,7 @@ Rails.application.routes.draw do
 
   post  '/artifacts/new', to: 'artifacts#create'
   get   '/:project_name/:type/edit/:title/', to: 'artifacts#edit'
-  get   '/projects/:name/artifacts/new', to: 'artifacts#new'
+  get   '/projects/:project_name/artifacts/new', to: 'artifacts#new', as: 'artifact_menu'
   get   '/:project_name/artifact/:title', to: 'artifacts#show'
   get   '/:project_name/versions/:title', to: 'artifacts#show_versions'
   get   '/:project_name/artifact/version/:hash', to: 'artifacts#show_version'

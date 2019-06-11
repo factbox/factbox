@@ -30,6 +30,8 @@ class ArtifactsController < ApplicationController
     # In production eager_load is active, but development no
     Rails.application.eager_load!
 
+    @project = find_project_by_name
+
     ApplicationRecord.descendants.each do |artifact|
       @artifacts.push artifact if artifact.is_a? Artifact
     end

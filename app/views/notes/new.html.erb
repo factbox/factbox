@@ -1,3 +1,7 @@
+<%= render 'layouts/breadcrumb',
+    project_name: @artifact.project.name,
+    current_page: 'New note' %>
+
 <h1>New Note</h1>
 
 <%= render 'notes/form' %>
