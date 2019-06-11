@@ -23,10 +23,12 @@ class ApplicationController < ActionController::Base
   def check_project_privacity
     is_allowed = current_project.is_public || user_belongs_to_project
     redirect_to not_found_path unless is_allowed
+  rescue NoMethodError
+    redirect_to not_found_path
   end
 
   def logged_in?
-    session[:user_id]
+    current_user
   end
 
   def authorize
