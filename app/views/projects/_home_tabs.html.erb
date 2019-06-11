@@ -23,7 +23,7 @@
     <li class="nav-item">
       <a
         href="/projects/<%=@project.uri_name%>/artifacts/new"
-        class="nav-link"
+        class="nav-link <%= "active" if current_page? artifact_menu_path %>"
       >
         <i class="fa fa-plus"></i> New Artifact
       </a>
