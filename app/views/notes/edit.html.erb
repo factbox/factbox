@@ -1,3 +1,7 @@
+<%= render 'layouts/breadcrumb',
+    project_name: @artifact.project.name,
+    current_page: 'Edit note' %>
+
 <h1>Editing Note</h1>
 
 <%= render "#{@type.pluralize}/form" %>
