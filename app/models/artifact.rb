@@ -60,6 +60,7 @@ class Artifact < ApplicationRecord
   # http://visjs.org/docs/network/nodes.html
   def node_options
     options = {
+      name: self.specific.class.name,
       id: self[:id],
       label: self[:title],
       shape: 'dot'
