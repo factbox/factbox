@@ -29,7 +29,7 @@ export class TraceabilityGraph extends React.Component {
   }
 
   mountCaption = (nodes) => {
-    const captions = {'#7f8c8d': 'Old version'};
+    const captions = {'#7f8c8d': 'Old'};
 
     JSON.parse(nodes).map(n => {
       const color = n.color.background;
@@ -71,10 +71,10 @@ export class TraceabilityGraph extends React.Component {
             </div>
             {
               Object.keys(captions).map(c => (
-                <div
-                  class="col-md-1 ml-1 text-center align-middle"
-                  style={{backgroundColor: c}}>
-                    { captions[c] }
+                <div class="col-md-1 ml-1 mt-1 text-center align-middle">
+                    <div class="h-50" style={{backgroundColor: c}}>
+                      { captions[c] }
+                    </div>
                 </div>
               ))
             }
