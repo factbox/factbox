@@ -18,7 +18,7 @@
               <i class="fa fa-edit"></i>
             </a>
           </td>
-          <% if @project.users.exists?(current_user.id) %>
+          <% if current_user && @project.users.exists?(current_user.id) %>
             <td>
               <%= link_to artifact, method: :delete do %>
                 <i class="fa fa-trash-alt"></i>

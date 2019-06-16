@@ -30,6 +30,8 @@ class ArtifactsController < ApplicationController
     # In production eager_load is active, but development no
     Rails.application.eager_load!
 
+    @project = find_project_by_name
+
     ApplicationRecord.descendants.each do |artifact|
       @artifacts.push artifact if artifact.is_a? Artifact
     end
@@ -145,6 +147,7 @@ class ArtifactsController < ApplicationController
     @versions = [@artifact]
 
     version = @artifact.origin_artifact
+
     until version.nil?
       @versions.push version
       version = version.origin_artifact
@@ -154,10 +157,7 @@ class ArtifactsController < ApplicationController
   # Show specific version
   # GET /:project_name/version/:hash
   def show_version
-    project = Project.find_by_name(CGI.unescape(params[:project_name]))
-    options = { project_id: project.id, version: [params[:hash]] }
-
-    @artifact = Artifact.where(options).first
+    @artifact = Artifact.where(version: params[:hash]).first
 
     render get_view(@artifact.actable_type, 'show')
   end

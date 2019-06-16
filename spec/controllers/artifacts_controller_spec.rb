@@ -15,12 +15,12 @@ RSpec.describe ArtifactsController, type: :controller do
     end
 
     it 'when entry in page to choose the artifact that should be create' do
-      get :new, params: { name: project.uri_name }
+      get :new, params: { project_name: project.uri_name }
       expect(response).to render_template('new')
     end
 
     it 'to load all @artifacts avaliable in system' do
-      get :new, params: { name: project.uri_name }
+      get :new, params: { project_name: project.uri_name }
       expect(assigns(:artifacts)).to_not be_empty
     end
   end

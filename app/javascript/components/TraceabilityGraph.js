@@ -24,11 +24,25 @@ export class TraceabilityGraph extends React.Component {
     this.state = {
       nodes: JSON.parse(nodes),
       edges: JSON.parse(edges),
+      captions: this.mountCaption(nodes),
     };
   }
 
+  mountCaption = (nodes) => {
+    const captions = {'#7f8c8d': 'Old'};
+
+    JSON.parse(nodes).map(n => {
+      const color = n.color.background;
+      if (!Object.keys(captions).includes(color)) {
+        captions[color] = n.name;
+      }
+    });
+
+    return captions;
+  }
+
   render() {
-    const { nodes, edges } = this.state;
+    const { nodes, edges, captions } = this.state;
 
     const graph = {
       nodes,
@@ -37,7 +51,6 @@ export class TraceabilityGraph extends React.Component {
 
     return (
       <div>
-        <Graph graph={graph} options={options} events={events} />
         <div class="container">
           <div class="row">
             <div class="col-md-2 ml-2">
@@ -56,8 +69,18 @@ export class TraceabilityGraph extends React.Component {
               />
               Next version
             </div>
+            {
+              Object.keys(captions).map(c => (
+                <div class="col-md-1 ml-1 mt-1 text-center align-middle">
+                    <div class="h-50" style={{backgroundColor: c}}>
+                      { captions[c] }
+                    </div>
+                </div>
+              ))
+            }
           </div>
         </div>
+        <Graph graph={graph} options={options} events={events} />
       </div>
     );
   }
