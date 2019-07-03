@@ -2,12 +2,19 @@
     project_name: @artifact.project.name,
     current_page: 'Image' %>
 
-<div class="row mb-3">
+<div class="row">
   <h1><%= @artifact.title %></h1>
 </div>
 
+<div class="row mb-3">
+  <p class="card-text text-muted">
+    <a href="/user/<%= @artifact.author.login %>"><%= @artifact.author.login %></a>
+    updated <%= time_ago_in_words @artifact.time_creation %>
+  </p>
+</div>
+
 <div class="row">
-  <div class="col-md-8">
-    <%= image_tag url_for(@artifact.specific.file), class: "img-fluid img-thumbnail mw-50" %>
+  <div class="col-md-12">
+    <%= image_tag url_for(@artifact.specific.file), class: "img-fluid" %>
   </div>
 </div>
