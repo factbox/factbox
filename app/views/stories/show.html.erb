@@ -2,8 +2,15 @@
     project_name: @artifact.project.name,
     current_page: 'Story' %>
 
-<div class="row mb-3">
+<div class="row">
   <h1><%= @artifact.title %></h1>
+</div>
+
+<div class="row mb-3">
+  <p class="card-text text-muted">
+    <a href="/user/<%= @artifact.author.login %>"><%= @artifact.author.login %></a>
+    updated <%= time_ago_in_words @artifact.time_creation %>
+  </p>
 </div>
 
 <h4>Story</h4>
