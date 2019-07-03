@@ -23,7 +23,7 @@ class Artifact < ApplicationRecord
   has_many   :children, class_name: 'Artifact', foreign_key: 'source_id'
   belongs_to :source, class_name: 'Artifact', optional: true
 
-  validates :title, presence: true, length: { in: 2..20 }
+  validates :title, presence: true, length: { in: 2..50 }
   validates_uniqueness_of :title, scope: :project_id, on: :create,
                                   message: 'Title redundancy is not permitted',
                                   if: proc { |a| a.is_new }
