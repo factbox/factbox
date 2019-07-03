@@ -1,3 +1,7 @@
+<%= render 'layouts/breadcrumb',
+    project_name: @artifact.project.name,
+    current_page: 'Edit Story' %>
+
 <h1>Editing User Story</h1>
 
 <%= render 'stories/form', story: @artifact %>
